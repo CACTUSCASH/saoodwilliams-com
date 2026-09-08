@@ -3,6 +3,13 @@ import Link from "next/link";
 
 const PROJECTS = [
   {
+    slug: "freelance-ledger",
+    title: "Freelance Ledger",
+    tagline: "Full-stack invoicing and income tracker. Auth, Postgres row level security, tested money logic, CI.",
+    stack: ["Next.js 14", "TypeScript", "Supabase"],
+    repo: "https://github.com/CACTUSCASH/freelance-ledger",
+  },
+  {
     slug: "ios-scroll-perf",
     title: "iOS Scroll-Perf Case Study",
     tagline: "Three scroll-jank bugs on a production Next.js 15 site, diagnosed and fixed.",
@@ -59,7 +66,7 @@ export default function Home() {
           </h1>
           <p className="mt-6 max-w-xl text-white/70 text-lg">
             Full-stack engineer. TypeScript, React Three Fiber, Node,
-            security-trained (Security+, PenTest+, CASP+). 20 hrs/week, $120/hr USD.
+            with a cyber-security foundation. 20 hrs/week, $120/hr USD.
           </p>
           <div className="mt-10 flex gap-4 pointer-events-auto flex-wrap justify-center">
             <a
@@ -116,8 +123,8 @@ export default function Home() {
           </h2>
           <div className="prose max-w-none">
             <p>
-              I graduated with a Higher Certificate in Information Systems (Cyber Security)
-              from Eduvos, passing Security+, PenTest+ and CASP+ with distinction. Alongside
+              I completed a Higher Certificate in Information Systems (Cyber Security)
+              from Eduvos, with a focus on security. Alongside
               the coursework I taught myself the modern web stack — Next.js, TypeScript,
               React, React Three Fiber — and now ship production applications solo.
             </p>
