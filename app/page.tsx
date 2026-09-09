@@ -5,8 +5,8 @@ const PROJECTS = [
   {
     slug: "freelance-ledger",
     title: "Freelance Ledger",
-    tagline: "Full-stack invoicing and income tracker. Auth, Postgres row level security, tested money logic, CI.",
-    stack: ["Next.js 14", "TypeScript", "Supabase"],
+    tagline: "Full-stack invoicing and income tracker. Auth, Postgres RLS, live FX API, tests, Docker and CI.",
+    stack: ["Next.js 14", "TypeScript", "Supabase", "Docker"],
     repo: "https://github.com/CACTUSCASH/freelance-ledger",
   },
   {
