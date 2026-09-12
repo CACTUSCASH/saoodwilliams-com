@@ -1,13 +1,146 @@
-import {$,esc,toast,download,storage} from './common.js';
-import {seed,columns,validate,filterTasks} from './model.js';
-const store=await storage('orbit-workspace',seed,validate);let tasks=store.data,editing=null;
-function render(){const done=tasks.filter(t=>t.status==='Done').length;$('#stats').innerHTML=[['Total tasks',tasks.length],['In progress',tasks.filter(t=>t.status==='In progress').length],['Ready for review',tasks.filter(t=>t.status==='Review').length],['Completion',`${tasks.length?Math.round(done/tasks.length*100):0}%`]].map(([a,b])=>`<div class="stat"><span>${a}</span><strong>${b}</strong></div>`).join('');const filtered=filterTasks(tasks,$('#search').value,$('#priority').value);$('#board').innerHTML=columns.map((name,i)=>`<section class="column" data-column="${name}"><div class="column-title" style="--dot:${['#858391','#b1a0ff','#e6bd77','#89c9ad'][i]}"><i></i>${name}<span>${filtered.filter(t=>t.status===name).length}</span></div>${filtered.filter(t=>t.status===name).map(t=>`<article class="task" draggable="true" data-id="${esc(t.id)}"><div class="task-id">${esc(t.id)}</div><button class="edit" data-edit="${esc(t.id)}"><h3>${esc(t.title)}</h3></button><div class="task-meta"><span class="tag">${esc(t.tag)}</span><span class="priority ${t.priority}">${t.priority==='High'?'▴':t.priority==='Medium'?'＝':'▾'} ${t.priority}</span></div><select aria-label="Move ${esc(t.title)}" data-move="${esc(t.id)}">${columns.map(s=>`<option ${s===t.status?'selected':''}>${s}</option>`).join('')}</select></article>`).join('')}${filtered.filter(t=>t.status===name).length?'':'<p class="empty">Nothing here yet.</p>'}<button class="column-add" data-add="${name}">＋ Add task</button></section>`).join('');}
-async function save(){await store.save(tasks);render();}
-function open(id=null,status='Backlog'){editing=id;const t=tasks.find(t=>t.id===id)||{title:'',description:'',status,priority:'Medium',tag:'Feature'};const form=$('#taskForm');for(const key of ['title','description','status','priority','tag'])form.elements[key].value=t[key];$('#editorTitle').textContent=id?'Edit task':'New task';$('#delete').hidden=!id;$('#editor').showModal();form.elements.title.focus();}
-$('#new').onclick=()=>open();$('#close').onclick=()=>$('#editor').close();$('#search').oninput=render;$('#priority').onchange=render;
-$('#taskForm').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.currentTarget);const item={id:editing||`ORB-${crypto.randomUUID().slice(0,8)}`,title:f.get('title').trim(),description:f.get('description').trim(),status:f.get('status'),priority:f.get('priority'),tag:f.get('tag').trim()};const next=editing?tasks.map(t=>t.id===editing?item:t):[...tasks,item];if(!validate(next))return toast('Add a title and keep the board under 500 tasks.');tasks=next;await save();$('#editor').close();toast('Task saved');};
-$('#delete').onclick=async()=>{if(!confirm('Delete this task?'))return;tasks=tasks.filter(t=>t.id!==editing);await save();$('#editor').close();toast('Task deleted');};
-$('#board').onclick=e=>{const edit=e.target.closest('[data-edit]'),add=e.target.closest('[data-add]');if(edit)open(edit.dataset.edit);if(add)open(null,add.dataset.add);};
-$('#board').onchange=async e=>{if(!e.target.dataset.move)return;tasks=tasks.map(t=>t.id===e.target.dataset.move?{...t,status:e.target.value}:t);await save();toast('Task moved');};
-let dragged=null;$('#board').ondragstart=e=>{const task=e.target.closest('[data-id]');if(!task)return;dragged=task.dataset.id;e.dataTransfer.setData('text/plain',dragged);e.dataTransfer.effectAllowed='move';};$('#board').ondragover=e=>{const col=e.target.closest('[data-column]');if(!col||!dragged)return;e.preventDefault();document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));col.classList.add('over');};$('#board').ondragend=()=>{dragged=null;document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));};$('#board').ondrop=async e=>{e.preventDefault();const col=e.target.closest('[data-column]');if(!col||!dragged)return;tasks=tasks.map(t=>t.id===dragged?{...t,status:col.dataset.column}:t);dragged=null;await save();toast('Task moved');};
-$('#export').onclick=()=>download('orbit-board.json',JSON.stringify(tasks,null,2));$('#reset').onclick=async()=>{if(!confirm('Replace your board with the sample workspace? Export first to keep your work.'))return;tasks=structuredClone(seed);await save();toast('Sample workspace restored');};render();
+import { $, esc, toast, download, storage } from "./common.js";
+import { seed, columns, validate, filterTasks } from "./model.js";
+const store = await storage("orbit-workspace", seed, validate);
+let tasks = store.data,
+  editing = null;
+function render() {
+  const done = tasks.filter((t) => t.status === "Done").length;
+  $("#stats").innerHTML = [
+    ["Total tasks", tasks.length],
+    ["In progress", tasks.filter((t) => t.status === "In progress").length],
+    ["Ready for review", tasks.filter((t) => t.status === "Review").length],
+    [
+      "Completion",
+      `${tasks.length ? Math.round((done / tasks.length) * 100) : 0}%`,
+    ],
+  ]
+    .map(
+      ([a, b]) =>
+        `<div class="stat"><span>${a}</span><strong>${b}</strong></div>`,
+    )
+    .join("");
+  const filtered = filterTasks(tasks, $("#search").value, $("#priority").value);
+  $("#board").innerHTML = columns
+    .map(
+      (name, i) =>
+        `<section class="column" data-column="${name}"><div class="column-title" style="--dot:${["#858391", "#b1a0ff", "#e6bd77", "#89c9ad"][i]}"><i></i>${name}<span>${filtered.filter((t) => t.status === name).length}</span></div>${filtered
+          .filter((t) => t.status === name)
+          .map(
+            (t) =>
+              `<article class="task" draggable="true" data-id="${esc(t.id)}"><div class="task-id">${esc(t.id)}</div><button class="edit" data-edit="${esc(t.id)}"><h3>${esc(t.title)}</h3></button><div class="task-meta"><span class="tag">${esc(t.tag)}</span><span class="priority ${t.priority}">${t.priority === "High" ? "▴" : t.priority === "Medium" ? "＝" : "▾"} ${t.priority}</span></div><select aria-label="Move ${esc(t.title)}" data-move="${esc(t.id)}">${columns.map((s) => `<option ${s === t.status ? "selected" : ""}>${s}</option>`).join("")}</select></article>`,
+          )
+          .join(
+            "",
+          )}${filtered.filter((t) => t.status === name).length ? "" : '<p class="empty">Nothing here yet.</p>'}<button class="column-add" data-add="${name}">＋ Add task</button></section>`,
+    )
+    .join("");
+}
+async function save() {
+  const persisted = await store.save(tasks);
+  render();
+  return persisted;
+}
+function open(id = null, status = "Backlog") {
+  editing = id;
+  const t = tasks.find((t) => t.id === id) || {
+    title: "",
+    description: "",
+    status,
+    priority: "Medium",
+    tag: "Feature",
+  };
+  const form = $("#taskForm");
+  for (const key of ["title", "description", "status", "priority", "tag"])
+    form.elements[key].value = t[key];
+  $("#editorTitle").textContent = id ? "Edit task" : "New task";
+  $("#delete").hidden = !id;
+  $("#editor").showModal();
+  form.elements.title.focus();
+}
+$("#new").onclick = () => open();
+$("#close").onclick = () => $("#editor").close();
+$("#search").oninput = render;
+$("#priority").onchange = render;
+$("#taskForm").onsubmit = async (e) => {
+  e.preventDefault();
+  const f = new FormData(e.currentTarget);
+  const item = {
+    id: editing || `ORB-${crypto.randomUUID().slice(0, 8)}`,
+    title: f.get("title").trim(),
+    description: f.get("description").trim(),
+    status: f.get("status"),
+    priority: f.get("priority"),
+    tag: f.get("tag").trim(),
+  };
+  const next = editing
+    ? tasks.map((t) => (t.id === editing ? item : t))
+    : [...tasks, item];
+  if (!validate(next))
+    return toast("Add a title and keep the board under 500 tasks.");
+  tasks = next;
+  const persisted = await save();
+  $("#editor").close();
+  if (persisted) toast("Task saved");
+};
+$("#delete").onclick = async () => {
+  if (!confirm("Delete this task?")) return;
+  tasks = tasks.filter((t) => t.id !== editing);
+  const persisted = await save();
+  $("#editor").close();
+  if (persisted) toast("Task deleted");
+};
+$("#board").onclick = (e) => {
+  const edit = e.target.closest("[data-edit]"),
+    add = e.target.closest("[data-add]");
+  if (edit) open(edit.dataset.edit);
+  if (add) open(null, add.dataset.add);
+};
+$("#board").onchange = async (e) => {
+  if (!e.target.dataset.move) return;
+  tasks = tasks.map((t) =>
+    t.id === e.target.dataset.move ? { ...t, status: e.target.value } : t,
+  );
+  if (await save()) toast("Task moved");
+};
+let dragged = null;
+$("#board").ondragstart = (e) => {
+  const task = e.target.closest("[data-id]");
+  if (!task) return;
+  dragged = task.dataset.id;
+  e.dataTransfer.setData("text/plain", dragged);
+  e.dataTransfer.effectAllowed = "move";
+};
+$("#board").ondragover = (e) => {
+  const col = e.target.closest("[data-column]");
+  if (!col || !dragged) return;
+  e.preventDefault();
+  document.querySelectorAll(".over").forEach((x) => x.classList.remove("over"));
+  col.classList.add("over");
+};
+$("#board").ondragend = () => {
+  dragged = null;
+  document.querySelectorAll(".over").forEach((x) => x.classList.remove("over"));
+};
+$("#board").ondrop = async (e) => {
+  e.preventDefault();
+  const col = e.target.closest("[data-column]");
+  if (!col || !dragged) return;
+  tasks = tasks.map((t) =>
+    t.id === dragged ? { ...t, status: col.dataset.column } : t,
+  );
+  dragged = null;
+  if (await save()) toast("Task moved");
+};
+$("#export").onclick = () =>
+  download("orbit-board.json", JSON.stringify(tasks, null, 2));
+$("#reset").onclick = async () => {
+  if (
+    !confirm(
+      "Replace your board with the sample workspace? Export first to keep your work.",
+    )
+  )
+    return;
+  tasks = structuredClone(seed);
+  if (await save()) toast("Sample workspace restored");
+};
+render();

@@ -1,5 +1,82 @@
-export const $=s=>document.querySelector(s);
-export const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export function toast(message){let el=document.querySelector('.toast');if(el)el.remove();el=document.createElement('div');el.className='toast';el.setAttribute('role','status');el.textContent=message;document.body.append(el);setTimeout(()=>el.remove(),3200);}
-export function download(name,content,type='application/json'){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-export async function storage(key,seed,validate){let remote=false,data;try{const r=await fetch(new URL('./api/health',location.href),{signal:AbortSignal.timeout(1200)});const health=await r.json();remote=health.app===key;}catch{}if(remote){try{data=(await (await fetch('./api/state')).json()).data;}catch{remote=false;}}if(!remote){try{data=JSON.parse(localStorage.getItem(key));}catch{}}if(!validate(data))data=structuredClone(seed);document.querySelector('#mode').textContent=remote?'Local API · SQLite':'Browser demo · saved locally';let queue=Promise.resolve();return{data,async save(data){const snapshot=JSON.stringify(data);if(remote){queue=queue.then(async()=>{const r=await fetch('./api/state',{method:'PUT',headers:{'Content-Type':'application/json'},body:snapshot});if(!r.ok)throw Error();}).catch(()=>toast('Could not save. Please retry.'));return queue;}try{localStorage.setItem(key,snapshot);}catch{toast('Storage unavailable. Export your changes to keep them.');}}};}
+export const $ = (s) => document.querySelector(s);
+export const esc = (s) =>
+  String(s).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
+export function toast(message) {
+  let el = document.querySelector(".toast");
+  if (el) el.remove();
+  el = document.createElement("div");
+  el.className = "toast";
+  el.setAttribute("role", "status");
+  el.textContent = message;
+  document.body.append(el);
+  setTimeout(() => el.remove(), 3200);
+}
+export function download(name, content, type = "application/json") {
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+export async function storage(key, seed, validate) {
+  let remote = false,
+    data;
+  try {
+    const r = await fetch(new URL("./api/health", location.href), {
+      signal: AbortSignal.timeout(1200),
+    });
+    const health = await r.json();
+    remote = health.app === key;
+  } catch {}
+  if (remote) {
+    try {
+      data = (await (await fetch("./api/state")).json()).data;
+    } catch {
+      remote = false;
+    }
+  }
+  if (!remote) {
+    try {
+      data = JSON.parse(localStorage.getItem(key));
+    } catch {}
+  }
+  if (!validate(data)) data = structuredClone(seed);
+  document.querySelector("#mode").textContent = remote
+    ? "Local API · SQLite"
+    : "Browser demo · saved locally";
+  let queue = Promise.resolve();
+  return {
+    data,
+    async save(data) {
+      const snapshot = JSON.stringify(data);
+      if (remote) {
+        queue = queue
+          .then(async () => {
+            const r = await fetch("./api/state", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: snapshot,
+            });
+            if (!r.ok) throw Error();
+            return true;
+          })
+          .catch(() => { toast("Could not save. Export your changes to keep them."); return false; });
+        return queue;
+      }
+      try {
+        localStorage.setItem(key, snapshot);
+        return true;
+      } catch {
+        toast("Storage unavailable. Export your changes to keep them.");
+        return false;
+      }
+    },
+  };
+}
