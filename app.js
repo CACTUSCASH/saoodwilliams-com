@@ -1,5 +1,8 @@
 import { projects, githubBase } from "./projects.js";
 import { createPortraitEffect } from "./portrait.js";
+import { initProfessional } from "./professional.js";
+import { initCredentials } from "./credentials.js";
+import { initActivity } from "./activity.js";
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -31,6 +34,12 @@ const write = (key, value) => {
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 let paused = reduced.matches || read("sw-motion") === "paused";
 let toastTimer;
+
+initProfessional({
+  timeline: "#experienceTimeline",
+  stack: "#technologyStack",
+});
+initCredentials($("#credentialsGallery"));
 function toast(message) {
   $("#toast").textContent = message;
   $("#toast").classList.add("visible");
@@ -235,6 +244,9 @@ $("#closeOverview").onclick = () => $("#overview").close();
 const commands = [
   ["Selected work", "#work", "Section"],
   ["About Sa'ood", "#about", "Section"],
+  ["Experience", "#experience", "Section"],
+  ["Technology stack", "#technology", "Section"],
+  ["Certifications", "#credentials", "Section"],
   ["GitHub archive", "#github", "Section"],
   ["Get in touch", "#contact", "Section"],
   ...featured.map((p) => [p.name, p.demo, "Demo"]),
@@ -340,13 +352,20 @@ async function refreshRepos() {
   }
 }
 refreshRepos();
+initActivity($("#githubActivity"));
 
 const sectionObserver = new IntersectionObserver(
   (entries) => {
     for (const entry of entries)
       if (entry.isIntersecting)
         $$("nav a").forEach((a) => {
-          const active = a.hash === `#${entry.target.id}`;
+          const navSection =
+            {
+              experience: "about",
+              technology: "about",
+              credentials: "about",
+            }[entry.target.id] || entry.target.id;
+          const active = a.hash === `#${navSection}`;
           a.classList.toggle("active", active);
           if (active) a.setAttribute("aria-current", "location");
           else a.removeAttribute("aria-current");
@@ -354,8 +373,8 @@ const sectionObserver = new IntersectionObserver(
   },
   { rootMargin: "-20% 0px -45% 0px" },
 );
-["work", "about", "github"].forEach((id) =>
-  sectionObserver.observe($("#" + id)),
+["work", "about", "experience", "technology", "credentials", "github"].forEach(
+  (id) => sectionObserver.observe($("#" + id)),
 );
 let scrollQueued = false;
 function updateScroll() {

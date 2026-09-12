@@ -13,6 +13,8 @@ const types = {
   ".pdf": "application/pdf",
   ".docx":
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  ".woff2": "font/woff2",
+  ".json": "application/json; charset=utf-8",
 };
 http
   .createServer(async (req, res) => {

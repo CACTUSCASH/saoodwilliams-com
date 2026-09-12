@@ -8,6 +8,12 @@ const files = [
   "projects.js",
   "portrait.js",
   "styles.css",
+  "professional.js",
+  "professional.css",
+  "credentials.js",
+  "credentials.css",
+  "activity.js",
+  "activity.css",
 ];
 async function walk(dir) {
   for (const name of await readdir(resolve(root, dir))) {

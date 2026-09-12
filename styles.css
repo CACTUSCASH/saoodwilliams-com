@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+  src: url("assets/fonts/dm-sans-latin.woff2") format("woff2");
+}
+
 :root {
   --bg: #151515;
   --panel: #20201f;
@@ -8,12 +24,11 @@
   --line: #3b3b37;
   --accent: #ff8a66;
   --on: #181818;
+  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Bricolage Grotesque", "DM Sans", system-ui, sans-serif;
   color-scheme: dark;
-  font-family:
-    "DM Sans",
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
   font-synthesis: none;
 }
 
@@ -41,8 +56,8 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 body:has(dialog[open]) {
@@ -107,15 +122,19 @@ p {
   margin: 0 0 20px;
 }
 h1,
-h2,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
 h3 {
-  font-weight: 500;
+  font-weight: 550;
 }
 h2 {
   margin: 0;
-  font-size: clamp(36px, 4.4vw, 58px);
-  line-height: 1.08;
-  letter-spacing: -2.2px;
+  font-size: clamp(38px, 4.6vw, 62px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 h2 em {
   font: inherit;
@@ -168,8 +187,9 @@ h2 em {
   align-items: center;
   gap: 8px;
   font-size: 33px;
+  font-family: var(--font-display);
   font-weight: 650;
-  letter-spacing: -2.8px;
+  letter-spacing: -0.08em;
   line-height: 1;
 }
 .brand-point {
@@ -231,7 +251,9 @@ nav sup {
 .command-trigger kbd {
   padding: 2px 6px;
   font:
-    10px "DM Mono",
+    10px ui-monospace,
+    "SFMono-Regular",
+    Consolas,
     monospace;
   border: 1px solid var(--line);
   border-radius: 3px;
@@ -312,8 +334,9 @@ nav sup {
   margin: 0 0 22px;
   color: var(--muted);
   font-size: 11px;
+  font-weight: 500;
   line-height: 1.6;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.08em;
 }
 .status-light {
   display: inline-block;
@@ -375,7 +398,7 @@ nav sup {
 .hero-top .eyebrow {
   margin: 0;
   font-size: 11px;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.035em;
 }
 .location-label {
   color: var(--muted);
@@ -391,6 +414,7 @@ nav sup {
 .hero-copy {
   min-width: 0;
   padding: 12px 0 24px;
+  container-type: inline-size;
 }
 .intro {
   margin: 0 0 25px;
@@ -399,20 +423,21 @@ nav sup {
 }
 h1 {
   margin: 0;
-  font-size: clamp(70px, 7.7vw, 114px);
-  letter-spacing: -6px;
-  line-height: 0.98;
-  font-weight: 500;
+  font-size: clamp(56px, 7.8vw, 116px);
+  font-size: clamp(52px, 20.8cqw, 116px);
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  font-weight: 600;
 }
 h1 em {
   font: inherit;
 }
 .hero-description {
-  max-width: 440px;
+  max-width: 38ch;
   margin: 30px 0 0;
   color: var(--muted);
-  font-size: 17px;
-  line-height: 1.7;
+  font-size: 18px;
+  line-height: 1.6;
 }
 .hero-actions {
   display: flex;
@@ -498,8 +523,8 @@ h1 em {
 .section-title > p {
   max-width: 390px;
   color: var(--muted);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.65;
   margin: 0 0 3px;
 }
 .work-toolbar {
@@ -629,31 +654,34 @@ h1 em {
   gap: 12px;
   margin: 0 0 13px;
   color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 0.8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
 }
 .project-kicker .status-light {
   display: none;
 }
 .project h3 {
   margin: 0 0 15px;
-  font-size: 30px;
-  line-height: 1.1;
-  letter-spacing: -0.9px;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
 }
 .project:first-child h3,
 .project-list[data-count="1"] h3 {
-  font-size: 34px;
+  font-size: 36px;
 }
 .project-summary {
   margin: 0 0 17px;
-  font-size: 15px;
+  max-width: 55ch;
+  font-size: 16px;
   line-height: 1.65;
   color: var(--muted);
 }
 .project-detail {
   margin: 0 0 18px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
   color: var(--text);
 }
@@ -727,12 +755,12 @@ h1 em {
 .source-row h3 {
   margin: 0 0 7px;
   font-size: 24px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
   line-height: 1.2;
 }
 .source-row p {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.65;
   color: var(--muted);
 }
@@ -763,9 +791,9 @@ h1 em {
 }
 .about-copy > p:not(.eyebrow) {
   color: var(--muted);
-  font-size: 16px;
-  line-height: 1.8;
-  max-width: 660px;
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 58ch;
 }
 .about-links {
   display: flex;
@@ -781,7 +809,7 @@ h1 em {
 .about-details h3 {
   margin: 18px 0 22px;
   font-size: 21px;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.02em;
 }
 .about-details dl {
   margin: 0;
@@ -818,7 +846,7 @@ h1 em {
 .capabilities h3 {
   margin: 15px 0 12px;
   font-size: 23px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
 }
 .capabilities p {
   margin: 0;
@@ -885,9 +913,10 @@ input::placeholder {
   justify-content: space-between;
   gap: 16px;
   margin: 0 0 15px;
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: 600;
   line-height: 1.3;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.015em;
   overflow-wrap: anywhere;
 }
 .github-repo:hover h3 {
@@ -902,7 +931,7 @@ input::placeholder {
 .github-repo p {
   margin: 0 0 22px;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.65;
   overflow-wrap: anywhere;
 }
@@ -939,10 +968,11 @@ input::placeholder {
 .contact-title {
   position: relative;
   display: block;
-  font-size: clamp(46px, 6.2vw, 84px);
+  font-family: var(--font-display);
+  font-size: clamp(46px, 6.5vw, 88px);
   line-height: 1.05;
-  font-weight: 500;
-  letter-spacing: -3.6px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
   padding-right: 80px;
 }
 .contact-title em {
@@ -1062,7 +1092,7 @@ dialog::backdrop {
 dialog h2 {
   margin: 0 0 18px;
   font-size: 38px;
-  letter-spacing: -1.2px;
+  letter-spacing: -0.035em;
 }
 dialog p,
 dialog li,
@@ -1074,7 +1104,7 @@ dialog dd {
 dialog h3 {
   margin: 25px 0 12px;
   font-size: 20px;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.02em;
 }
 dialog ul {
   padding-left: 20px;
@@ -1174,7 +1204,7 @@ dialog li {
 #quickNavTitle {
   margin: 0;
   font-size: 26px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
 }
 #commandSearch {
   width: 100%;
@@ -1266,9 +1296,6 @@ dialog li {
     gap: 100px;
     padding-block: 62px;
   }
-  h1 {
-    font-size: 118px;
-  }
 }
 
 @media (max-width: 1100px) {
@@ -1284,12 +1311,8 @@ dialog li {
   .hero-grid {
     gap: 44px;
   }
-  h1 {
-    font-size: 86px;
-    letter-spacing: -4.5px;
-  }
   .hero-description {
-    font-size: 16px;
+    font-size: 17px;
   }
   .hero-actions {
     gap: 15px;
@@ -1311,7 +1334,7 @@ dialog li {
   }
   .project:first-child h3,
   .project-list[data-count="1"] h3 {
-    font-size: 30px;
+    font-size: 32px;
   }
   .project-actions {
     gap: 8px 16px;
@@ -1351,16 +1374,12 @@ dialog li {
     grid-template-columns: 1fr 0.9fr;
     padding: 40px 0;
   }
-  h1 {
-    font-size: 68px;
-    letter-spacing: -3.5px;
-  }
   .intro {
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 22px;
   }
   .hero-description {
-    font-size: 15px;
+    font-size: 16px;
     margin-top: 25px;
   }
   .hero-actions {
@@ -1397,11 +1416,10 @@ dialog li {
   }
   .section-title > p {
     max-width: 300px;
-    font-size: 14px;
+    font-size: 15px;
   }
   h2 {
-    font-size: 43px;
-    letter-spacing: -1.6px;
+    font-size: 44px;
   }
   .project:first-child,
   .project-list[data-count="1"] .project {
@@ -1426,13 +1444,10 @@ dialog li {
     margin-top: 0;
   }
   .project h3 {
-    font-size: 27px;
+    font-size: 28px;
   }
   .project-summary {
-    font-size: 14px;
-  }
-  .project-detail {
-    font-size: 13px;
+    font-size: 15px;
   }
   .project-actions {
     gap: 6px 17px;
@@ -1459,7 +1474,7 @@ dialog li {
     grid-template-columns: 1.2fr 1fr;
   }
   .about-copy > p:not(.eyebrow) {
-    font-size: 15px;
+    font-size: 16px;
   }
   .about-details dd {
     font-size: 14px;
@@ -1472,7 +1487,7 @@ dialog li {
     font-size: 21px;
   }
   .capabilities p {
-    font-size: 13px;
+    font-size: 14px;
   }
   .github-toolbar {
     align-items: flex-start;
@@ -1485,13 +1500,13 @@ dialog li {
   .search-wrap input {
     flex: 1;
     width: auto;
+    font-size: 16px;
   }
   .contact {
     margin-top: 80px;
   }
   .contact-title {
     font-size: 62px;
-    letter-spacing: -2.5px;
   }
   .contact-arrow {
     width: 35px;
@@ -1513,9 +1528,6 @@ dialog li {
 @media (max-width: 600px) {
   html {
     scroll-padding-top: 90px;
-  }
-  body {
-    font-size: 15px;
   }
   .shell {
     width: calc(100% - 40px);
@@ -1549,12 +1561,13 @@ dialog li {
     gap: 12px;
   }
   .hero-top .eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.1px;
+    font-size: 11px;
+    letter-spacing: 0;
   }
   .location-label {
-    font-size: 10px;
-    white-space: nowrap;
+    font-size: 11px;
+    max-width: 120px;
+    text-align: right;
   }
   .hero-grid {
     grid-template-columns: 1fr;
@@ -1568,14 +1581,9 @@ dialog li {
     font-size: 15px;
     margin-bottom: 19px;
   }
-  h1 {
-    font-size: clamp(67px, 18vw, 96px);
-    line-height: 0.98;
-    letter-spacing: -4px;
-  }
   .hero-description {
-    max-width: 430px;
-    font-size: 16px;
+    max-width: 38ch;
+    font-size: 17px;
     line-height: 1.65;
     margin-top: 24px;
   }
@@ -1619,16 +1627,13 @@ dialog li {
   }
   .section-title > p {
     max-width: 100%;
-    font-size: 14px;
+    font-size: 15px;
   }
   .eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.5px;
     margin-bottom: 18px;
   }
   h2 {
-    font-size: 37px;
-    letter-spacing: -1.4px;
+    font-size: 38px;
   }
   .work-toolbar {
     margin-bottom: 24px;
@@ -1674,15 +1679,12 @@ dialog li {
   .project:first-child h3,
   .project-list[data-count="1"] h3 {
     font-size: 28px;
-    letter-spacing: -0.8px;
   }
   .project-kicker {
-    font-size: 10px;
     margin-bottom: 11px;
-    letter-spacing: 0.6px;
   }
   .project-summary {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.65;
     margin-bottom: 15px;
   }
@@ -1729,7 +1731,7 @@ dialog li {
     font-size: 21px;
   }
   .source-row p {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.6;
   }
   .source-row button {
@@ -1744,8 +1746,8 @@ dialog li {
     margin-bottom: 24px;
   }
   .about-copy > p:not(.eyebrow) {
-    font-size: 16px;
-    line-height: 1.75;
+    font-size: 17px;
+    line-height: 1.7;
   }
   .about-links {
     gap: 20px;
@@ -1793,7 +1795,7 @@ dialog li {
     font-size: 13px;
   }
   .search-wrap input {
-    font-size: 13px;
+    font-size: 16px;
     min-width: 0;
   }
   .repo-grid {
@@ -1805,10 +1807,10 @@ dialog li {
     padding-block: 23px;
   }
   .github-repo h3 {
-    font-size: 17px;
+    font-size: 18px;
   }
   .github-repo p {
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 20px;
   }
   .repo-language {
@@ -1830,9 +1832,8 @@ dialog li {
   }
   .contact-title {
     padding-right: 0;
-    font-size: clamp(37px, 10vw, 56px);
-    line-height: 1.12;
-    letter-spacing: -1.6px;
+    font-size: clamp(40px, 10.5vw, 58px);
+    line-height: 1.08;
   }
   .contact-arrow {
     display: none;
@@ -1880,11 +1881,10 @@ dialog li {
     margin-bottom: 22px;
   }
   .dialog-bar .eyebrow {
-    font-size: 10px;
+    font-size: 11px;
   }
   dialog h2 {
-    font-size: 31px;
-    letter-spacing: -0.9px;
+    font-size: 32px;
   }
   dialog h3 {
     font-size: 19px;
@@ -1892,7 +1892,7 @@ dialog li {
   dialog p,
   dialog li,
   dialog dd {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.7;
   }
   .case-tabs {
@@ -1928,7 +1928,7 @@ dialog li {
     font-size: 25px;
   }
   #commandSearch {
-    font-size: 14px;
+    font-size: 16px;
   }
   .command-option {
     padding: 12px 8px;
@@ -1958,12 +1958,12 @@ dialog li {
     flex-wrap: wrap;
     gap: 5px;
   }
+  .location-label {
+    max-width: none;
+    text-align: left;
+  }
   .hero-grid {
     padding-top: 29px;
-  }
-  h1 {
-    font-size: 67px;
-    letter-spacing: -4px;
   }
   .portrait-caption {
     display: block;

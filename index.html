@@ -33,10 +33,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=DM+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="professional.css" />
+    <link rel="stylesheet" href="credentials.css" />
+    <link rel="stylesheet" href="activity.css" />
     <script type="module" src="app.js"></script>
   </head>
   <body>
@@ -155,6 +158,8 @@
         <div id="projectList" class="project-list"></div>
         <noscript
           ><p>
+            <a href="labs/canvas/">Canvas Rooms</a> /
+            <a href="labs/quorum/">Quorum Lab</a> /
             <a href="labs/relay/">Relay workflows</a> /
             <a href="labs/spectra/">Spectra Studio</a> /
             <a href="labs/atlas/">Atlas Pathfinder</a> /
@@ -218,26 +223,25 @@
             </dl>
           </aside>
         </div>
-        <div class="capabilities">
-          <article class="reveal">
-            <span class="cap-index">01</span>
-            <h3>The interface</h3>
-            <p>React / Next.js / TypeScript<br />CSS / WebGL / Accessibility</p>
-          </article>
-          <article class="reveal">
-            <span class="cap-index">02</span>
-            <h3>The application</h3>
-            <p>Node.js / Python / APIs<br />PostgreSQL / SQLite / Supabase</p>
-          </article>
-          <article class="reveal">
-            <span class="cap-index">03</span>
-            <h3>The delivery</h3>
-            <p>
-              Git / GitHub Actions / Docker<br />Testing / Deployment /
-              Documentation
-            </p>
-          </article>
+      </section>
+      <section id="experience" class="experience shell section">
+        <div id="experienceTimeline"></div>
+      </section>
+      <section id="technology" class="technology shell section">
+        <div id="technologyStack"></div>
+      </section>
+      <section id="credentials" class="credentials shell section">
+        <div class="section-title reveal">
+          <div>
+            <p class="eyebrow">CERTIFICATIONS</p>
+            <h2>Proof of practice.</h2>
+          </div>
+          <p>
+            Course completions from Claude Academy, each linked to its public
+            verification record.
+          </p>
         </div>
+        <div id="credentialsGallery"></div>
       </section>
       <section id="github" class="github shell section">
         <div class="section-title reveal">
@@ -270,6 +274,7 @@
         <button class="button more-repos" id="moreRepos" hidden>
           Show more repositories <span class="plus" aria-hidden="true"></span>
         </button>
+        <div id="githubActivity"></div>
       </section>
       <section id="contact" class="contact shell section reveal">
         <div class="contact-top">
