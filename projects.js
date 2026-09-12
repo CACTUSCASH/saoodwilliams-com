@@ -1,6 +1,66 @@
 export const githubBase = "https://github.com/CACTUSCASH/";
 export const projects = [
   {
+    id: "canvas",
+    name: "Canvas Rooms",
+    category: "fullstack",
+    type: "COLLABORATION / DIAGRAM EDITOR",
+    repo: "canvas-rooms",
+    demo: "labs/canvas/",
+    tags: ["Convergent operations", "SVG", "SQLite / SSE"],
+    wash: "#8399b6",
+    screen: "#111923",
+    summary:
+      "Draw a system together across browser tabs. Move a shape in one view, edit its text in another, and watch the changes meet.",
+    detail: "Open a second tab. Change different fields at the same time.",
+    challenge:
+      "Shared editing needs a consistent answer when changes arrive out of order. Canvas Rooms combines field-level operations so independent edits survive, while explicit tie-breaking and deletion rules keep each tab in agreement.",
+    features: [
+      "Build diagrams with boxes, ellipses, notes, and connectors, then edit text, size, color, and position.",
+      "Share a room across same-origin tabs with real presence and live updates.",
+      "Move shapes with the keyboard, undo local actions, import JSON, and export JSON or SVG.",
+    ],
+    architecture:
+      "An SVG editor applies per-field operations ordered by Lamport counters and client IDs. Permanent deletion tombstones prevent late updates from reviving removed shapes. The hosted demo uses BroadcastChannel and browser storage; an optional local Node.js server persists operations in SQLite and streams updates over SSE.",
+    diagram: [
+      "Canvas operations",
+      "Deterministic merge",
+      "Tabs / SQLite + SSE",
+    ],
+    validation:
+      "Tests verify convergence across delivery orders, tied clocks, deletion safety, replay idempotence, rejected imports, and safe SVG output. Server checks cover atomic validation, SQLite persistence after restart, and SSE replay.",
+    limits:
+      "The hosted demo collaborates across same-origin tabs in one browser profile, with no cloud service. Rooms support 5,000 operations and the editor allows 128 shapes. Concurrent changes to the same field choose one value; text does not merge character by character. The optional local server has no account authentication.",
+  },
+  {
+    id: "quorum",
+    name: "Quorum Lab",
+    category: "algorithms",
+    type: "DISTRIBUTED SYSTEMS / CONSENSUS",
+    repo: "quorum-lab",
+    demo: "labs/quorum/",
+    tags: ["Raft rules", "Deterministic simulation", "Fault injection"],
+    wash: "#859879",
+    screen: "#0e151d",
+    summary:
+      "Split a network and challenge its agreement. Follow elections, competing writes, and the log entries that survive recovery.",
+    detail: "Isolate the leader. See why two votes cannot commit a write.",
+    challenge:
+      "A successful write means more than reaching one server. Quorum makes the majority rule visible, showing how a minority leader can accept a pending write while a new leader commits a different history.",
+    features: [
+      "Step through seeded elections, votes, and actual scheduled messages across five nodes.",
+      "Partition links, crash or restart processes, and send writes to a selected leader.",
+      "Inspect each log, distinguish pending and committed entries, and export the event history and majority acknowledgements.",
+    ],
+    architecture:
+      "A deterministic JavaScript scheduler implements core Raft election, log freshness, prefix repair, and current-term majority commit rules. SVG renders the model's actual node states and queued messages. Simulated restarts retain each node's term, vote, and log.",
+    diagram: ["Seeded messages", "Votes + replication", "Committed prefix"],
+    validation:
+      "Tests exercise 60 seeded fault schedules, majority loss, stale candidates, retained votes, competing writes, and recovery. Committed prefixes, election safety, and log matching are checked throughout.",
+    limits:
+      "Educational simulation in one browser, with five fixed voters, 96 log entries per node, and 5,000 ticks per run. No networked backend, persistent disk, membership changes, or linearizable read API. Runs do not survive a page reload.",
+  },
+  {
     id: "relay",
     name: "Relay Workflows",
     category: "fullstack",

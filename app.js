@@ -1,4 +1,5 @@
 import { projects, githubBase } from "./projects.js";
+import { createPortraitEffect } from "./portrait.js";
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -55,6 +56,8 @@ $("#theme").onclick = () => {
 };
 
 const featured = projects.filter((p) => p.demo);
+$("#workCount").textContent = `${featured.length} PROJECTS`;
+$("#projectList").dataset.count = String(featured.length);
 function sendFrameMotion(frame) {
   frame.contentWindow?.postMessage(
     {
@@ -128,7 +131,7 @@ $("#sourceProjects").innerHTML = projects
   .filter((p) => !p.demo)
   .map(
     (p, i) =>
-      `<article class="source-row reveal"><span class="source-index">0${i + 6}</span><div><h3>${p.name}</h3><p>${p.summary}</p></div><span class="source-stack">${p.tags.join(" / ")}</span><button data-case="${p.id}" aria-label="Read about ${p.name}"><span class="arrow" aria-hidden="true"></span></button></article>`,
+      `<article class="source-row reveal"><span class="source-index">${String(i + featured.length + 1).padStart(2, "0")}</span><div><h3>${p.name}</h3><p>${p.summary}</p></div><span class="source-stack">${p.tags.join(" / ")}</span><button data-case="${p.id}" aria-label="Read about ${p.name}"><span class="arrow" aria-hidden="true"></span></button></article>`,
   )
   .join("");
 $$("[data-filter]").forEach(
@@ -235,7 +238,8 @@ const commands = [
   ["GitHub archive", "#github", "Section"],
   ["Get in touch", "#contact", "Section"],
   ...featured.map((p) => [p.name, p.demo, "Demo"]),
-  ["Download CV", "Saood-Williams-CV.docx", "Document"],
+  ["Download CV (PDF)", "Saood-Williams-CV.pdf", "Document"],
+  ["Download CV (Word)", "Saood-Williams-CV.docx", "Document"],
 ];
 function renderCommands() {
   const query = $("#commandSearch").value.toLowerCase();
@@ -370,13 +374,27 @@ addEventListener(
 );
 updateScroll();
 
+const portraitEffect = createPortraitEffect($("#portraitReveal"), {
+  imageUrl: "assets/portrait.png",
+  reducedMotion: reduced,
+  onState: ({ ready, pinned, paused: effectPaused, unavailable }) => {
+    $("#portraitHint").textContent = unavailable
+      ? "Sa'ood Williams"
+      : effectPaused
+        ? "Portrait motion paused"
+        : pinned
+          ? "Move to explore / tap to reassemble"
+          : ready
+            ? "Hover to scatter / tap to hold"
+            : "Move through the portrait";
+  },
+});
 function applyMotion() {
   document.documentElement.classList.toggle("motion-off", paused);
-  $("#footerMotion").textContent = paused
-    ? "Enable preview motion"
-    : "Disable preview motion";
+  $("#footerMotion").textContent = paused ? "Enable motion" : "Disable motion";
   $("#footerMotion").setAttribute("aria-pressed", String(paused));
   for (const frame of $$(".project-screen iframe")) sendFrameMotion(frame);
+  portraitEffect.setPaused(paused);
 }
 $("#footerMotion").onclick = () => {
   paused = !paused;
@@ -390,67 +408,3 @@ reduced.addEventListener("change", (event) => {
   }
 });
 applyMotion();
-
-const portrait = $("#portraitReveal");
-let portraitPinned = false;
-let portraitHovered = false;
-let portraitFocused = false;
-let portraitFrame = null;
-let portraitPoint = { x: 50, y: 50 };
-function drawPortrait() {
-  portraitFrame = null;
-  const fullColour = portraitPinned || portraitFocused;
-  portrait.classList.toggle("is-revealed", fullColour);
-  portrait.style.setProperty("--portrait-x", `${portraitPoint.x}%`);
-  portrait.style.setProperty("--portrait-y", `${portraitPoint.y}%`);
-  portrait.style.setProperty(
-    "--reveal-radius",
-    fullColour ? "150%" : portraitHovered ? "62%" : "0%",
-  );
-  portrait.setAttribute("aria-pressed", String(portraitPinned));
-  portrait.setAttribute(
-    "aria-label",
-    portraitPinned ? "Show portrait in monochrome" : "Show portrait in colour",
-  );
-  $("#portraitHint").textContent = portraitPinned
-    ? "Tap to return to monochrome"
-    : "Hover or tap for colour";
-}
-function schedulePortrait() {
-  if (portraitFrame === null)
-    portraitFrame = requestAnimationFrame(drawPortrait);
-}
-portrait.addEventListener("pointermove", (event) => {
-  if (event.pointerType === "touch") return;
-  const bounds = portrait.getBoundingClientRect();
-  portraitPoint = {
-    x: Math.max(
-      0,
-      Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100),
-    ),
-    y: Math.max(
-      0,
-      Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100),
-    ),
-  };
-  portraitHovered = true;
-  schedulePortrait();
-});
-portrait.addEventListener("pointerleave", () => {
-  portraitHovered = false;
-  schedulePortrait();
-});
-portrait.addEventListener("focus", () => {
-  portraitFocused = portrait.matches(":focus-visible");
-  schedulePortrait();
-});
-portrait.addEventListener("blur", () => {
-  portraitFocused = false;
-  schedulePortrait();
-});
-portrait.addEventListener("click", () => {
-  portraitPinned = !portraitPinned;
-  portraitHovered = false;
-  portraitFocused = false;
-  drawPortrait();
-});

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="A five-node consensus laboratory. Break network links, elect leaders, and follow the log through failure and recovery."
+    />
+    <meta name="theme-color" content="#0e151d" />
+    <title>Quorum | Consensus laboratory</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#workspace">Skip to laboratory</a>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="./"
+          ><svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="m16 3 12 9-5 15H9L4 12Z" />
+            <path d="m16 3 7 24L4 12h24L9 27Z" />
+            <circle cx="16" cy="3" r="2" /></svg
+          >quorum<span>LAB / 05</span></a
+        >
+        <div class="top-links">
+          <span class="simulation-label">Discrete-event simulation</span
+          ><a
+            href="https://github.com/CACTUSCASH/quorum-lab"
+            target="_blank"
+            rel="noopener"
+            >View source <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </header>
+      <main>
+        <section class="intro">
+          <div>
+            <p class="eyebrow">Distributed systems / made observable</p>
+            <h1>Agreement,<br /><em>under pressure.</em></h1>
+          </div>
+          <div class="intro-copy">
+            <p>
+              Five nodes. One replicated log.<br />Cut a link, lose a leader,
+              write into a partition. See what the cluster can still agree on.
+            </p>
+            <div class="intro-rule">
+              <span>03 / 05</span>
+              <p>A majority commits.<br />A minority waits.</p>
+            </div>
+          </div>
+        </section>
+        <section id="workspace" aria-label="Consensus laboratory">
+          <div class="control-bar">
+            <div class="playback">
+              <button id="play" class="play-button">Play simulation</button
+              ><button id="step" class="quiet-button">Step one tick</button
+              ><label class="speed-label"
+                >Speed<select id="speed">
+                  <option value="1">1x</option>
+                  <option value="2" selected>2x</option>
+                  <option value="4">4x</option>
+                  <option value="8">8x</option>
+                </select></label
+              >
+            </div>
+            <div class="seed-control">
+              <label
+                >Seed<input
+                  id="seed"
+                  value="19"
+                  type="number"
+                  min="0"
+                  max="4294967295"
+                  step="1" /></label
+              ><button id="reset" class="quiet-button">Reset</button>
+            </div>
+          </div>
+          <div
+            class="metrics"
+            id="metrics"
+            aria-label="Cluster statistics"
+          ></div>
+          <div class="lab-grid">
+            <section class="topology panel" aria-labelledby="topologyTitle">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">01 / Network topology</p>
+                  <h2 id="topologyTitle">A cluster in motion.</h2>
+                </div>
+                <span class="cluster-state" id="clusterState"
+                  >Awaiting election</span
+                >
+              </div>
+              <div class="network-stage">
+                <svg
+                  id="network"
+                  viewBox="0 0 760 520"
+                  role="img"
+                  aria-label="Network links and in-flight messages"
+                >
+                  <defs>
+                    <pattern
+                      id="dots"
+                      width="23"
+                      height="23"
+                      patternUnits="userSpaceOnUse"
+                    >
+                      <circle cx="1" cy="1" r=".7" fill="#30404d" />
+                    </pattern>
+                  </defs>
+                  <rect width="760" height="520" fill="url(#dots)" />
+                  <ellipse
+                    class="orbit-ring"
+                    cx="380"
+                    cy="280"
+                    rx="286"
+                    ry="179"
+                  />
+                  <ellipse
+                    class="orbit-ring inner"
+                    cx="380"
+                    cy="280"
+                    rx="196"
+                    ry="120"
+                  />
+                  <g id="links"></g>
+                  <g id="packets"></g>
+                  <g id="node-art"></g>
+                  <text
+                    class="network-label"
+                    x="380"
+                    y="273"
+                    text-anchor="middle"
+                  >
+                    FIXED MEMBERSHIP
+                  </text>
+                  <text
+                    class="network-quorum"
+                    x="380"
+                    y="302"
+                    text-anchor="middle"
+                  >
+                    3 of 5
+                  </text>
+                </svg>
+                <div
+                  class="node-controls"
+                  id="nodeControls"
+                  role="group"
+                  aria-label="Inspect a node"
+                ></div>
+              </div>
+              <div class="network-legend">
+                <span><i class="lime"></i>Append / heartbeat</span
+                ><span><i class="blue"></i>Vote</span
+                ><span><i class="muted-dot"></i>Reply</span
+                ><span><i class="fault"></i>Cut link</span
+                ><span class="tick-note"
+                  >Time is measured in simulation ticks.</span
+                >
+              </div>
+              <div class="fault-bar">
+                <button id="partition">Split network 2 / 3</button
+                ><button id="crashLeader">Crash leader</button
+                ><button id="heal">Restore all</button>
+              </div>
+            </section>
+            <aside class="inspector panel" aria-labelledby="inspectorTitle">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">02 / Node inspector</p>
+                  <h2 id="inspectorTitle">Node 02</h2>
+                </div>
+                <span class="node-state" id="nodeState">Follower</span>
+              </div>
+              <div
+                class="inspector-glyph"
+                id="inspectorGlyph"
+                aria-hidden="true"
+              >
+                <span></span><span></span><span></span>
+              </div>
+              <dl class="node-facts" id="nodeFacts"></dl>
+              <p class="inspector-explanation" id="nodeExplanation"></p>
+              <div class="node-actions">
+                <button id="nodeConnection">Isolate node</button
+                ><button id="nodePower">Crash node</button>
+              </div>
+            </aside>
+            <section class="journal panel" aria-labelledby="logTitle">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">03 / Replicated log</p>
+                  <h2 id="logTitle">Same prefix. Different views.</h2>
+                </div>
+                <span class="small-note"
+                  >Solid: committed / outline: pending</span
+                >
+              </div>
+              <div class="log-scroll">
+                <div id="logs" class="log-grid"></div>
+              </div>
+              <form id="writeForm" class="write-form">
+                <label class="command-label"
+                  >Client command<input
+                    id="command"
+                    maxlength="64"
+                    value="SET region=cape-town"
+                    autocomplete="off" /></label
+                ><label>Send to<select id="writeTarget"></select></label
+                ><button id="submitWrite" type="submit">
+                  Submit write <span aria-hidden="true">↗</span>
+                </button>
+              </form>
+              <p class="write-note">
+                Accepted writes remain pending until a leader receives three
+                matching acknowledgements. Term barriers are protocol entries.
+              </p>
+            </section>
+            <section class="timeline panel" aria-labelledby="timelineTitle">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">04 / Event journal</p>
+                  <h2 id="timelineTitle">The sequence matters.</h2>
+                </div>
+                <button
+                  id="export"
+                  class="export-button"
+                  title="Export the current simulation snapshot"
+                >
+                  Export JSON
+                </button>
+              </div>
+              <ol id="events"></ol>
+            </section>
+          </div>
+          <p id="status" class="status-message" role="status">
+            Ready. Play to begin an election, or step through one tick at a
+            time.
+          </p>
+        </section>
+        <section class="explanation">
+          <div>
+            <p class="eyebrow">What to try</p>
+            <h2>Make the minority<br /><em>lose the argument.</em></h2>
+          </div>
+          <ol>
+            <li>
+              <span>01</span>
+              <div>
+                <h3>Establish a leader.</h3>
+                <p>
+                  Play until a candidate receives three votes. Submit a command
+                  and watch matching log entries become committed.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <h3>Split the network.</h3>
+                <p>
+                  The split places the current leader with one other node. It
+                  can accept a write locally, but it cannot commit a new entry
+                  alone.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <h3>Restore the links.</h3>
+                <p>
+                  The majority can elect a leader in a higher term. After
+                  reconnection, conflicting uncommitted entries are replaced
+                  while the committed prefix stays intact.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </section>
+      </main>
+      <footer>
+        <a href="https://cactuscash.github.io/saoodwilliams-com/"
+          >Sa'ood Williams / Portfolio</a
+        >
+        <p>
+          Educational Raft-style simulation. All five nodes run in this browser.
+        </p>
+        <a href="https://raft.github.io/raft.pdf" target="_blank" rel="noopener"
+          >Algorithm reference</a
+        >
+      </footer>
+    </div>
+  </body>
+</html>

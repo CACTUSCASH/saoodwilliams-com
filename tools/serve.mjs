@@ -10,6 +10,7 @@ const types = {
   ".jpeg": "image/jpeg",
   ".png": "image/png",
   ".svg": "image/svg+xml",
+  ".pdf": "application/pdf",
   ".docx":
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 };
