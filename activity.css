@@ -23,6 +23,10 @@
   justify-content: space-between;
   gap: 24px;
 }
+.activity-heading {
+  min-width: 0;
+  max-width: 620px;
+}
 .activity-kicker {
   margin: 0 0 9px;
   font:
@@ -37,6 +41,13 @@
   line-height: 1.2;
   letter-spacing: -1px;
   margin: 0;
+}
+.activity-intro {
+  max-width: 520px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
 }
 .activity-range {
   display: flex;
@@ -61,22 +72,40 @@
   gap: 8px 28px;
   margin: 26px 0 22px;
 }
-.activity-summary p {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 0;
+.activity-stat {
+  display: flex;
+  min-width: 132px;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 15px 13px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--panel) 34%, transparent);
 }
-.activity-summary strong {
+.activity-stat strong {
   color: var(--text);
   font-size: 23px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
-  margin-right: 5px;
+  line-height: 1;
 }
-.activity-summary > span {
+.activity-stat span,
+.activity-stat small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+.activity-stat small {
+  color: var(--faint);
+  font-size: 10px;
+}
+.activity-window {
   margin-left: auto;
+  align-self: center;
   color: var(--faint);
   font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
 }
 .activity-calendar-wrap {
   width: 100%;
@@ -289,9 +318,12 @@
   }
   .activity-top {
     align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
   }
   .activity-range {
     gap: 14px;
+    align-self: flex-start;
   }
   .activity-range button {
     font-size: 12px;
@@ -301,12 +333,22 @@
     font-size: 9px;
   }
   .activity-summary {
-    gap: 4px 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 8px;
     margin: 20px 0 16px;
   }
-  .activity-summary > span {
+  .activity-stat {
+    min-width: 0;
+    padding: 11px 12px 12px;
+  }
+  .activity-window {
+    grid-column: 1 / -1;
     width: 100%;
     margin: 4px 0 0;
+    text-align: left;
+    white-space: normal;
   }
   .activity-calendar td,
   .activity-calendar button {

@@ -196,11 +196,11 @@ export async function initActivity(container, options = {}) {
     };
   }
   container.removeAttribute("aria-busy");
-  let range = 365,
+  let range = 90,
     days = selectRange(snapshot, range),
     selected = days.at(-1).date;
   const $ = (selector) => container.querySelector(selector);
-  container.innerHTML = `<div class="activity-top"><div><p class="activity-kicker">GITHUB / ACTIVITY</p><h3 id="${prefix}-title">A year of visible work.</h3></div><div class="activity-range" role="group" aria-label="Contribution date range"><button type="button" data-range="365" aria-pressed="true">${uiIcon("calendar", "control-icon")}365 days</button><button type="button" data-range="90" aria-pressed="false">${uiIcon("calendar", "control-icon")}90 days</button></div></div><div class="activity-summary" aria-live="polite"></div><div class="activity-calendar-wrap"><table class="activity-calendar" role="grid" aria-labelledby="${prefix}-title" aria-describedby="${prefix}-instructions"></table></div><div class="activity-bottom"><p id="${prefix}-instructions" class="activity-instructions">Select a date to inspect activity. Use arrow keys to move.</p><div class="activity-legend" aria-label="Contribution intensity from less to more"><span>Less</span>${[0, 1, 2, 3, 4].map((level) => `<i data-level="${level}" aria-hidden="true"></i>`).join("")}<span>More</span></div></div><div class="activity-day-detail"><div class="activity-selected" aria-live="polite" aria-atomic="true"></div><div class="activity-day-controls"><button type="button" data-day="previous" aria-label="Select previous day">${uiIcon("previous", "control-icon")}</button><button type="button" data-day="next" aria-label="Select next day">${uiIcon("next", "control-icon")}</button><a class="activity-day-link" target="_blank" rel="noreferrer">Open on GitHub ${uiIcon("external", "control-icon")}</a></div></div><div class="activity-source"><p>Commits, issues, pull requests, and other public GitHub activity.</p><p>Last synced <time datetime="${escape(snapshot.fetchedAt)}">${displayDate(snapshot.fetchedAt.slice(0, 10))}</time>. <a href="${escape(snapshot.source)}" target="_blank" rel="noreferrer">Open source data</a></p></div>`;
+  container.innerHTML = `<div class="activity-top"><div class="activity-heading"><p class="activity-kicker">GITHUB / ACTIVITY</p><h3 id="${prefix}-title">Recent work, in the open.</h3><p class="activity-intro">A focused view of the latest public build cycle, with each day linked to its source.</p></div><div class="activity-range" role="group" aria-label="Contribution date range"><button type="button" data-range="365" aria-pressed="false">${uiIcon("calendar", "control-icon")}365 days</button><button type="button" data-range="90" aria-pressed="true">${uiIcon("calendar", "control-icon")}90 days</button></div></div><div class="activity-summary" aria-live="polite"></div><div class="activity-calendar-wrap"><table class="activity-calendar" role="grid" aria-labelledby="${prefix}-title" aria-describedby="${prefix}-instructions"></table></div><div class="activity-bottom"><p id="${prefix}-instructions" class="activity-instructions">Select a date to inspect activity. Use arrow keys to move.</p><div class="activity-legend" aria-label="Contribution intensity from less to more"><span>Less</span>${[0, 1, 2, 3, 4].map((level) => `<i data-level="${level}" aria-hidden="true"></i>`).join("")}<span>More</span></div></div><div class="activity-day-detail"><div class="activity-selected" aria-live="polite" aria-atomic="true"></div><div class="activity-day-controls"><button type="button" data-day="previous" aria-label="Select previous day">${uiIcon("previous", "control-icon")}</button><button type="button" data-day="next" aria-label="Select next day">${uiIcon("next", "control-icon")}</button><a class="activity-day-link" target="_blank" rel="noreferrer">Open on GitHub ${uiIcon("external", "control-icon")}</a></div></div><div class="activity-source"><p>Commits, issues, pull requests, and other public GitHub activity.</p><p>Last synced <time datetime="${escape(snapshot.fetchedAt)}">${displayDate(snapshot.fetchedAt.slice(0, 10))}</time>. <a href="${escape(snapshot.source)}" target="_blank" rel="noreferrer">Open source data</a></p></div>`;
   function select(date, focus = false) {
     const index = days.findIndex((day) => day.date === date);
     if (index < 0) return;
@@ -231,10 +231,14 @@ export async function initActivity(container, options = {}) {
   function render() {
     days = selectRange(snapshot, range);
     const stats = summarize(days),
+      peak = days.reduce(
+        (best, day) => (day.count > best.count ? day : best),
+        days[0],
+      ),
       columns = calendarColumns(days);
     if (!days.some((day) => day.date === selected)) selected = days.at(-1).date;
     $(".activity-summary").innerHTML =
-      `<p><strong>${stats.total.toLocaleString("en-GB")}</strong> contributions</p><p><strong>${stats.activeDays}</strong> active days</p><span>${displayDate(days[0].date)} to ${displayDate(days.at(-1).date)}</span>`;
+      `<div class="activity-stat"><strong>${stats.total.toLocaleString("en-GB")}</strong><span>contributions</span></div><div class="activity-stat"><strong>${stats.activeDays}</strong><span>active days</span></div><div class="activity-stat"><strong>${peak.count.toLocaleString("en-GB")}</strong><span>peak day</span><small>${displayDate(peak.date)}</small></div><span class="activity-window">${displayDate(days[0].date)} to ${displayDate(days.at(-1).date)}</span>`;
     const months = [];
     columns.forEach((week, index) => {
       const date =

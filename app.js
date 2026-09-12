@@ -69,7 +69,7 @@ function applyTheme(theme) {
     `Switch to ${theme === "dark" ? "light" : "dark"} theme`,
   );
   $('meta[name="theme-color"]').content =
-    theme === "dark" ? "#151515" : "#f3f1eb";
+    theme === "dark" ? "#171614" : "#f2efe9";
 }
 applyTheme(read("sw-theme") === "light" ? "light" : "dark");
 $("#theme").onclick = () => {
@@ -360,13 +360,45 @@ document.addEventListener("keydown", (event) => {
   }
 });
 $("#copyEmail").onclick = async () => {
+  copyEmail();
+};
+async function copyEmail() {
   try {
     await navigator.clipboard.writeText("saoodwilliams321@gmail.com");
     toast("Email copied.");
   } catch {
     toast("saoodwilliams321@gmail.com");
   }
-};
+}
+const chatPanel = $("#chatPanel");
+const chatTrigger = $("#chatTrigger");
+const chatClose = $("#chatClose");
+let chatReturnFocus = chatTrigger;
+function setChat(open) {
+  if (open) chatReturnFocus = document.activeElement;
+  chatPanel.hidden = !open;
+  chatTrigger.setAttribute("aria-expanded", String(open));
+  chatTrigger.classList.toggle("is-open", open);
+  if (open) chatPanel.querySelector(".chat-route")?.focus();
+  else chatReturnFocus?.focus?.();
+}
+chatTrigger.onclick = () => setChat(chatPanel.hidden);
+chatClose.onclick = () => setChat(false);
+$("#chatCopyEmail").onclick = copyEmail;
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !chatPanel.hidden) {
+    event.preventDefault();
+    setChat(false);
+  }
+});
+document.addEventListener("click", (event) => {
+  if (
+    !chatPanel.hidden &&
+    !chatPanel.contains(event.target) &&
+    !chatTrigger.contains(event.target)
+  )
+    setChat(false);
+});
 
 let repos = projects.map((p) => ({
   name: p.repo,
@@ -428,6 +460,33 @@ async function refreshRepos() {
 }
 refreshRepos();
 initActivity($("#githubActivity"));
+
+const pageViewApi = "https://page-views-api.ratneshc.com/api/v1";
+const pageViewSite = "cactuscash.github.io";
+const pageViewPath = "/saoodwilliams-com/";
+async function refreshProfileViews() {
+  if (location.hostname !== pageViewSite) return;
+  const target = $("#profileViews");
+  if (!target) return;
+  try {
+    const query = `site=${encodeURIComponent(pageViewSite)}&path=${encodeURIComponent(pageViewPath)}`;
+    await fetch(`${pageViewApi}/track?${query}`, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    });
+    const response = await fetch(`${pageViewApi}/views?${query}`, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!response.ok) throw Error();
+    const data = await response.json();
+    if (!Number.isSafeInteger(data.views) || data.views < 0) throw Error();
+    target.querySelector(".profile-views-value").textContent =
+      data.views.toLocaleString("en-GB");
+    target.hidden = false;
+  } catch {}
+}
+setTimeout(refreshProfileViews, 1200);
 
 const sectionObserver = new IntersectionObserver(
   (entries) => {
