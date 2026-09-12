@@ -18,13 +18,40 @@
       content="Open the demos. Inspect the decisions. Read the source."
     />
     <meta
-      property="og:image"
-      content="https://cactuscash.github.io/saoodwilliams-com/assets/portrait.png"
+      property="og:url"
+      content="https://cactuscash.github.io/saoodwilliams-com/"
     />
-    <meta property="og:image:alt" content="Portrait of Sa'ood Williams" />
-    <meta property="og:image:width" content="1254" />
-    <meta property="og:image:height" content="1254" />
+    <meta property="og:site_name" content="Sa'ood Williams" />
+    <meta
+      property="og:image"
+      content="https://cactuscash.github.io/saoodwilliams-com/og.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="Sa'ood Williams, full-stack developer"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Sa'ood Williams | Full-stack systems builder"
+    />
+    <meta
+      name="twitter:description"
+      content="Open the demos. Inspect the decisions. Read the source."
+    />
+    <meta
+      name="twitter:image"
+      content="https://cactuscash.github.io/saoodwilliams-com/og.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Sa'ood Williams, full-stack developer"
+    />
+    <meta name="author" content="Sa'ood Williams" />
     <link
       rel="canonical"
       href="https://cactuscash.github.io/saoodwilliams-com/"
@@ -40,6 +67,25 @@
     <link rel="stylesheet" href="professional.css" />
     <link rel="stylesheet" href="credentials.css" />
     <link rel="stylesheet" href="activity.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Sa'ood Williams",
+        "url": "https://cactuscash.github.io/saoodwilliams-com/",
+        "image": "https://cactuscash.github.io/saoodwilliams-com/assets/portrait-1254.jpg",
+        "jobTitle": "Full-stack developer",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Cape Town",
+          "addressCountry": "ZA"
+        },
+        "sameAs": [
+          "https://github.com/CACTUSCASH",
+          "https://www.linkedin.com/in/sa%E2%80%99ood-williams-17bb96378/"
+        ]
+      }
+    </script>
     <script type="module" src="app.js"></script>
   </head>
   <body>
@@ -131,15 +177,38 @@
               aria-pressed="false"
               aria-describedby="portraitHint"
             >
-              <img
-                class="portrait-base"
-                src="assets/portrait.png"
-                width="1254"
-                height="1254"
-                alt="Sa'ood Williams wearing glasses and a black blazer"
-                fetchpriority="high"
-                decoding="async"
-              />
+              <picture>
+                <source
+                  media="(max-width: 600px)"
+                  type="image/webp"
+                  srcset="assets/portrait-900.webp"
+                />
+                <source type="image/avif" srcset="assets/portrait.avif" />
+                <source type="image/webp" srcset="assets/portrait.webp" />
+                <source
+                  media="(max-width: 600px)"
+                  srcset="assets/portrait-640.jpg"
+                />
+                <source
+                  media="(max-width: 1100px)"
+                  srcset="assets/portrait-960.jpg"
+                />
+                <img
+                  class="portrait-base"
+                  src="assets/portrait-1254.jpg"
+                  srcset="
+                    assets/portrait-640.jpg   640w,
+                    assets/portrait-960.jpg   960w,
+                    assets/portrait-1254.jpg 1254w
+                  "
+                  sizes="(max-width: 600px) min(350px, calc(100vw - 40px)), (max-width: 1100px) 44vw, 520px"
+                  width="1254"
+                  height="1254"
+                  alt="Sa'ood Williams wearing glasses and a black blazer"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              </picture>
             </button>
             <figcaption class="portrait-caption">
               <span>Sa'ood / Cape Town</span

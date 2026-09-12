@@ -213,7 +213,7 @@ export class PortraitRenderer {
  */
 export function createPortraitEffect(
   button,
-  { imageUrl, reducedMotion = false, onState } = {},
+  { imageUrl, reducedMotion = false, onState, grid = 240 } = {},
 ) {
   const base = button?.querySelector("img.portrait-base");
   if (!base)
@@ -425,7 +425,7 @@ export function createPortraitEffect(
         powerPreference: "low-power",
       });
       if (!gl) throw new Error("WebGL2 unavailable.");
-      renderer = new PortraitRenderer(gl, textureImage, 240);
+      renderer = new PortraitRenderer(gl, textureImage, grid);
       unavailable = false;
       resize();
       emitState();
@@ -512,11 +512,12 @@ export function createPortraitEffect(
   });
   listen(window, "pageshow", request);
 
-  const source = new URL(
-    imageUrl || base.currentSrc || base.src,
-    document.baseURI,
-  ).href;
-  textureImage = base.src === source ? base : new Image();
+  const baseSource = base.currentSrc || base.src;
+  const source = new URL(imageUrl || baseSource, document.baseURI).href;
+  const renderedSource = new URL(baseSource, document.baseURI).href;
+  // Reuse the responsive image already decoded by the browser. Supplying an
+  // explicit imageUrl still opts into a separate texture source.
+  textureImage = renderedSource === source ? base : new Image();
   if (textureImage !== base) {
     textureImage.crossOrigin = "anonymous";
     textureImage.src = source;

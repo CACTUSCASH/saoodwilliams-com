@@ -235,18 +235,27 @@ export function initTimeline(target) {
   mount.innerHTML = `
     <div class="section-title professional-heading">
       <div><p class="eyebrow">WORK / EXPERIENCE</p><h2>From platform work<br>to edge cases.</h2></div>
-      <p>At Cipher30 I build and run an online education platform. The projects below isolate the parts I keep coming back to: shared state, failures, rendering, and data.</p>
+      <p>At Cipher30 I own the work around an online education platform: product UI, services, data, releases, member access, and first-line support.</p>
     </div>
     <ol class="experience-track">
       <li class="experience-entry">
         <div class="experience-date"><span class="experience-marker" aria-hidden="true"></span><span>JAN 2024</span><span>TO PRESENT</span><span class="experience-kind">Self-employed</span></div>
         <div class="experience-content">
           <div class="experience-role"><div><h3>Founder & Full-Stack Developer</h3><a class="experience-company" href="https://cipher30mentorship.com" target="_blank" rel="noopener noreferrer">Cipher30 ${uiIcon("external", "control-icon")}</a></div><span class="experience-location">Cape Town / Remote</span></div>
-          <p>I work across the product: Next.js, React, and TypeScript in the interface, Node and SQLite in the backend, plus hosting, DNS, deployments, and support.</p>
+          <p>I develop and operate the platform end to end. I ship the Next.js, React, and TypeScript interface, build Node.js services and SQLite-backed automation, and handle hosting, DNS, deployments, and first-line support.</p>
           <div class="experience-tags" aria-label="Technologies used"><span>Next.js</span><span>React</span><span>TypeScript</span><span>Node.js</span><span>SQLite</span></div>
+          <div class="experience-scope" aria-label="Cipher30 areas of ownership">
+            <div class="experience-scope-heading"><span class="experience-scope-label">OWNED SURFACE</span><p>One role across four connected layers.</p></div>
+            <div class="experience-scope-grid">
+              <article class="experience-scope-item"><span class="experience-scope-index">01</span>${uiIcon("interface", "experience-scope-icon")}<h4>Product</h4><p>Next.js, React, and TypeScript interface work.</p></article>
+              <article class="experience-scope-item"><span class="experience-scope-index">02</span>${uiIcon("backend", "experience-scope-icon")}<h4>Services</h4><p>Node.js services, SQLite data, and Discord automation.</p></article>
+              <article class="experience-scope-item"><span class="experience-scope-index">03</span>${uiIcon("delivery", "experience-scope-icon")}<h4>Release</h4><p>Hosting, domains, DNS, and deployments.</p></article>
+              <article class="experience-scope-item"><span class="experience-scope-index">04</span>${uiIcon("systems", "experience-scope-icon")}<h4>Member path</h4><p>Lead capture, pipeline tracking, paid-member roles, and support.</p></article>
+            </div>
+          </div>
           <details class="experience-details">
             <summary><span>What I shipped</span><span class="experience-toggle" aria-hidden="true"></span></summary>
-            <div class="experience-notes"><article><h4>Performance on iOS Safari</h4><p>Removed a conflicting scroll library, moved carousel updates onto requestAnimationFrame, and isolated frequent clock updates.</p></article><article><h4>Lead capture and community access</h4><p>Built a Node.js and discord.js v14 bot with SQLite for source attribution, pipeline tracking, and paid community roles.</p></article></div>
+            <div class="experience-notes"><article><span class="experience-note-label">PERFORMANCE / IOS SAFARI</span><h4>Removed scroll contention.</h4><p>Removed a conflicting scroll library, moved carousel updates onto requestAnimationFrame, and isolated frequent clock updates.</p></article><article><span class="experience-note-label">OPERATIONS / DISCORD</span><h4>Connected lead capture and access.</h4><p>Built a Node.js and discord.js v14 bot with SQLite for source attribution, pipeline tracking, and paid-member role commands.</p></article></div>
           </details>
         </div>
       </li>

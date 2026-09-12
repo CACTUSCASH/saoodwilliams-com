@@ -100,7 +100,9 @@ const previewObserver = new IntersectionObserver(
         frame.src = frame.dataset.src;
     }
   },
-  { rootMargin: "250px" },
+  // Keep the first frame close enough to feel immediate while avoiding a
+  // six-iframe burst when a recruiter lands on the page.
+  { rootMargin: "140px" },
 );
 const frameVisibility = new IntersectionObserver(
   (entries) => {
@@ -182,9 +184,52 @@ $$("[data-filter]").forEach(
 
 const dialog = $("#caseStudy");
 let currentCase = null;
-function renderCasePanel(tab) {
+function projectUrlState() {
+  const url = new URL(location.href);
+  const id = url.searchParams.get("project");
+  const project = projects.find((item) => item.id === id);
+  if (!project) return null;
+  const validTabs = [
+    "overview",
+    "engineering",
+    ...(project.demo ? ["demo"] : []),
+  ];
+  return {
+    id: project.id,
+    tab: validTabs.includes(url.searchParams.get("view"))
+      ? url.searchParams.get("view")
+      : "overview",
+  };
+}
+function writeProjectUrl(id, tab = "overview", mode = "push") {
+  const url = new URL(location.href);
+  url.searchParams.set("project", id);
+  if (tab === "overview") url.searchParams.delete("view");
+  else url.searchParams.set("view", tab);
+  const state = {
+    ...(history.state && typeof history.state === "object"
+      ? history.state
+      : {}),
+    portfolioProject: id,
+    portfolioView: tab,
+  };
+  history[`${mode}State`](state, "", `${url.pathname}${url.search}${url.hash}`);
+}
+function clearProjectUrl() {
+  const url = new URL(location.href);
+  if (!url.searchParams.has("project") && !url.searchParams.has("view")) return;
+  url.searchParams.delete("project");
+  url.searchParams.delete("view");
+  history.replaceState(
+    history.state,
+    "",
+    `${url.pathname}${url.search}${url.hash}`,
+  );
+}
+function renderCasePanel(tab, syncUrl = true) {
   const p = currentCase;
   if (!p) return;
+  if (syncUrl && dialog.open) writeProjectUrl(p.id, tab, "replace");
   $$(".case-tabs button").forEach((button) => {
     const active = button.dataset.tab === tab;
     button.classList.toggle("active", active);
@@ -200,15 +245,19 @@ function renderCasePanel(tab) {
   else
     panel.innerHTML = `<iframe class="case-demo" src="${p.demo}" title="${esc(p.name)} interactive demo" allow="clipboard-write"></iframe><p class="case-note">The demo is embedded here. Open it full screen for the complete workspace.</p>`;
 }
-function openCase(id, tab = "overview") {
+function openCase(id, tab = "overview", { updateUrl = true } = {}) {
   const p = projects.find((p) => p.id === id);
   if (!p) return;
+  const wasOpen = dialog.open;
+  const validTabs = ["overview", "engineering", ...(p.demo ? ["demo"] : [])];
+  tab = validTabs.includes(tab) ? tab : "overview";
+  if (updateUrl) writeProjectUrl(p.id, tab);
   currentCase = p;
   $("#caseType").textContent = p.type;
   $("#caseContent").innerHTML =
     `<h2 id="caseTitle">${esc(p.name)}</h2><p>${esc(p.summary)}</p><div class="case-tabs" role="tablist" aria-label="Project details">${["overview", "engineering", ...(p.demo ? ["demo"] : [])].map((t) => `<button id="case-tab-${t}" role="tab" data-tab="${t}" aria-controls="casePanel">${{ overview: `${uiIcon("notes", "control-icon")}Why it exists`, engineering: `${uiIcon("source", "control-icon")}Inside the build`, demo: `${uiIcon("play", "control-icon")}Run the demo` }[t]}</button>`).join("")}</div><div class="case-panel" id="casePanel" role="tabpanel" tabindex="0"></div><div class="case-links"><a class="button primary" href="${githubBase + p.repo}" target="_blank" rel="noopener">Read the source ${uiIcon("source", "control-icon")}</a>${p.demo ? `<a class="button" href="${p.demo}">Open demo full screen ${uiIcon("external", "control-icon")}</a>` : ""}</div>`;
-  renderCasePanel(tab);
-  dialog.showModal();
+  renderCasePanel(tab, false);
+  if (!wasOpen) dialog.showModal();
   dialog.scrollTop = 0;
 }
 document.addEventListener("click", (event) => {
@@ -241,6 +290,17 @@ $(".close-dialog").onclick = () => dialog.close();
 dialog.addEventListener("close", () => {
   $("#caseContent").replaceChildren();
   currentCase = null;
+  clearProjectUrl();
+});
+addEventListener("popstate", () => {
+  const state = projectUrlState();
+  if (!state) {
+    if (dialog.open) dialog.close();
+    return;
+  }
+  if (dialog.open && currentCase?.id === state.id)
+    renderCasePanel(state.tab, false);
+  else openCase(state.id, state.tab, { updateUrl: false });
 });
 for (const d of $$("dialog"))
   d.addEventListener("click", (event) => {
@@ -408,8 +468,12 @@ addEventListener(
 );
 updateScroll();
 
+const portraitGrid =
+  matchMedia("(max-width: 600px)").matches || navigator.connection?.saveData
+    ? 192
+    : 240;
 const portraitEffect = createPortraitEffect($("#portraitReveal"), {
-  imageUrl: "assets/portrait.png",
+  grid: portraitGrid,
   reducedMotion: reduced,
   onState: ({ ready, pinned, paused: effectPaused, unavailable }) => {
     $("#portraitHint").textContent = unavailable
@@ -444,3 +508,8 @@ reduced.addEventListener("change", (event) => {
   }
 });
 applyMotion();
+const sharedProject = projectUrlState();
+if (sharedProject)
+  requestAnimationFrame(() =>
+    openCase(sharedProject.id, sharedProject.tab, { updateUrl: false }),
+  );

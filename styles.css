@@ -470,6 +470,15 @@ h1 em {
   height: 100%;
   object-fit: cover;
 }
+.portrait-frame picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.portrait-frame picture img {
+  width: 100%;
+  height: 100%;
+}
 .portrait-particles {
   position: absolute;
   inset: 0;
