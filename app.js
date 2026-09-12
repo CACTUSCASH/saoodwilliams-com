@@ -108,7 +108,7 @@ const previewSizes = new ResizeObserver((entries) => {
 $("#projectList").innerHTML = featured
   .map(
     (p) =>
-      `<article class="project" data-category="${p.category}" id="project-${p.id}" style="--screen:${p.screen}"><div class="project-visual"><div class="project-screen"><iframe title="${p.name} preview" data-src="${p.demo}?preview=1" tabindex="-1" aria-hidden="true" inert loading="lazy"></iframe></div><button class="preview-open" data-case="${p.id}" data-initial="demo" aria-label="Try ${p.name}">Try project <span class="arrow" aria-hidden="true"></span></button></div><div class="project-info"><p class="project-kicker">${p.type}</p><h3>${p.name}</h3><p class="project-summary">${p.summary}</p><p class="project-detail">${p.detail}</p><div class="tags">${p.tags.map((tag) => `<span>${tag}</span>`).join("")}</div><div class="project-actions"><a href="${p.demo}">Open project <span class="arrow" aria-hidden="true"></span></a><button data-case="${p.id}">Project notes <span class="plus" aria-hidden="true"></span></button><a class="project-source" href="${githubBase + p.repo}" target="_blank" rel="noopener" aria-label="${p.name} source on GitHub">GitHub</a></div></div></article>`,
+      `<article class="project" data-category="${p.category}" id="project-${p.id}" style="--screen:${p.screen}"><div class="project-visual"><div class="project-screen"><iframe title="${p.name} preview" data-src="${p.demo}?preview=1" tabindex="-1" aria-hidden="true" inert loading="lazy"></iframe></div><button class="preview-open" data-case="${p.id}" data-initial="demo" aria-label="Try the ${p.name} demo">Try the demo <span class="arrow" aria-hidden="true"></span></button></div><div class="project-info"><p class="project-kicker">${p.type}</p><h3>${p.name}</h3><p class="project-summary">${p.summary}</p><p class="project-detail">${p.detail}</p><div class="tags">${p.tags.map((tag) => `<span>${tag}</span>`).join("")}</div><div class="project-actions"><a href="${p.demo}">Open demo <span class="arrow" aria-hidden="true"></span></a><button data-case="${p.id}">Build notes <span class="plus" aria-hidden="true"></span></button><a class="project-source" href="${githubBase + p.repo}" target="_blank" rel="noopener" aria-label="${p.name} source on GitHub">Read source</a></div></div></article>`,
   )
   .join("");
 $$(".project-screen").forEach((el) => {
@@ -140,7 +140,7 @@ $("#sourceProjects").innerHTML = projects
   .filter((p) => !p.demo)
   .map(
     (p, i) =>
-      `<article class="source-row reveal"><span class="source-index">${String(i + featured.length + 1).padStart(2, "0")}</span><div><h3>${p.name}</h3><p>${p.summary}</p></div><span class="source-stack">${p.tags.join(" / ")}</span><button data-case="${p.id}" aria-label="Read about ${p.name}"><span class="arrow" aria-hidden="true"></span></button></article>`,
+      `<article class="source-row reveal"><span class="source-index">${String(i + featured.length + 1).padStart(2, "0")}</span><div><h3>${p.name}</h3><p>${p.summary}</p></div><span class="source-stack">${p.tags.join(" / ")}</span><button data-case="${p.id}" aria-label="Open build notes for ${p.name}"><span class="arrow" aria-hidden="true"></span></button></article>`,
   )
   .join("");
 $$("[data-filter]").forEach(
@@ -179,11 +179,11 @@ function renderCasePanel(tab) {
   const panel = $("#casePanel");
   panel.setAttribute("aria-labelledby", `case-tab-${tab}`);
   if (tab === "overview")
-    panel.innerHTML = `<h3>The idea</h3><p>${esc(p.challenge)}</p><h3>What you can do</h3><ul>${p.features.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>`;
+    panel.innerHTML = `<h3>Why I built it</h3><p>${esc(p.challenge)}</p><h3>Try the behavior</h3><ul>${p.features.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>`;
   else if (tab === "engineering")
-    panel.innerHTML = `<div class="case-diagram" aria-label="${esc(p.diagram.join(" to "))}">${p.diagram.map((x) => `<span>${esc(x)}</span>`).join('<i aria-hidden="true"></i>')}</div><h3>How it works</h3><p>${esc(p.architecture)}</p><h3>What was checked</h3><p>${esc(p.validation)}</p><h3>Scope</h3><p>${esc(p.limits)}</p>`;
+    panel.innerHTML = `<div class="case-diagram" aria-label="${esc(p.diagram.join(" to "))}">${p.diagram.map((x) => `<span>${esc(x)}</span>`).join('<i aria-hidden="true"></i>')}</div><h3>How it works</h3><p>${esc(p.architecture)}</p><h3>What I checked</h3><p>${esc(p.validation)}</p><h3>Boundaries</h3><p>${esc(p.limits)}</p>`;
   else
-    panel.innerHTML = `<iframe class="case-demo" src="${p.demo}" title="${esc(p.name)} interactive demo" allow="clipboard-write"></iframe><p class="case-note">The demo runs here. Open it in its own page for more room.</p>`;
+    panel.innerHTML = `<iframe class="case-demo" src="${p.demo}" title="${esc(p.name)} interactive demo" allow="clipboard-write"></iframe><p class="case-note">The demo is embedded here. Open it full screen for the complete workspace.</p>`;
 }
 function openCase(id, tab = "overview") {
   const p = projects.find((p) => p.id === id);
@@ -191,7 +191,7 @@ function openCase(id, tab = "overview") {
   currentCase = p;
   $("#caseType").textContent = p.type;
   $("#caseContent").innerHTML =
-    `<h2 id="caseTitle">${esc(p.name)}</h2><p>${esc(p.summary)}</p><div class="case-tabs" role="tablist" aria-label="Project details">${["overview", "engineering", ...(p.demo ? ["demo"] : [])].map((t) => `<button id="case-tab-${t}" role="tab" data-tab="${t}" aria-controls="casePanel">${{ overview: "Overview", engineering: "Engineering", demo: "Try it here" }[t]}</button>`).join("")}</div><div class="case-panel" id="casePanel" role="tabpanel" tabindex="0"></div><div class="case-links"><a class="button primary" href="${githubBase + p.repo}" target="_blank" rel="noopener">View source <span class="arrow" aria-hidden="true"></span></a>${p.demo ? `<a class="button" href="${p.demo}">Open full demo <span class="arrow" aria-hidden="true"></span></a>` : ""}</div>`;
+    `<h2 id="caseTitle">${esc(p.name)}</h2><p>${esc(p.summary)}</p><div class="case-tabs" role="tablist" aria-label="Project details">${["overview", "engineering", ...(p.demo ? ["demo"] : [])].map((t) => `<button id="case-tab-${t}" role="tab" data-tab="${t}" aria-controls="casePanel">${{ overview: "Why it exists", engineering: "Inside the build", demo: "Run the demo" }[t]}</button>`).join("")}</div><div class="case-panel" id="casePanel" role="tabpanel" tabindex="0"></div><div class="case-links"><a class="button primary" href="${githubBase + p.repo}" target="_blank" rel="noopener">Read the source <span class="arrow" aria-hidden="true"></span></a>${p.demo ? `<a class="button" href="${p.demo}">Open demo full screen <span class="arrow" aria-hidden="true"></span></a>` : ""}</div>`;
   renderCasePanel(tab);
   dialog.showModal();
   dialog.scrollTop = 0;
@@ -242,13 +242,13 @@ for (const d of $$("dialog"))
 $("#quickOverview").onclick = () => $("#overview").showModal();
 $("#closeOverview").onclick = () => $("#overview").close();
 const commands = [
-  ["Selected work", "#work", "Section"],
-  ["About Sa'ood", "#about", "Section"],
+  ["Working software", "#work", "Section"],
+  ["How I work", "#about", "Section"],
   ["Experience", "#experience", "Section"],
   ["Technology stack", "#technology", "Section"],
-  ["Certifications", "#credentials", "Section"],
-  ["GitHub archive", "#github", "Section"],
-  ["Get in touch", "#contact", "Section"],
+  ["Verified training", "#credentials", "Section"],
+  ["Source and activity", "#github", "Section"],
+  ["Contact", "#contact", "Section"],
   ...featured.map((p) => [p.name, p.demo, "Demo"]),
   ["Download CV (PDF)", "Saood-Williams-CV.pdf", "Document"],
   ["Download CV (Word)", "Saood-Williams-CV.docx", "Document"],
@@ -262,7 +262,7 @@ function renderCommands() {
         ([name, href, type]) =>
           `<a class="command-option" href="${href}">${esc(name)}<small>${type}</small></a>`,
       )
-      .join("") || "<p>No matches. Try a project name.</p>";
+      .join("") || "<p>No matches. Try a section or project.</p>";
 }
 function openNav() {
   if ($("dialog[open]")) return;
@@ -312,7 +312,7 @@ function renderRepos() {
       .slice(0, limit)
       .map(
         (r) =>
-          `<a class="github-repo" href="${esc(r.html_url)}" target="_blank" rel="noopener"><h3>${esc(r.name)}<span class="arrow" aria-hidden="true"></span></h3><p>${esc(cleanCopy(r.description || "Source code, setup, and documentation on GitHub."))}</p><span class="repo-language">${esc(r.language || "Source code")}<span>${typeof r.stargazers_count === "number" ? `${r.stargazers_count} ${r.stargazers_count === 1 ? "star" : "stars"}` : "Public source"}</span></span></a>`,
+          `<a class="github-repo" href="${esc(r.html_url)}" target="_blank" rel="noopener"><h3>${esc(r.name)}<span class="arrow" aria-hidden="true"></span></h3><p>${esc(cleanCopy(r.description || "Repository details and setup on GitHub."))}</p><span class="repo-language">${esc(r.language || "Source code")}<span>${typeof r.stargazers_count === "number" ? `${r.stargazers_count} ${r.stargazers_count === 1 ? "star" : "stars"}` : "Public source"}</span></span></a>`,
       )
       .join("") ||
     '<p class="repo-empty">No repositories match that search.</p>';
@@ -348,7 +348,7 @@ async function refreshRepos() {
     renderRepos();
   } catch {
     $("#githubStatus").textContent =
-      "Selected repositories / live refresh unavailable";
+      "GitHub refresh unavailable / showing selected repositories";
   }
 }
 refreshRepos();

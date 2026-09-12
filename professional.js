@@ -19,14 +19,14 @@ const technologies = [
   {
     id: "interface",
     name: "Interface",
-    description: "What people see and use.",
+    description: "The controls, canvases, and screens people touch.",
     items: [
       {
         id: "javascript",
         name: "JavaScript",
-        title: "The browser as a workspace.",
+        title: "Small browser systems, composed in modules.",
         description:
-          "Native modules, browser events, and small state models power the interactive projects. Each interface gives the underlying model room to be inspected.",
+          "Native modules, browser events, and small state models power the interactive projects. The screen stays close enough to the model to be explained.",
         projects: ["orbit", "prism"],
         proof:
           "Orbit validates task state before saving. Prism separates CSV parsing and aggregation from its charts.",
@@ -34,9 +34,9 @@ const technologies = [
       {
         id: "react",
         name: "React",
-        title: "Components with a clear job.",
+        title: "Screens with a job to do.",
         description:
-          "React handles application screens and interactive controls, with server concerns kept outside the presentation layer.",
+          "React handles the screens and controls that need to change. Server concerns stay outside the presentation layer, where they can be tested on their own.",
         projects: ["ledger", "shader"],
         proof:
           "Freelance Ledger uses Next.js Server Actions. Shader Play connects React controls to GPU shader uniforms.",
@@ -44,9 +44,9 @@ const technologies = [
       {
         id: "typescript",
         name: "TypeScript",
-        title: "Explicit contracts, fewer guesses.",
+        title: "Types at the boundaries.",
         description:
-          "Types describe application data and the boundaries between forms, domain logic, and server operations.",
+          "Types describe the data moving between forms, domain logic, and server operations before a request reaches the database.",
         projects: ["headers", "ledger"],
         proof:
           "Headerwatch isolates its grading module. Ledger represents monetary amounts in integer minor units.",
@@ -54,9 +54,9 @@ const technologies = [
       {
         id: "next",
         name: "Next.js",
-        title: "From screen to server.",
+        title: "One request path, end to end.",
         description:
-          "Application routing, server operations, and account access come together in source projects built around Next.js.",
+          "Next.js ties application routes to server operations and account access without hiding the data boundary.",
         projects: ["ledger", "headers"],
         proof:
           "Both repositories include account-based features backed by Supabase. Running them requires a Supabase configuration.",
@@ -64,9 +64,9 @@ const technologies = [
       {
         id: "svg",
         name: "SVG",
-        title: "A drawing you can work with.",
+        title: "Graphics with a data model.",
         description:
-          "SVG makes diagrams and charts part of the interface, with editable geometry, meaningful interaction, and exportable output.",
+          "SVG turns diagrams and charts into real interface objects with editable geometry, keyboard input, and exportable output.",
         projects: ["canvas", "prism"],
         proof:
           "Canvas Rooms exports the real diagram as SVG. Prism draws its charts from the imported and filtered dataset.",
@@ -76,14 +76,14 @@ const technologies = [
   {
     id: "backend",
     name: "Server & data",
-    description: "Where state becomes durable.",
+    description: "Where inputs are checked and state is kept.",
     items: [
       {
         id: "node",
         name: "Node.js",
-        title: "A small, inspectable backend.",
+        title: "Keep the backend close to the model.",
         description:
-          "Local HTTP APIs validate writes, run shared domain logic, and expose the state used by the browser.",
+          "Local HTTP APIs validate writes, run the same domain logic as the browser, and expose state that can be inspected after a restart.",
         projects: ["relay", "canvas"],
         proof:
           "Relay runs the same execution engine in Node and the browser. Canvas Rooms can stream persisted operations over SSE.",
@@ -91,9 +91,9 @@ const technologies = [
       {
         id: "sqlite",
         name: "SQLite",
-        title: "State that survives a restart.",
+        title: "A restart should not erase the work.",
         description:
-          "SQLite stores validated application data locally. The public demos use browser storage; the repositories include the optional Node servers.",
+          "SQLite stores validated application data locally. The hosted demos use browser storage, while the repositories include optional Node servers for durable state.",
         projects: ["orbit", "canvas"],
         proof:
           "Server tests restart the process and check that saved boards and canvas operations can be recovered.",
@@ -101,9 +101,9 @@ const technologies = [
       {
         id: "postgres",
         name: "PostgreSQL",
-        title: "Data with an account boundary.",
+        title: "Account-scoped data, enforced in the database.",
         description:
-          "PostgreSQL backs account-scoped application records, with database access rules as part of the application design.",
+          "PostgreSQL backs account-scoped records, with access rules treated as part of the application design rather than a later patch.",
         projects: ["ledger", "headers"],
         proof:
           "Freelance Ledger uses Row Level Security to separate account data. Headerwatch saves authenticated scan history.",
@@ -111,9 +111,9 @@ const technologies = [
       {
         id: "supabase",
         name: "Supabase",
-        title: "Identity and storage together.",
+        title: "Sign-in tied to the record.",
         description:
-          "Supabase Auth and PostgreSQL connect sign-in to the records each account can access.",
+          "Supabase Auth and PostgreSQL connect a sign-in to the records that account is allowed to read and write.",
         projects: ["ledger", "headers"],
         proof:
           "Email-link sign-in and account-scoped records are implemented in source. These features require configured Supabase credentials.",
@@ -123,14 +123,14 @@ const technologies = [
   {
     id: "systems",
     name: "Systems & graphics",
-    description: "Work beneath the interface.",
+    description: "Workers, shaders, schedulers, and shared state.",
     items: [
       {
         id: "webgl",
         name: "WebGL / GLSL",
-        title: "Let the GPU do the drawing.",
+        title: "Put the pixels on the GPU.",
         description:
-          "Shader programs turn time, coordinates, and pointer input into pixels and particle motion.",
+          "Shader programs turn time, coordinates, and pointer input into pixels and particle motion without asking the CPU to draw each point.",
         projects: ["spectra", "shader"],
         proof:
           "Spectra keeps the last valid program after a compile error, cleans up failed resources, and pauses rendering when hidden.",
@@ -138,9 +138,9 @@ const technologies = [
       {
         id: "workers",
         name: "Web Workers",
-        title: "Keep the interface responsive.",
+        title: "Run search away from the main thread.",
         description:
-          "Path searches run in a module worker while the browser displays their actual visited order and result.",
+          "Path searches run in a module worker while the browser animates the actual visited cells and final route.",
         projects: ["atlas"],
         proof:
           "A* and Dijkstra are checked against an independent shortest-path implementation across 120 seeded maps.",
@@ -148,9 +148,9 @@ const technologies = [
       {
         id: "algorithms",
         name: "Algorithms",
-        title: "Make the rules visible.",
+        title: "Turn system rules into a trace.",
         description:
-          "Deterministic models let a visitor reproduce a search or a failed election, change one condition, and compare the outcome.",
+          "Deterministic models let a visitor reproduce a search or a failed election, change one condition, and see why the outcome changes.",
         projects: ["quorum", "atlas"],
         proof:
           "Quorum checks election safety and committed prefixes through 60 seeded fault schedules. It is an educational simulation in one browser.",
@@ -158,9 +158,9 @@ const technologies = [
       {
         id: "collaboration",
         name: "Shared state",
-        title: "Edits that arrive out of order.",
+        title: "Converge after concurrent edits.",
         description:
-          "Field-level operations use logical clocks and stable tie-breaking to bring diagram state into agreement across tabs.",
+          "Field-level operations use logical clocks and stable tie-breaking to bring diagram state into agreement when messages arrive out of order.",
         projects: ["canvas"],
         proof:
           "Tests vary delivery order, clock ties, deletion, and replay. The public demo shares between same-origin tabs in one browser profile.",
@@ -170,14 +170,14 @@ const technologies = [
   {
     id: "delivery",
     name: "Delivery",
-    description: "How the work holds up.",
+    description: "Tests and tooling that keep changes shippable.",
     items: [
       {
         id: "testing",
         name: "Testing",
-        title: "Check the behavior that matters.",
+        title: "Test the failure paths.",
         description:
-          "Tests challenge invalid inputs, interrupted execution, persistence, and the invariants each project relies on.",
+          "Tests challenge invalid inputs, interrupted execution, persistence, and the invariants each project relies on when the happy path disappears.",
         projects: ["canvas", "quorum"],
         proof:
           "Canvas checks convergence and SSE replay after persistence. Quorum injects partitions, crashes, and competing writes.",
@@ -185,9 +185,9 @@ const technologies = [
       {
         id: "actions",
         name: "GitHub Actions",
-        title: "Checks alongside the source.",
+        title: "Every change gets a check.",
         description:
-          "Repository workflows keep validation close to the code being changed.",
+          "Repository workflows keep validation beside the code being changed, so a result is visible before a feature is called finished.",
         projects: ["ledger", "headers"],
         proof:
           "Both source repositories include automated checks. The public repository is the place to inspect the workflow and its latest run.",
@@ -195,9 +195,9 @@ const technologies = [
       {
         id: "docker",
         name: "Docker",
-        title: "A repeatable application setup.",
+        title: "A clean start on another machine.",
         description:
-          "A container configuration documents the application runtime and provides a consistent starting point for running the project.",
+          "A container configuration documents the runtime and gives another developer a consistent starting point for running the project.",
         projects: ["ledger"],
         proof:
           "Freelance Ledger includes Docker configuration. Supabase and other application environment values still need to be supplied.",
@@ -220,18 +220,18 @@ export function initTimeline(target) {
   if (!mount) return;
   mount.innerHTML = `
     <div class="section-title professional-heading">
-      <div><p class="eyebrow">EXPERIENCE</p><h2>Building, then<br>building on it.</h2></div>
-      <p>Running a platform, solving the problems around it, and taking those lessons into new software.</p>
+      <div><p class="eyebrow">EXPERIENCE</p><h2>From the platform<br>to the edge cases.</h2></div>
+      <p>I develop and operate an online education platform, then turn the hard parts into small systems you can open, test, and inspect.</p>
     </div>
     <ol class="experience-track">
       <li class="experience-entry">
         <div class="experience-date"><span class="experience-marker" aria-hidden="true"></span><span>JAN 2024</span><span>TO PRESENT</span><span class="experience-kind">Self-employed</span></div>
         <div class="experience-content">
           <div class="experience-role"><div><h3>Founder & Full-Stack Developer</h3><a class="experience-company" href="https://cipher30mentorship.com" target="_blank" rel="noopener noreferrer">Cipher30 <span aria-hidden="true">↗</span></a></div><span class="experience-location">Cape Town / Remote</span></div>
-          <p>I develop and operate an online education platform, from its Next.js, React, and TypeScript interface to hosting, DNS, deployments, and support.</p>
+          <p>At Cipher30, I work from the Next.js, React, and TypeScript interface through hosting, DNS, deployments, support, and the tools that bring users into the community.</p>
           <div class="experience-tags" aria-label="Technologies used"><span>Next.js</span><span>React</span><span>TypeScript</span><span>Node.js</span><span>SQLite</span></div>
           <details class="experience-details">
-            <summary><span>Selected work</span><span class="experience-toggle" aria-hidden="true"></span></summary>
+            <summary><span>What I shipped</span><span class="experience-toggle" aria-hidden="true"></span></summary>
             <div class="experience-notes"><article><h4>Performance on iOS Safari</h4><p>Removed a conflicting scroll library, moved carousel updates onto requestAnimationFrame, and isolated frequent clock updates.</p></article><article><h4>Lead capture and community access</h4><p>Built a Node.js and discord.js v14 bot with SQLite for source attribution, pipeline tracking, and paid community roles.</p></article></div>
           </details>
         </div>
@@ -239,12 +239,12 @@ export function initTimeline(target) {
       <li class="experience-entry">
         <div class="experience-date"><span class="experience-marker" aria-hidden="true"></span><span>SEP 2026</span><span class="experience-kind">Independent projects</span></div>
         <div class="experience-content">
-          <div class="experience-role"><div><h3>Interactive software projects</h3><span class="experience-company">Personal development work</span></div><span class="experience-location">Open source</span></div>
-          <p>A collection of working applications and engineering studies, covering shared editing, workflow execution, consensus, graphics, and pathfinding.</p>
+          <div class="experience-role"><div><h3>Independent software projects</h3><span class="experience-company">Personal builds / open source</span></div><span class="experience-location">Open source</span></div>
+          <p>Open source experiments that make hard behavior visible: multi-tab merge, workflow traces, Raft elections, shader compilation, and pathfinding.</p>
           <div class="experience-project-links">${projectLink("canvas")}${projectLink("quorum")}${projectLink("relay")}</div>
           <details class="experience-details">
-            <summary><span>Engineering focus</span><span class="experience-toggle" aria-hidden="true"></span></summary>
-            <div class="experience-notes"><article><h4>Working interfaces</h4><p>Each featured project runs in the browser. Source repositories include implementation notes, tests, and the limits of the hosted demo.</p></article><article><h4>Inspectable behavior</h4><p>Changes merge across tabs in Canvas Rooms. Quorum Lab exposes elections and log entries. Relay Workflows records branches, inputs, and retry attempts.</p></article></div>
+            <summary><span>What the projects expose</span><span class="experience-toggle" aria-hidden="true"></span></summary>
+            <div class="experience-notes"><article><h4>Open in the browser</h4><p>Each featured project runs in the browser. Source repositories include implementation notes, tests, and the limits of the hosted demo.</p></article><article><h4>Follow the state</h4><p>Changes merge across tabs in Canvas Rooms. Quorum Lab exposes elections and log entries. Relay Workflows records branches, inputs, and retry attempts.</p></article></div>
           </details>
         </div>
       </li>
@@ -252,7 +252,7 @@ export function initTimeline(target) {
 }
 
 function projectEvidence(project) {
-  return `<article class="stack-evidence-project"><div class="stack-evidence-type">${escapeHTML(project.demo ? "RUNNING DEMO" : "SOURCE PROJECT")}</div><h4>${escapeHTML(project.name)}</h4><p>${escapeHTML(project.summary)}</p><div class="stack-evidence-links">${project.demo ? `<a href="${escapeHTML(project.demo)}">Open project <span aria-hidden="true">↗</span></a>` : ""}<a href="${escapeHTML(githubBase + project.repo)}" target="_blank" rel="noopener noreferrer">Source code <span aria-hidden="true">↗</span></a></div></article>`;
+  return `<article class="stack-evidence-project"><div class="stack-evidence-type">${escapeHTML(project.demo ? "RUNNING DEMO" : "SOURCE PROJECT")}</div><h4>${escapeHTML(project.name)}</h4><p>${escapeHTML(project.summary)}</p><div class="stack-evidence-links">${project.demo ? `<a href="${escapeHTML(project.demo)}">Open demo <span aria-hidden="true">↗</span></a>` : ""}<a href="${escapeHTML(githubBase + project.repo)}" target="_blank" rel="noopener noreferrer">Read source <span aria-hidden="true">↗</span></a></div></article>`;
 }
 
 export function initTechnologyStack(target) {
@@ -262,7 +262,7 @@ export function initTechnologyStack(target) {
   let activeCategory = 0;
   let activeTechnology = 0;
   mount.innerHTML = `
-    <div class="section-title professional-heading"><div><p class="eyebrow">TECHNOLOGIES</p><h2>Follow the stack.</h2></div><p>Choose a technology to see where it appears in the work, what it does, and the source behind it.</p></div>
+    <div class="section-title professional-heading"><div><p class="eyebrow">TECHNOLOGIES</p><h2>See the stack in action.</h2></div><p>Pick a tool. Trace it into a project, then open the source that proves how it is used.</p></div>
     <div class="stack-explorer">
       <div class="stack-layers" role="tablist" aria-label="Technology categories" aria-orientation="vertical">${technologies.map((category, index) => `<button type="button" role="tab" class="stack-layer" id="${prefix}-tab-${index}" aria-selected="${index === 0}" aria-controls="${prefix}-panel" tabindex="${index === 0 ? 0 : -1}" data-stack-category="${index}"><span class="stack-layer-number" aria-hidden="true">0${index + 1}</span><span><strong>${escapeHTML(category.name)}</strong><small>${escapeHTML(category.description)}</small></span><span class="stack-layer-arrow" aria-hidden="true">↗</span></button>`).join("")}</div>
       <div class="stack-panel" id="${prefix}-panel" role="tabpanel" aria-labelledby="${prefix}-tab-0" tabindex="0"><div class="stack-technologies" role="group" aria-label="Technologies in the selected category"></div><div class="stack-detail"></div></div>
@@ -281,7 +281,7 @@ export function initTechnologyStack(target) {
       .forEach((button, index) =>
         button.setAttribute("aria-pressed", String(index === activeTechnology)),
       );
-    detail.innerHTML = `<div class="stack-detail-heading"><span class="stack-selected-label">${escapeHTML(technology.name)}</span><span class="stack-project-count">${technology.projects.length} ${technology.projects.length === 1 ? "project" : "projects"}</span></div><h3>${escapeHTML(technology.title)}</h3><p class="stack-description">${escapeHTML(technology.description)}</p><div class="stack-evidence">${technology.projects.map((id) => projectEvidence(projectById.get(id))).join("")}</div><div class="stack-proof"><span class="stack-proof-label">IN THE IMPLEMENTATION</span><p>${escapeHTML(technology.proof)}</p></div>`;
+    detail.innerHTML = `<div class="stack-detail-heading"><span class="stack-selected-label">${escapeHTML(technology.name)}</span><span class="stack-project-count">${technology.projects.length} ${technology.projects.length === 1 ? "project" : "projects"}</span></div><h3>${escapeHTML(technology.title)}</h3><p class="stack-description">${escapeHTML(technology.description)}</p><div class="stack-evidence">${technology.projects.map((id) => projectEvidence(projectById.get(id))).join("")}</div><div class="stack-proof"><span class="stack-proof-label">IN THE SOURCE</span><p>${escapeHTML(technology.proof)}</p></div>`;
     if (announce)
       status.textContent = `${technology.name}: ${technology.projects.length} ${technology.projects.length === 1 ? "project" : "projects"} shown.`;
   }

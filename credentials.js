@@ -109,11 +109,11 @@ export function initCredentials(container) {
       <p class="credential-count" role="status"></p>
     </div>
     <div class="credential-grid"></div>
-    <button class="text-button credential-more" type="button">View all 21 certificates <span class="plus" aria-hidden="true"></span></button>
+    <button class="text-button credential-more" type="button">Show all 21 records <span class="plus" aria-hidden="true"></span></button>
     <dialog class="credential-dialog" aria-labelledby="credentialTitle">
-      <div class="dialog-bar"><span class="eyebrow">Course completion</span><button type="button" class="icon-button" data-close-credential aria-label="Close certificate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
+      <div class="dialog-bar"><span class="eyebrow">Verified course</span><button type="button" class="icon-button" data-close-credential aria-label="Close certificate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
       <div class="credential-sheet"></div>
-      <div class="credential-dialog-footer"><span>Open the issuer's record to verify this completion.</span><a class="button primary credential-verify" target="_blank" rel="noopener">View credential <span class="arrow" aria-hidden="true"></span></a></div>
+      <div class="credential-dialog-footer"><span>Open the issuer's record to verify the title, recipient, date, and credential ID.</span><a class="button primary credential-verify" target="_blank" rel="noopener">Open verification <span class="arrow" aria-hidden="true"></span></a></div>
     </dialog>`;
   const grid = container.querySelector(".credential-grid"),
     more = container.querySelector(".credential-more"),
@@ -129,7 +129,7 @@ export function initCredentials(container) {
       .map(
         (
           item,
-        ) => `<button type="button" class="credential-card" data-credential="${item.id}" aria-label="View certificate: ${escape(item.title)}">
+        ) => `<button type="button" class="credential-card" data-credential="${item.id}" aria-label="Open credential record: ${escape(item.title)}">
       <span class="credential-card-top"><span>${item.category}</span><span class="credential-number">${String(credentials.indexOf(item) + 1).padStart(2, "0")}</span></span>
       <span class="credential-card-title">${escape(item.title)}</span>
       <span class="credential-card-bottom"><span>Claude Academy<small>September 2026</small></span><span class="credential-open" aria-hidden="true"><span class="arrow"></span></span></span>
@@ -137,7 +137,7 @@ export function initCredentials(container) {
       )
       .join("");
     more.hidden = expanded || matches.length <= 6;
-    more.firstChild.textContent = `View all ${matches.length} certificates `;
+    more.firstChild.textContent = `Show all ${matches.length} records `;
   }
   container.querySelectorAll("[data-credential-filter]").forEach((button) =>
     button.addEventListener("click", () => {

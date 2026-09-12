@@ -11,10 +11,11 @@ export const projects = [
     wash: "#8399b6",
     screen: "#111923",
     summary:
-      "Draw a system together across browser tabs. Move a shape in one view, edit its text in another, and watch the changes meet.",
-    detail: "Open a second tab. Change different fields at the same time.",
+      "Two tabs, one diagram. Edit a shape in one window and watch the operation settle everywhere else.",
+    detail:
+      "Open a second tab, change different fields, and watch both views converge.",
     challenge:
-      "Shared editing needs a consistent answer when changes arrive out of order. Canvas Rooms combines field-level operations so independent edits survive, while explicit tie-breaking and deletion rules keep each tab in agreement.",
+      "I wanted a shared editor where two people could change different fields without one tab quietly winning. Canvas Rooms makes the merge rules visible, so each tab can explain how it reached the same state.",
     features: [
       "Build diagrams with boxes, ellipses, notes, and connectors, then edit text, size, color, and position.",
       "Share a room across same-origin tabs with real presence and live updates.",
@@ -43,10 +44,11 @@ export const projects = [
     wash: "#859879",
     screen: "#0e151d",
     summary:
-      "Split a network and challenge its agreement. Follow elections, competing writes, and the log entries that survive recovery.",
-    detail: "Isolate the leader. See why two votes cannot commit a write.",
+      "Partition five Raft nodes, send competing writes, and watch only the majority survive.",
+    detail:
+      "Isolate a leader, trigger an election, and inspect the log that gets repaired.",
     challenge:
-      "A successful write means more than reaching one server. Quorum makes the majority rule visible, showing how a minority leader can accept a pending write while a new leader commits a different history.",
+      "I built Quorum around a simple question: what should happen to a write that reaches the wrong side of a partition? The lab makes the majority rule visible, including the pending history a new leader must repair.",
     features: [
       "Step through seeded elections, votes, and actual scheduled messages across five nodes.",
       "Partition links, crash or restart processes, and send writes to a selected leader.",
@@ -71,10 +73,11 @@ export const projects = [
     wash: "#b38350",
     screen: "#161718",
     summary:
-      "Build a workflow you can follow. Connect nodes, choose a branch, and inspect what happened at every step.",
-    detail: "Try the retry fixture. Watch the failure recover.",
+      "Connect a few typed nodes, run the graph, and inspect every branch and retry.",
+    detail:
+      "Run the failing HTTP fixture and follow the recovery in the trace.",
     challenge:
-      "A workflow should be easy to inspect when something goes wrong. Relay pairs an editable node graph with a trace that records inputs, outputs, branches, and retry attempts.",
+      "When a workflow fails, the trace is the useful artifact. Relay pairs an editable graph with a run history that records inputs, outputs, branches, and retry attempts.",
     features: [
       "Edit transforms, conditions, delays, and connections in a visual workflow.",
       "Execute the same deterministic engine in the browser or through the Node API.",
@@ -99,10 +102,11 @@ export const projects = [
     wash: "#51444e",
     screen: "#101016",
     summary:
-      "A live studio for fragment shaders. Edit the source, move through the canvas, and see the pixels respond.",
-    detail: "Break a shader. The last valid program keeps running.",
+      "Write a fragment shader, see it compile in place, and keep the last good frame when the new one fails.",
+    detail:
+      "Change the GLSL, introduce an error, and watch the previous program hold.",
     challenge:
-      "Experimenting with graphics should leave room for mistakes. Spectra makes the compiler part of the workflow while keeping a valid image on screen.",
+      "I wanted shader experiments to be forgiving. Spectra puts the compiler in the workflow, but never replaces a working image with a broken one.",
     features: [
       "Explore five original GLSL studies with live time, pointer, scale, and intensity controls.",
       "Compile your edits, inspect shader errors, and keep the last working program.",
@@ -127,10 +131,10 @@ export const projects = [
     wash: "#93aaa0",
     screen: "#f4f7f2",
     summary:
-      "Paint a map and watch a search unfold. Compare three strategies on the same walls, weights, and endpoints.",
-    detail: "Add expensive terrain. See which route each search takes.",
+      "Paint walls and terrain, then watch A*, Dijkstra, and BFS make different decisions.",
+    detail: "Add a costly cell and compare the route each search chooses.",
     challenge:
-      "The final route only tells part of the story. Atlas exposes the cells each algorithm explores, then lets you change the map and compare the result.",
+      "A route is only the final answer. Atlas shows the cells each algorithm explores, then lets you change one wall or weight and compare the reasoning.",
     features: [
       "Paint walls and weighted terrain with pointer or keyboard controls.",
       "Run A*, Dijkstra, or BFS in a worker with pause, step, and speed controls.",
@@ -155,10 +159,11 @@ export const projects = [
     wash: "#9995ae",
     screen: "#16151c",
     summary:
-      "A focused workspace for moving tasks forward. Edit the details, drag between columns, and pick up where you left off.",
-    detail: "Create a task, move it, then reload the board.",
+      "A small kanban board that treats task state like data: editable, searchable, and persistent.",
+    detail:
+      "Create a task, move it, reload the board, and find it where you left it.",
     challenge:
-      "Keep task management useful without burying the board in settings. Orbit gives each task a clear status, priority, and editable context.",
+      "Task boards become noisy when every action opens another panel. Orbit keeps the board direct, with a clear status, priority, and editable context for each task.",
     features: [
       "Create, edit, and delete tasks with descriptions, labels, and priorities.",
       "Move work with drag-and-drop or a keyboard-accessible status control.",
@@ -183,10 +188,11 @@ export const projects = [
     wash: "#b1bbaa",
     screen: "#fff",
     summary:
-      "Bring a CSV into focus. Filter a dataset, explore its revenue, and take the useful rows back out.",
-    detail: "Import the sample CSV and compare its categories.",
+      "Drop in a CSV and trace it from raw rows to a chart you can verify and export.",
+    detail:
+      "Import the sample data, filter a category, and compare the totals.",
     challenge:
-      "Explore a small sales dataset without uploading it to a third-party dashboard. Prism keeps parsing and aggregation local to the browser.",
+      "Dashboards often hide the transformation between a row and a chart. Prism keeps parsing and aggregation local, so the numbers can be followed back to the source file.",
     features: [
       "Import and validate quoted CSV fields, dates, amounts, and order counts.",
       "Filter categories and dates, switch between area and bar charts, and sort records.",
@@ -208,7 +214,7 @@ export const projects = [
     repo: "freelance-ledger",
     tags: ["Next.js", "Supabase"],
     summary:
-      "Multi-currency invoicing with email sign-in and account-scoped data.",
+      "An invoicing ledger for freelancers billing across currencies, with sign-in and account-scoped records.",
     challenge:
       "Keep invoices, paid totals, and outstanding balances separated by account and currency.",
     features: [
@@ -232,7 +238,7 @@ export const projects = [
     repo: "headerwatch",
     tags: ["TypeScript", "PostgreSQL"],
     summary:
-      "HTTP header reports with weighted scoring and saved scan history.",
+      "A security-header checker that turns six HTTP responses into a report you can revisit.",
     challenge:
       "Make missing or weak HTTP security headers easier to understand and revisit.",
     features: [
@@ -255,7 +261,8 @@ export const projects = [
     type: "PARTICLES / SOURCE PROJECT",
     repo: "shader-play",
     tags: ["React Three Fiber", "GLSL"],
-    summary: "A GPU particle playground with custom shaders and live controls.",
+    summary:
+      "A GPU particle playground where React controls drive custom GLSL in real time.",
     challenge:
       "Move particle evolution onto the GPU so the CPU does not recalculate every particle on each frame.",
     features: [
