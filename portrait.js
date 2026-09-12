@@ -43,7 +43,9 @@ void main() {
 
   vec2 distanceToPointer = position.xy - uPointer;
   float influence = exp(-dot(distanceToPointer, distanceToPointer) * 18.0) * uPointerStrength * uAmount;
-  position.xy += normalize(distanceToPointer + vec2(0.0001)) * influence * (0.17 + release * 0.18);
+  vec2 radial = normalize(distanceToPointer + vec2(0.0001));
+  position.xy += radial * influence * (0.035 + release * 0.055);
+  position.xy += vec2(-radial.y, radial.x) * influence * release * 0.065;
   position.z += influence * (0.18 + seed.z * 0.20);
 
   float yaw = (uPointer.x * 0.24 + sin(uTime * 0.22) * 0.035) * uAmount;
@@ -53,7 +55,7 @@ void main() {
   float perspective = 1.0 / (1.0 - position.z * 0.30);
   gl_Position = vec4(position.xy * perspective, -position.z * 0.35, 1.0);
   float cell = max(uResolution.x, uResolution.y) / float(uGrid);
-  gl_PointSize = clamp(cell * mix(1.16, 0.80, uAmount) * perspective, 1.0, 9.0 * uDpr);
+  gl_PointSize = clamp(cell * mix(1.16, 0.98, uAmount) * perspective, 1.0, 9.0 * uDpr);
   vColour = colour + vec3(0.045) * uAmount * (1.0 - luminance);
   vOpacity = 1.0 - paper * smoothstep(0.05, 0.8, uAmount) * 0.985;
   vRoundness = smoothstep(0.0, 0.45, uAmount);
