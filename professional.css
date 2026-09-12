@@ -730,6 +730,14 @@ a.experience-company:hover {
     border-color 180ms ease,
     transform 180ms ease;
 }
+.stack-layer > span {
+  min-width: 0;
+}
+.stack-layer-arrow {
+  min-width: 0;
+  justify-self: end;
+  overflow: hidden;
+}
 .stack-layer:hover {
   background: color-mix(in srgb, var(--panel) 56%, transparent);
   transform: translateX(2px);
@@ -840,16 +848,14 @@ a.experience-company:hover {
     color 180ms ease,
     border-color 180ms ease,
     background 180ms ease,
-    transform 180ms ease,
-    box-shadow 180ms ease;
+    transform 180ms ease;
 }
 .stack-technologies button:hover:not([aria-pressed="true"]) {
   background: color-mix(in srgb, var(--panel) 82%, transparent);
   transform: translateY(-1px);
-  box-shadow: 0 8px 18px -17px var(--accent);
 }
 .stack-technologies button[aria-pressed="true"] {
-  box-shadow: 0 8px 18px -17px var(--accent);
+  border-color: var(--text);
 }
 @media (max-width: 1100px) {
   .stack-layer {

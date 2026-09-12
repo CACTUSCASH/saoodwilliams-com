@@ -1,9 +1,9 @@
 .github-activity {
-  --activity-0: #292927;
-  --activity-1: #62473c;
-  --activity-2: #986348;
-  --activity-3: #d37e53;
-  --activity-4: #ffab80;
+  --activity-0: #2b2925;
+  --activity-1: #58483f;
+  --activity-2: #795f51;
+  --activity-3: #9b6a56;
+  --activity-4: #bd8068;
   margin-top: 54px;
   padding-block: 30px 0;
   border-top: 1px solid var(--line);
@@ -11,11 +11,11 @@
   contain: layout style;
 }
 [data-theme="light"] .github-activity {
-  --activity-0: #e4e0d8;
-  --activity-1: #dbbba4;
-  --activity-2: #bf8868;
-  --activity-3: #a65936;
-  --activity-4: #85351d;
+  --activity-0: #e4dfd7;
+  --activity-1: #d1b7a8;
+  --activity-2: #b88a76;
+  --activity-3: #9d624b;
+  --activity-4: #7e3926;
 }
 .activity-top {
   display: flex;
@@ -398,14 +398,12 @@
     color 180ms ease,
     border-color 180ms ease,
     background 180ms ease,
-    transform 180ms ease,
-    box-shadow 180ms ease;
+    transform 180ms ease;
 }
 .activity-day-controls button:hover:not(:disabled) {
   background: color-mix(in srgb, var(--accent) 12%, var(--panel));
   border-color: color-mix(in srgb, var(--accent) 65%, var(--line));
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px -18px var(--accent);
 }
 .activity-day-controls button:active:not(:disabled) {
   transform: translateY(1px) scale(0.96);
