@@ -11,7 +11,7 @@ const POSTS = [
     slug: "removing-lenis",
     title: "Why I removed Lenis from my production Next.js site",
     excerpt:
-      "How a JavaScript smooth-scroll library was quietly making my iOS scroll worse — and what I replaced it with.",
+      "How a JavaScript smooth-scroll library affected my iOS scrolling, and what I replaced it with.",
     date: "2026-08-10",
     readingTime: "6 min read",
   },

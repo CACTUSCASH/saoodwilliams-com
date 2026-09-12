@@ -2,12 +2,13 @@
   "name": "saoodwilliams-com",
   "version": "1.0.0",
   "private": true,
-  "description": "Sa'ood Williams — personal site + portfolio. Full-stack engineer, Next.js / TypeScript / WebGL, available for contract.",
+  "type": "module",
+  "description": "Sa'ood Williams | personal site and portfolio. Full-stack engineer, Next.js, TypeScript, and WebGL.",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "node tools/serve.mjs",
+    "build": "node tools/check-site.mjs",
+    "start": "node tools/serve.mjs",
+    "legacy:dev": "next dev"
   },
   "dependencies": {
     "next": "15.0.3",

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Atlas is an interactive pathfinding workbench for exploring algorithms, walls, and weighted terrain."
+    />
+    <title>Atlas Pathfinder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./"
+          ><span class="brand-mark" aria-hidden="true"></span><span>atlas</span
+          ><small>PATHFINDER</small></a
+        >
+        <div class="top-status">
+          <span class="status-led" id="statusLed" aria-hidden="true"></span
+          ><span id="mode" role="status">READY TO EXPLORE</span
+          ><span class="separator">/</span
+          ><a
+            href="https://github.com/CACTUSCASH/atlas-pathfinder"
+            target="_blank"
+            rel="noopener"
+            >SOURCE</a
+          >
+        </div>
+      </header>
+      <main>
+        <section class="intro">
+          <div>
+            <p class="eyebrow">ALGORITHM LAB / 01</p>
+            <h1>Make the route<br /><em>visible.</em></h1>
+            <p class="lede">
+              Paint a landscape. Raise the cost of a crossing. Watch three
+              search strategies find their way through the same terrain.
+            </p>
+          </div>
+          <div class="intro-note">
+            <span class="note-line"></span>
+            <p>
+              Change any cell and run it again. Each trail comes from a fresh
+              search of your map.
+            </p>
+          </div>
+        </section>
+        <section class="workspace" aria-label="Pathfinding workspace">
+          <div class="map-panel">
+            <div class="panel-bar">
+              <div>
+                <span class="panel-index" id="mapDimensions"
+                  >28 columns / 18 rows</span
+                >
+                <h2>North ridge</h2>
+              </div>
+              <div class="map-actions">
+                <button id="clearMap">Clear</button
+                ><button id="pan" aria-pressed="false">Pan map</button>
+              </div>
+            </div>
+            <div class="map-wrap" role="region" aria-label="Scrollable map">
+              <div
+                id="grid"
+                class="grid"
+                role="grid"
+                aria-label="Editable pathfinding map"
+                aria-describedby="hint"
+              ></div>
+            </div>
+            <div class="map-footer">
+              <div class="legend">
+                <span><i class="legend-dot start"></i>Start</span
+                ><span><i class="legend-dot end"></i>End</span
+                ><span><i class="legend-dot wall"></i>Wall</span
+                ><span><i class="legend-dot weight"></i>Weighted</span
+                ><span><i class="legend-dot"></i>Expanded</span
+                ><span><i class="legend-dot route"></i>Route</span>
+              </div>
+              <p id="hint">
+                Drag to paint. Arrow keys move, Enter paints. On a phone, use
+                Pan map to scroll.
+              </p>
+            </div>
+            <div class="save-bar">
+              <span id="saveState">Edits are saved in this browser</span
+              ><span id="engine">Local calculation</span>
+            </div>
+          </div>
+          <aside class="controls">
+            <div class="preview-meta" id="previewMeta" hidden>
+              <p class="eyebrow">TERRAIN STUDY / 23</p>
+              <h2>A* path<br /><em>search.</em></h2>
+              <p>Find the lowest-cost route through weighted terrain.</p>
+            </div>
+            <div class="control-group">
+              <p class="eyebrow">TOOL</p>
+              <div class="tool-list" role="group" aria-label="Map editing tool">
+                <button class="tool active" data-tool="wall">
+                  <span class="tool-icon wall-icon"></span
+                  ><span>Paint walls</span><kbd>1</kbd></button
+                ><button class="tool" data-tool="weight">
+                  <span class="tool-icon weight-icon"></span
+                  ><span>Paint weight</span><kbd>2</kbd></button
+                ><button class="tool" data-tool="erase">
+                  <span class="tool-icon erase-icon"></span
+                  ><span>Erase terrain</span><kbd>0</kbd></button
+                ><button class="tool" data-tool="start">
+                  <span class="tool-icon start-icon"></span
+                  ><span>Move start</span><kbd>S</kbd></button
+                ><button class="tool" data-tool="end">
+                  <span class="tool-icon end-icon"></span><span>Move end</span
+                  ><kbd>E</kbd>
+                </button>
+              </div>
+              <label class="select-label weight-label" id="weightLabel" hidden
+                >Cost per weighted cell<select id="weight">
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option selected>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                </select></label
+              >
+            </div>
+            <div class="control-group">
+              <p class="eyebrow">SEARCH STRATEGY</p>
+              <label class="select-label"
+                >Algorithm<select id="algorithm">
+                  <option>A*</option>
+                  <option>Dijkstra</option>
+                  <option>BFS</option>
+                </select></label
+              ><label class="range-label"
+                >Animation speed <output id="speedValue">4x</output
+                ><input id="speed" type="range" min="1" max="10" value="4"
+              /></label>
+              <div class="run-actions">
+                <button class="run-button" id="run">Run search</button
+                ><button
+                  class="square-button"
+                  id="pause"
+                  aria-label="Pause animation"
+                  disabled
+                >
+                  Pause</button
+                ><button
+                  class="square-button"
+                  id="step"
+                  aria-label="Step animation"
+                  disabled
+                >
+                  Step
+                </button>
+              </div>
+            </div>
+            <div class="control-group">
+              <p class="eyebrow">MAP DATA</p>
+              <label class="select-label seed-label"
+                >Terrain seed<input
+                  id="seed"
+                  type="number"
+                  min="0"
+                  max="4294967295"
+                  step="1"
+                  value="23"
+              /></label>
+              <div class="data-actions">
+                <button id="generate">Generate terrain</button
+                ><button id="maze">Generate maze</button>
+              </div>
+              <div class="data-actions">
+                <button id="export">Export map</button
+                ><button id="import">Import map</button
+                ><input
+                  id="file"
+                  type="file"
+                  accept="application/json,.json"
+                  hidden
+                />
+              </div>
+              <button id="compare" class="compare-button">
+                Compare all three algorithms
+              </button>
+            </div>
+            <div class="metrics" id="metrics">
+              <div><span>EXPANDED</span><strong>0</strong></div>
+              <div><span>ROUTE</span><strong>0 cells</strong></div>
+              <div><span>COST</span><strong>0</strong></div>
+              <div><span>ELAPSED</span><strong>0 ms</strong></div>
+            </div>
+          </aside>
+        </section>
+        <section class="comparison" id="comparison" hidden>
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">RESULTS / SAME MAP</p>
+              <h2>Three ways through.</h2>
+            </div>
+            <button id="closeComparison">Close</button>
+          </div>
+          <p class="comparison-note">
+            All costs use the terrain on your map. BFS chooses the fewest steps;
+            A* and Dijkstra choose the lowest terrain cost.
+          </p>
+          <div id="comparisonRows" class="comparison-rows"></div>
+        </section>
+        <section class="notes">
+          <div>
+            <p class="eyebrow">HOW TO READ IT</p>
+            <h2>The cost of<br /><em>getting there.</em></h2>
+          </div>
+          <div class="note-grid">
+            <article>
+              <span class="note-number">01</span>
+              <h3>Frontier</h3>
+              <p>
+                Expanded cells show the order in which the algorithm processes
+                the map.
+              </p>
+            </article>
+            <article>
+              <span class="note-number">02</span>
+              <h3>Terrain</h3>
+              <p>
+                A longer route can cost less. A* and Dijkstra account for the
+                cost of entering each cell.
+              </p>
+            </article>
+            <article>
+              <span class="note-number">03</span>
+              <h3>Tradeoff</h3>
+              <p>
+                Breadth first search minimizes steps. Add expensive terrain to
+                see when that route costs more.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <a href="https://cactuscash.github.io/saoodwilliams-com/"
+          >Sa'ood Williams portfolio</a
+        ><span>Atlas / Algorithm workbench</span
+        ><a
+          href="https://github.com/CACTUSCASH/atlas-pathfinder"
+          target="_blank"
+          rel="noopener"
+          >View source</a
+        >
+      </footer>
+    </div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

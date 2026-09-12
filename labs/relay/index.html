@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Relay is a visual workflow editor. Connect steps, route payloads, and inspect every execution."
+    />
+    <title>Relay | Workflow studio</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#workflow">Skip to workflow</a>
+    <header class="app-header">
+      <a class="brand" href="./" aria-label="Relay home"
+        ><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span
+        >relay<span class="brand-tag">WORKFLOW STUDIO</span></a
+      >
+      <nav aria-label="App navigation">
+        <a href="#workflow" class="active">Editor</a
+        ><a href="#history">Executions</a
+        ><a
+          href="https://github.com/CACTUSCASH/relay-workflows"
+          target="_blank"
+          rel="noreferrer"
+          >Source <span aria-hidden="true">↗</span></a
+        >
+      </nav>
+      <span class="mode" id="mode">Browser demo</span>
+    </header>
+    <main id="workflow">
+      <div class="workspace-heading">
+        <div>
+          <p class="eyebrow">WORKSPACE / AUTOMATIONS</p>
+          <h1 id="workflow-title">Order routing</h1>
+          <p id="workflow-description">Calculate, route, and inspect.</p>
+        </div>
+        <div class="primary-actions">
+          <button id="save" class="secondary">Save workflow</button
+          ><button id="run" class="run-button">
+            <span class="play-icon" aria-hidden="true"></span> Run workflow
+          </button>
+        </div>
+      </div>
+      <div class="editor-shell">
+        <div class="editor-main">
+          <div class="canvas-toolbar">
+            <div class="flow-status">
+              <span class="status-dot"></span
+              ><span id="validation-state">Ready to run</span>
+            </div>
+            <div class="toolbar-controls">
+              <label class="sr-only" for="preset">Workflow preset</label
+              ><select id="preset">
+                <option value="orders">Order routing</option>
+                <option value="leads">Lead qualification</option>
+                <option value="recovery">Retry laboratory</option></select
+              ><button
+                class="icon-button"
+                id="fit"
+                title="Fit workflow to canvas"
+                aria-label="Fit workflow to canvas"
+              >
+                Fit</button
+              ><button
+                class="icon-button"
+                id="add"
+                title="Insert a transform before the final output"
+              >
+                + Step
+              </button>
+            </div>
+          </div>
+          <div class="canvas-viewport" id="canvas-viewport">
+            <div class="canvas-world" id="canvas-world">
+              <svg
+                id="connections"
+                aria-hidden="true"
+                viewBox="0 0 1180 470"
+              ></svg>
+              <div id="nodes"></div>
+              <div class="canvas-caption">
+                <span>EDIT. CONNECT. EXECUTE.</span
+                ><span>Click a node to inspect</span>
+              </div>
+            </div>
+          </div>
+          <div class="canvas-footer">
+            <span
+              ><i class="legend-dot"></i> Completed
+              <i class="legend-dot skipped"></i> Not visited
+              <i class="legend-dot retry"></i> Retried</span
+            ><span id="node-count">6 nodes / 6 connections</span>
+          </div>
+          <section class="execution-panel" aria-label="Execution trace">
+            <div class="panel-heading">
+              <h2>Execution trace <span id="trace-count">0</span></h2>
+              <span id="run-summary">Waiting for a run</span>
+            </div>
+            <div id="trace" class="trace-empty">
+              Your payload has somewhere to go.<br /><span
+                >Run the workflow to follow it through each step.</span
+              >
+            </div>
+          </section>
+        </div>
+        <aside class="inspector">
+          <div class="inspector-tabs">
+            <button class="selected" data-tab="node" aria-pressed="true">
+              Node</button
+            ><button data-tab="input" aria-pressed="false">Input</button
+            ><button data-tab="output" aria-pressed="false">Output</button>
+          </div>
+          <div id="inspector-body"></div>
+        </aside>
+      </div>
+      <section id="history" class="history">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">EVERY EXECUTION LEAVES A TRACE</p>
+            <h2>Recent runs</h2>
+          </div>
+          <button id="export" class="secondary">Export workflow</button>
+        </div>
+        <div id="history-list" class="history-empty">
+          Run a workflow to start its history.
+        </div>
+      </section>
+      <footer>
+        <span>Built by Sa'ood Williams</span
+        ><span
+          >HTTP steps use deterministic fixtures. No external requests are
+          sent.</span
+        ><a href="https://cactuscash.github.io/saoodwilliams-com/"
+          >Portfolio <span aria-hidden="true">↗</span></a
+        >
+      </footer>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

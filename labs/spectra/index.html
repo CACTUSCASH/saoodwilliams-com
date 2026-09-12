@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Spectra Studio is a live WebGL fragment shader workbench."
+    />
+    <title>Spectra Studio</title>
+    <script>
+      if (new URLSearchParams(location.search).get("preview") === "1")
+        document.documentElement.classList.add("preview");
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="./"
+        ><span class="brand-dot"></span><span>spectra</span
+        ><small>SHADER STUDIO</small></a
+      >
+      <div class="top-meta">
+        <span class="led" id="led"></span
+        ><span id="status" role="status" aria-live="polite">READY</span
+        ><span class="divider">/</span
+        ><a
+          href="https://github.com/CACTUSCASH/spectra-studio"
+          target="_blank"
+          rel="noopener"
+          >SOURCE</a
+        >
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">CREATIVE CODE / 02</p>
+          <h1>Make light<br /><em>misbehave.</em></h1>
+          <p class="lede">
+            Five fragment shader studies, rendered on your GPU. Bend the field
+            with your pointer, change the source, and export a frame. A failed
+            compile keeps the previous shader running.
+          </p>
+        </div>
+        <div class="hero-aside">
+          <span class="aside-mark"></span>
+          <p>WebGL2<br />GLSL<br />Pointer input</p>
+        </div>
+      </section>
+      <section class="studio" aria-label="Shader studio workspace">
+        <button
+          id="previewPause"
+          class="preview-pause"
+          aria-label="Pause animation"
+        >
+          Pause
+        </button>
+        <div class="canvas-panel">
+          <div class="canvas-bar">
+            <div>
+              <span class="eyebrow">LIVE CANVAS</span
+              ><strong id="shaderName">Tidal glass</strong>
+            </div>
+            <div class="canvas-actions">
+              <button id="pause">Pause</button
+              ><button id="restart">Restart</button
+              ><button id="exportPng">Export PNG</button>
+            </div>
+          </div>
+          <div class="canvas-wrap">
+            <canvas
+              id="canvas"
+              width="1200"
+              height="760"
+              aria-label="Live shader canvas"
+            ></canvas>
+            <div class="canvas-overlay" id="canvasOverlay" role="status">
+              <strong>WebGL2 required</strong>
+              <p>Your browser could not create a WebGL2 context.</p>
+            </div>
+            <div class="canvas-cursor" id="cursor"></div>
+            <div class="preview-caption">
+              <span>SPECTRA / LIVE GLSL</span
+              ><strong id="previewName">Tidal glass</strong>
+            </div>
+          </div>
+          <div class="canvas-foot">
+            <span id="frameInfo">1200 x 760</span
+            ><span>Move your pointer through the field</span
+            ><span id="compileInfo">Program ready</span>
+          </div>
+        </div>
+        <aside class="inspector">
+          <div class="inspector-section">
+            <div class="section-head">
+              <p class="eyebrow">STUDIES</p>
+              <span id="presetCount">05</span>
+            </div>
+            <div id="presets" class="preset-list"></div>
+          </div>
+          <div class="inspector-section">
+            <div class="section-head">
+              <p class="eyebrow">UNIFORMS</p>
+              <span>LIVE</span>
+            </div>
+            <label class="range"
+              ><span>Scale <output id="scaleValue">1.00</output></span
+              ><input
+                id="scale"
+                type="range"
+                min=".45"
+                max="2.5"
+                step=".01"
+                value="1" /></label
+            ><label class="range"
+              ><span>Intensity <output id="intensityValue">1.00</output></span
+              ><input
+                id="intensity"
+                type="range"
+                min=".2"
+                max="2"
+                step=".01"
+                value="1"
+            /></label>
+          </div>
+          <div class="inspector-section editor-section">
+            <div class="section-head">
+              <p class="eyebrow">FRAGMENT SOURCE</p>
+              <button id="compile">Compile</button>
+            </div>
+            <textarea
+              id="source"
+              spellcheck="false"
+              maxlength="24000"
+              aria-label="Fragment shader source"
+              aria-describedby="editorHelp"
+            ></textarea>
+            <p id="editorHelp" class="editor-help">
+              GLSL 300 ES. Write to outColor. Ctrl or Command + Enter to
+              compile.
+            </p>
+            <div
+              id="error"
+              class="error"
+              role="status"
+              aria-live="polite"
+            ></div>
+            <label class="patch-name"
+              >Patch name<input
+                id="patchName"
+                maxlength="100"
+                value="Tidal glass"
+            /></label>
+            <div class="editor-actions">
+              <button id="save">Save patch</button
+              ><button id="import">Import JSON</button
+              ><button id="exportJson">Export JSON</button
+              ><input
+                id="file"
+                type="file"
+                accept="application/json,.json"
+                hidden
+              />
+            </div>
+          </div>
+        </aside>
+      </section>
+      <section class="saved" id="savedSection" hidden>
+        <div>
+          <p class="eyebrow">YOUR PATCHES</p>
+          <h2>Keep the accidents.</h2>
+        </div>
+        <div id="savedList" class="saved-list"></div>
+      </section>
+      <section class="footnote">
+        <div>
+          <p class="eyebrow">UNDER THE SURFACE</p>
+          <h2>Five studies.<br /><em>One canvas.</em></h2>
+        </div>
+        <p>
+          Each pixel runs the fragment source in the editor. Time, pointer
+          position, scale, and intensity feed into the shader as uniforms. Saved
+          patches stay in this browser; exported JSON includes the source and
+          control values.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <a href="https://cactuscash.github.io/saoodwilliams-com/"
+        >Sa'ood Williams portfolio</a
+      ><span>Open experiments, documented clearly.</span
+      ><a
+        href="https://github.com/CACTUSCASH/spectra-studio"
+        target="_blank"
+        rel="noopener"
+        >View source</a
+      >
+    </footer>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

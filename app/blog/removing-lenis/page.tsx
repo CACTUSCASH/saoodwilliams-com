@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Why I removed Lenis from my production Next.js site",
   description:
-    "How a JavaScript smooth-scroll library was quietly making my iOS scroll worse — and what I replaced it with.",
+    "How a JavaScript smooth-scroll library affected my iOS scrolling, and what I replaced it with.",
 };
 
 export default function Post() {
@@ -18,10 +18,10 @@ export default function Post() {
 
       <article className="prose">
         <p>
-          I ship a Next.js 15 site with a fixed-viewport WebGL background — a React Three
+          I ship a Next.js 15 site with a fixed-viewport WebGL background: a React Three
           Fiber scene with glass materials, real-time bloom, and a rotating cluster of
           objects. On desktop it ran at a solid 60 fps. On iPhone the whole site felt
-          janky when I swiped through it. Not broken, but visibly stuttery — the kind of
+          janky when I swiped through it. It visibly stuttered, the kind of
           thing your brain registers as low quality before your eyes can articulate why.
         </p>
 
@@ -74,7 +74,7 @@ export default function Post() {
             overwriting A with its own value on every frame.
           </li>
           <li>
-            Result: the two momentum systems fight. What you see is a subtle judder — the
+            Result: the two momentum systems fight. What you see is a subtle judder. The
             scroll position doesn't move in the perfectly smooth curve your finger expects.
           </li>
         </ul>
@@ -96,7 +96,7 @@ export default function Post() {
         </p>
 
         <p>The site immediately felt smoother. Not "measurably better in Chrome DevTools"
-          smoother — <em>viscerally</em> smoother. My thumb felt like it was moving the
+          smoother, but visibly smoother. My thumb felt like it was moving the
           page directly, not through a filter.</p>
 
         <p>
@@ -117,7 +117,7 @@ export default function Post() {
         <p>
           Lenis has a real place on desktop-first sites with wheel-heavy interaction,
           where the browser's native wheel-scroll is choppy and JS interpolation genuinely
-          smooths it. But on mobile — and any site where mobile is the dominant surface —
+          smooths it. But on mobile, and any site where mobile is the dominant surface,
           it's actively harmful.
         </p>
 

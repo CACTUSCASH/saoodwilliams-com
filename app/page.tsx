@@ -19,7 +19,7 @@ const PROJECTS = [
   {
     slug: "cinematic-hero",
     title: "Cinematic WebGL Hero",
-    tagline: "Drop-in Next.js hero component — glass materials, real bloom, iOS-smooth.",
+    tagline: "Next.js hero component with glass materials and bloom.",
     stack: ["React Three Fiber", "@react-three/postprocessing", "TypeScript"],
     repo: "https://github.com/cactuscash/nextjs-cinematic-hero",
   },
@@ -125,8 +125,8 @@ export default function Home() {
             <p>
               I completed a Higher Certificate in Information Systems (Cyber Security)
               from Eduvos, with a focus on security. Alongside
-              the coursework I taught myself the modern web stack — Next.js, TypeScript,
-              React, React Three Fiber — and now ship production applications solo.
+              the coursework I taught myself Next.js, TypeScript,
+              React, and React Three Fiber, and now build full-stack applications.
             </p>
             <p>
               I diagnose problems across the whole stack. iOS Safari scroll jank on a
@@ -135,8 +135,8 @@ export default function Home() {
               rendering pipeline that took a manual multi-hour job down to minutes.
             </p>
             <p>
-              I use AI-augmented workflows heavily — Claude Code with MCP integrations for
-              Vercel and GitHub — because that's how modern engineering ships fast in 2026.
+              I use AI-assisted workflows with MCP integrations for
+              Vercel and GitHub to help develop and test projects.
               But I own every architectural decision and can walk through every line I've
               shipped.
             </p>
