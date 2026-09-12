@@ -19,6 +19,21 @@ const cleanCopy = (value) =>
     .replace(/[\u2013\u2014]/g, ", ")
     .replace(/\p{Extended_Pictographic}/gu, "")
     .trim();
+const uiIcon = (name, className = "") => {
+  const icons = {
+    arrow: '<path d="M5 12h13M13 6l6 6-6 6"/>',
+    play: '<path d="m9 6 9 6-9 6Z"/>',
+    notes:
+      '<rect x="6" y="4.5" width="12" height="15" rx="1.5"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+    source: '<path d="m9 7-5 5 5 5M15 7l5 5-5 5M13 4l-2 16"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    download: '<path d="M12 4v10m0 0 4-4m-4 4-4-4M5 19h14"/>',
+    external: '<path d="M13 5h6v6M19 5l-8 8M18 14v5H5V6h5"/>',
+    search: '<circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4.5 4.5"/>',
+    document: '<path d="M7 3.5h7l3 3V20H7zM14 3.5V7h3M9.5 11h5M9.5 14.5h5"/>',
+  };
+  return `<svg class="ui-icon ${className}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${icons[name] || icons.arrow}</svg>`;
+};
 const read = (key) => {
   try {
     return localStorage.getItem(key);
@@ -108,7 +123,7 @@ const previewSizes = new ResizeObserver((entries) => {
 $("#projectList").innerHTML = featured
   .map(
     (p) =>
-      `<article class="project" data-category="${p.category}" id="project-${p.id}" style="--screen:${p.screen}"><div class="project-visual"><div class="project-screen"><iframe title="${p.name} preview" data-src="${p.demo}?preview=1" tabindex="-1" aria-hidden="true" inert loading="lazy"></iframe></div><button class="preview-open" data-case="${p.id}" data-initial="demo" aria-label="Try the ${p.name} demo">Try the demo <span class="arrow" aria-hidden="true"></span></button></div><div class="project-info"><p class="project-kicker">${p.type}</p><h3>${p.name}</h3><p class="project-summary">${p.summary}</p><p class="project-detail">${p.detail}</p><div class="tags">${p.tags.map((tag) => `<span>${tag}</span>`).join("")}</div><div class="project-actions"><a href="${p.demo}">Open demo <span class="arrow" aria-hidden="true"></span></a><button data-case="${p.id}">Build notes <span class="plus" aria-hidden="true"></span></button><a class="project-source" href="${githubBase + p.repo}" target="_blank" rel="noopener" aria-label="${p.name} source on GitHub">Read source</a></div></div></article>`,
+      `<article class="project" data-category="${p.category}" id="project-${p.id}" style="--screen:${p.screen}"><div class="project-visual"><div class="project-screen"><iframe title="${p.name} preview" data-src="${p.demo}?preview=1" tabindex="-1" aria-hidden="true" inert loading="lazy"></iframe></div><button class="preview-open" data-case="${p.id}" data-initial="demo" aria-label="${p.demoAction} in ${p.name}">${p.demoAction} ${uiIcon("play", "control-icon")}</button></div><div class="project-info"><p class="project-kicker">${p.type}</p><h3>${p.name}</h3><p class="project-summary">${p.summary}</p><p class="project-detail">${p.detail}</p><div class="tags">${p.tags.map((tag) => `<span>${tag}</span>`).join("")}</div><div class="project-actions"><a href="${p.demo}">Open demo ${uiIcon("arrow", "control-icon")}</a><button data-case="${p.id}">Build notes ${uiIcon("notes", "control-icon")}</button><a class="project-source" href="${githubBase + p.repo}" target="_blank" rel="noopener" aria-label="${p.name} source on GitHub">Read source ${uiIcon("source", "control-icon")}</a></div></div></article>`,
   )
   .join("");
 $$(".project-screen").forEach((el) => {
@@ -140,7 +155,7 @@ $("#sourceProjects").innerHTML = projects
   .filter((p) => !p.demo)
   .map(
     (p, i) =>
-      `<article class="source-row reveal"><span class="source-index">${String(i + featured.length + 1).padStart(2, "0")}</span><div><h3>${p.name}</h3><p>${p.summary}</p></div><span class="source-stack">${p.tags.join(" / ")}</span><button data-case="${p.id}" aria-label="Open build notes for ${p.name}"><span class="arrow" aria-hidden="true"></span></button></article>`,
+      `<article class="source-row reveal"><span class="source-index">${String(i + featured.length + 1).padStart(2, "0")}</span><div><h3>${p.name}</h3><p>${p.summary}</p></div><span class="source-stack">${p.tags.join(" / ")}</span><button data-case="${p.id}" aria-label="Open build notes for ${p.name}">${uiIcon("notes", "control-icon")}</button></article>`,
   )
   .join("");
 $$("[data-filter]").forEach(
@@ -191,7 +206,7 @@ function openCase(id, tab = "overview") {
   currentCase = p;
   $("#caseType").textContent = p.type;
   $("#caseContent").innerHTML =
-    `<h2 id="caseTitle">${esc(p.name)}</h2><p>${esc(p.summary)}</p><div class="case-tabs" role="tablist" aria-label="Project details">${["overview", "engineering", ...(p.demo ? ["demo"] : [])].map((t) => `<button id="case-tab-${t}" role="tab" data-tab="${t}" aria-controls="casePanel">${{ overview: "Why it exists", engineering: "Inside the build", demo: "Run the demo" }[t]}</button>`).join("")}</div><div class="case-panel" id="casePanel" role="tabpanel" tabindex="0"></div><div class="case-links"><a class="button primary" href="${githubBase + p.repo}" target="_blank" rel="noopener">Read the source <span class="arrow" aria-hidden="true"></span></a>${p.demo ? `<a class="button" href="${p.demo}">Open demo full screen <span class="arrow" aria-hidden="true"></span></a>` : ""}</div>`;
+    `<h2 id="caseTitle">${esc(p.name)}</h2><p>${esc(p.summary)}</p><div class="case-tabs" role="tablist" aria-label="Project details">${["overview", "engineering", ...(p.demo ? ["demo"] : [])].map((t) => `<button id="case-tab-${t}" role="tab" data-tab="${t}" aria-controls="casePanel">${{ overview: `${uiIcon("notes", "control-icon")}Why it exists`, engineering: `${uiIcon("source", "control-icon")}Inside the build`, demo: `${uiIcon("play", "control-icon")}Run the demo` }[t]}</button>`).join("")}</div><div class="case-panel" id="casePanel" role="tabpanel" tabindex="0"></div><div class="case-links"><a class="button primary" href="${githubBase + p.repo}" target="_blank" rel="noopener">Read the source ${uiIcon("source", "control-icon")}</a>${p.demo ? `<a class="button" href="${p.demo}">Open demo full screen ${uiIcon("external", "control-icon")}</a>` : ""}</div>`;
   renderCasePanel(tab);
   dialog.showModal();
   dialog.scrollTop = 0;
@@ -260,9 +275,9 @@ function renderCommands() {
       .filter((c) => c[0].toLowerCase().includes(query))
       .map(
         ([name, href, type]) =>
-          `<a class="command-option" href="${href}">${esc(name)}<small>${type}</small></a>`,
+          `<a class="command-option" href="${href}">${uiIcon(type === "Demo" ? "play" : type === "Document" ? "document" : "arrow", "control-icon")}<span class="command-option-name">${esc(name)}</span><small>${type}</small></a>`,
       )
-      .join("") || "<p>No matches. Try a section or project.</p>";
+      .join("") || "<p>No result. Try a section or project name.</p>";
 }
 function openNav() {
   if ($("dialog[open]")) return;
@@ -312,10 +327,10 @@ function renderRepos() {
       .slice(0, limit)
       .map(
         (r) =>
-          `<a class="github-repo" href="${esc(r.html_url)}" target="_blank" rel="noopener"><h3>${esc(r.name)}<span class="arrow" aria-hidden="true"></span></h3><p>${esc(cleanCopy(r.description || "Repository details and setup on GitHub."))}</p><span class="repo-language">${esc(r.language || "Source code")}<span>${typeof r.stargazers_count === "number" ? `${r.stargazers_count} ${r.stargazers_count === 1 ? "star" : "stars"}` : "Public source"}</span></span></a>`,
+          `<a class="github-repo" href="${esc(r.html_url)}" target="_blank" rel="noopener"><h3>${esc(r.name)}${uiIcon("external", "control-icon")}</h3><p>${esc(cleanCopy(r.description || "Read the repository for setup, tests, and source."))}</p><span class="repo-language">${esc(r.language || "Source code")}<span>${typeof r.stargazers_count === "number" ? `${r.stargazers_count} ${r.stargazers_count === 1 ? "star" : "stars"}` : "Public source"}</span></span></a>`,
       )
       .join("") ||
-    '<p class="repo-empty">No repositories match that search.</p>';
+    '<p class="repo-empty">No repository matched. Try a name, language, or topic.</p>';
   $("#moreRepos").hidden = matches.length <= limit;
 }
 $("#repoSearch").oninput = () => {
@@ -348,7 +363,7 @@ async function refreshRepos() {
     renderRepos();
   } catch {
     $("#githubStatus").textContent =
-      "GitHub refresh unavailable / showing selected repositories";
+      "GitHub is unavailable / showing selected repositories";
   }
 }
 refreshRepos();
@@ -410,7 +425,9 @@ const portraitEffect = createPortraitEffect($("#portraitReveal"), {
 });
 function applyMotion() {
   document.documentElement.classList.toggle("motion-off", paused);
-  $("#footerMotion").textContent = paused ? "Enable motion" : "Disable motion";
+  $("#footerMotion .motion-label").textContent = paused
+    ? "Enable motion"
+    : "Pause preview motion";
   $("#footerMotion").setAttribute("aria-pressed", String(paused));
   for (const frame of $$(".project-screen iframe")) sendFrameMotion(frame);
   portraitEffect.setPaused(paused);

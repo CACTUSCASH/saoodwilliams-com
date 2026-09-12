@@ -95,6 +95,26 @@ const escape = (value) =>
         char
       ],
   );
+const uiIcon = (name, className = "") => {
+  const icons = {
+    all: '<path d="M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h5v5h-5z"/>',
+    development: '<path d="m9 7-5 5 5 5M15 7l5 5-5 5"/>',
+    cloud:
+      '<path d="M7 17h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 10.5 3.5 3.5 0 0 0 7 17Z"/>',
+    ai: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
+    arrow: '<path d="M5 12h13M13 6l6 6-6 6"/>',
+    close: '<path d="m6 6 12 12M6 18 18 6"/>',
+  };
+  return `<svg class="ui-icon ${className}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${icons[name] || icons.arrow}</svg>`;
+};
+const categoryIcon = (category) =>
+  category === "All"
+    ? "all"
+    : category === "Development"
+      ? "development"
+      : category === "Cloud"
+        ? "cloud"
+        : "ai";
 
 export function initCredentials(container) {
   if (!container) return;
@@ -104,16 +124,16 @@ export function initCredentials(container) {
   container.innerHTML = `
     <div class="credential-toolbar">
       <div class="credential-filters" role="group" aria-label="Filter certificates">
-        ${["All", "Development", "Cloud", "AI fluency"].map((name) => `<button type="button" data-credential-filter="${name}" aria-pressed="${name === category}">${name}</button>`).join("")}
+        ${["All", "Development", "Cloud", "AI fluency"].map((name) => `<button type="button" data-credential-filter="${name}" aria-pressed="${name === category}">${uiIcon(categoryIcon(name), "control-icon")}<span>${name}</span></button>`).join("")}
       </div>
       <p class="credential-count" role="status"></p>
     </div>
     <div class="credential-grid"></div>
-    <button class="text-button credential-more" type="button">Show all 21 records <span class="plus" aria-hidden="true"></span></button>
+    <button class="text-button credential-more" type="button">View all 21 records ${uiIcon("arrow", "control-icon")}</button>
     <dialog class="credential-dialog" aria-labelledby="credentialTitle">
-      <div class="dialog-bar"><span class="eyebrow">Verified course</span><button type="button" class="icon-button" data-close-credential aria-label="Close certificate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
+      <div class="dialog-bar"><span class="eyebrow">Verified course</span><button type="button" class="icon-button" data-close-credential aria-label="Close certificate">${uiIcon("close")}</button></div>
       <div class="credential-sheet"></div>
-      <div class="credential-dialog-footer"><span>Open the issuer's record to verify the title, recipient, date, and credential ID.</span><a class="button primary credential-verify" target="_blank" rel="noopener">Open verification <span class="arrow" aria-hidden="true"></span></a></div>
+      <div class="credential-dialog-footer"><span>Open the issuer's record to verify the title, recipient, date, and credential ID.</span><a class="button primary credential-verify" target="_blank" rel="noopener">Verify this record ${uiIcon("external", "control-icon")}</a></div>
     </dialog>`;
   const grid = container.querySelector(".credential-grid"),
     more = container.querySelector(".credential-more"),
@@ -124,7 +144,7 @@ export function initCredentials(container) {
     );
     const visible = expanded ? matches : matches.slice(0, 6);
     container.querySelector(".credential-count").textContent =
-      `${visible.length} of ${matches.length} certificates`;
+      `Showing ${visible.length} of ${matches.length} certificates`;
     grid.innerHTML = visible
       .map(
         (
@@ -132,12 +152,12 @@ export function initCredentials(container) {
         ) => `<button type="button" class="credential-card" data-credential="${item.id}" aria-label="Open credential record: ${escape(item.title)}">
       <span class="credential-card-top"><span>${item.category}</span><span class="credential-number">${String(credentials.indexOf(item) + 1).padStart(2, "0")}</span></span>
       <span class="credential-card-title">${escape(item.title)}</span>
-      <span class="credential-card-bottom"><span>Claude Academy<small>September 2026</small></span><span class="credential-open" aria-hidden="true"><span class="arrow"></span></span></span>
+      <span class="credential-card-bottom"><span>Claude Academy<small>September 2026</small></span><span class="credential-open" aria-hidden="true">${uiIcon("arrow", "control-icon")}</span></span>
     </button>`,
       )
       .join("");
     more.hidden = expanded || matches.length <= 6;
-    more.firstChild.textContent = `Show all ${matches.length} records `;
+    more.firstChild.textContent = `View all ${matches.length} records `;
   }
   container.querySelectorAll("[data-credential-filter]").forEach((button) =>
     button.addEventListener("click", () => {

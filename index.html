@@ -59,7 +59,13 @@
             id="commandTrigger"
             aria-label="Open quick navigation"
           >
-            Jump to <kbd>Ctrl / Cmd K</kbd></button
+            <span
+              class="ui-icon control-icon control-icon-terminal"
+              aria-hidden="true"
+              ><svg viewBox="0 0 24 24" focusable="false">
+                <path d="m5 7 5 5-5 5M13 17h6" /></svg></span
+            ><span class="control-label">Jump to</span>
+            <kbd>Ctrl / Cmd K</kbd></button
           ><button
             class="icon-button"
             id="theme"
@@ -70,7 +76,12 @@
               <path d="M12 5a7 7 0 0 1 0 14Z" fill="currentColor" />
             </svg></button
           ><a class="nav-contact" href="#contact"
-            >Get in touch <span class="arrow" aria-hidden="true"></span
+            >Get in touch
+            <span
+              class="ui-icon control-icon control-icon-arrow"
+              aria-hidden="true"
+              ><svg viewBox="0 0 24 24" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" /></svg></span
           ></a>
         </div>
       </div>
@@ -85,20 +96,30 @@
         </div>
         <div class="hero-grid">
           <div class="hero-copy">
-            <p class="intro">Full-stack developer</p>
+            <p class="intro">Founder / full-stack developer</p>
             <h1>Sa'ood<br />Williams.</h1>
             <p class="hero-description">
-              From education platforms to browser labs for collaboration,
-              consensus, graphics, and data, I build the interface, state model,
-              and server work underneath.
+              I build complete web products, from the first interaction to the
+              data model and server logic behind it. Recent work covers
+              collaborative editors, workflow runs, pathfinding, and GPU
+              graphics.
             </p>
             <div class="hero-actions">
               <a href="#work" class="button primary"
-                >Open the builds
-                <span class="arrow diagonal-down" aria-hidden="true"></span></a
+                >Explore the systems
+                <span
+                  class="ui-icon control-icon control-icon-play"
+                  aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" focusable="false">
+                    <path d="m9 6 9 6-9 6Z" /></svg></span></a
               ><button class="text-button" id="quickOverview">
-                Get the short version
-                <span class="plus" aria-hidden="true"></span>
+                Read the 30-second brief
+                <span
+                  class="ui-icon control-icon control-icon-plus"
+                  aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M12 5v14M5 12h14" /></svg
+                ></span>
               </button>
             </div>
           </div>
@@ -145,13 +166,29 @@
         <div class="work-toolbar">
           <div class="work-filters" role="group" aria-label="Filter projects">
             <button data-filter="all" class="active" aria-pressed="true">
-              All builds</button
+              <span
+                class="filter-glyph filter-glyph-all"
+                aria-hidden="true"
+              ></span
+              >All builds</button
             ><button data-filter="fullstack" aria-pressed="false">
-              Applications</button
+              <span
+                class="filter-glyph filter-glyph-applications"
+                aria-hidden="true"
+              ></span
+              >Applications</button
             ><button data-filter="graphics" aria-pressed="false">
-              Graphics</button
+              <span
+                class="filter-glyph filter-glyph-graphics"
+                aria-hidden="true"
+              ></span
+              >Graphics</button
             ><button data-filter="algorithms" aria-pressed="false">
-              Algorithms
+              <span
+                class="filter-glyph filter-glyph-algorithms"
+                aria-hidden="true"
+              ></span
+              >Algorithms
             </button>
           </div>
           <span class="work-count" id="workCount" role="status"
@@ -171,19 +208,19 @@
           </p></noscript
         >
         <div class="source-work">
-          <p class="eyebrow">OTHER BUILDS / SOURCE ONLY</p>
+          <p class="eyebrow">MORE BUILDS / SOURCE PROJECTS</p>
           <div id="sourceProjects"></div>
         </div>
       </section>
       <section class="about shell section" id="about">
         <div class="about-layout">
           <div class="about-copy reveal">
-            <p class="eyebrow">How I work</p>
+            <p class="eyebrow">The work behind the screen</p>
             <h2>From first screen<br />to last request.</h2>
             <p>
-              I'm Sa'ood, a full-stack developer in Cape Town. I build the part
-              a user sees and the parts they should never have to think about:
-              state, failure, access, and recovery.
+              I'm Sa'ood, a full-stack developer in Cape Town. I work from the
+              interaction outward, modelling state, validating edge cases, and
+              keeping the result easy to inspect.
             </p>
             <p>
               At Cipher30, I develop and operate an online education platform,
@@ -191,16 +228,29 @@
               and support.
             </p>
             <p>
-              My training is a Higher Certificate in Information Systems (Cyber
-              Security) from Eduvos. I'm looking for a team that values clear
-              thinking, useful software, and honest feedback.
+              I hold a Higher Certificate in Information Systems (Cyber
+              Security) from Eduvos. I'm looking for work where I can own
+              features end to end and keep sharpening the engineering behind
+              them.
             </p>
             <div class="about-links">
               <a class="button" href="Saood-Williams-CV.pdf" download
                 >Download CV
-                <span class="arrow diagonal-down" aria-hidden="true"></span></a
+                <span
+                  class="ui-icon control-icon control-icon-download"
+                  aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" focusable="false">
+                    <path
+                      d="M12 4v10m0 0 4-4m-4 4-4-4M5 19h14"
+                    /></svg></span></a
               ><a class="text-button" href="mailto:saoodwilliams321@gmail.com"
-                >Email me <span class="arrow" aria-hidden="true"></span
+                >Email Sa'ood
+                <span
+                  class="ui-icon control-icon control-icon-mail"
+                  aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" focusable="false">
+                    <rect x="4" y="6" width="16" height="12" rx="2" />
+                    <path d="m5 8 7 5 7-5" /></svg></span
               ></a>
             </div>
           </div>
@@ -218,9 +268,10 @@
                 </dd>
               </div>
               <div>
-                <dt>Next step</dt>
+                <dt>Open to</dt>
                 <dd>
-                  A full-stack role or thoughtful contract. Open to remote work.
+                  Full-stack roles and focused contract work. Available for
+                  remote work.
                 </dd>
               </div>
             </dl>
@@ -249,8 +300,8 @@
       <section id="github" class="github shell section">
         <div class="section-title reveal">
           <div>
-            <p class="eyebrow">Source / activity</p>
-            <h2>The code behind the work.</h2>
+            <p class="eyebrow">GitHub / source</p>
+            <h2>Open the source.</h2>
           </div>
           <a
             class="text-button"
@@ -258,7 +309,12 @@
             target="_blank"
             rel="noopener"
             >Browse every repository
-            <span class="arrow" aria-hidden="true"></span
+            <span
+              class="ui-icon control-icon control-icon-external"
+              aria-hidden="true"
+              ><svg viewBox="0 0 24 24" focusable="false">
+                <path d="M13 5h6v6M19 5l-8 8" />
+                <path d="M18 14v5H5V6h5" /></svg></span
           ></a>
         </div>
         <div class="github-toolbar">
@@ -266,7 +322,13 @@
             <span id="githubStatus">Public repositories from GitHub</span>
           </p>
           <label class="search-wrap"
-            ><span>Find a repository</span
+            ><span
+              class="ui-icon control-icon control-icon-search"
+              aria-hidden="true"
+              ><svg viewBox="0 0 24 24" focusable="false">
+                <circle cx="10.5" cy="10.5" r="5.5" />
+                <path d="m15 15 4.5 4.5" /></svg></span
+            ><span class="search-label">Find a repository</span
             ><input
               type="search"
               id="repoSearch"
@@ -276,7 +338,13 @@
         </div>
         <div id="repos" class="repo-grid"></div>
         <button class="button more-repos" id="moreRepos" hidden>
-          Show more repositories <span class="plus" aria-hidden="true"></span>
+          Show more repositories
+          <span
+            class="ui-icon control-icon control-icon-plus"
+            aria-hidden="true"
+            ><svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 5v14M5 12h14" /></svg
+          ></span>
         </button>
         <div id="githubActivity"></div>
       </section>
@@ -295,7 +363,14 @@
           <a href="mailto:saoodwilliams321@gmail.com"
             >saoodwilliams321@gmail.com</a
           ><button class="text-button" id="copyEmail">
-            Copy email <span class="copy-icon" aria-hidden="true"></span>
+            Copy email
+            <span
+              class="ui-icon control-icon control-icon-copy"
+              aria-hidden="true"
+              ><svg viewBox="0 0 24 24" focusable="false">
+                <rect x="8" y="8" width="11" height="11" rx="1.5" />
+                <path d="M16 8V5H5v11h3" /></svg
+            ></span>
           </button>
           <p>Cape Town / GMT+2<br /><span>Remote roles & contracts</span></p>
         </div>
@@ -306,13 +381,30 @@
         >sw<span class="brand-point" aria-hidden="true"></span></a
       ><span>© 2026 Sa'ood Williams</span>
       <div>
-        <button id="footerMotion">Disable preview motion</button
+        <button id="footerMotion">
+          <span
+            class="ui-icon control-icon control-icon-motion"
+            aria-hidden="true"
+            ><svg viewBox="0 0 24 24" focusable="false">
+              <path d="M5 12a7 7 0 0 1 12-5M19 12a7 7 0 0 1-12 5" />
+              <path d="m16 4 1 3-3 1M8 20l-1-3 3-1" /></svg></span
+          ><span class="motion-label">Pause preview motion</span></button
         ><a
           href="https://github.com/CACTUSCASH/saoodwilliams-com"
           target="_blank"
           rel="noopener"
-          >Site source</a
-        ><a href="#home">Back to top</a>
+          >Site source
+          <span
+            class="ui-icon control-icon control-icon-source"
+            aria-hidden="true"
+            ><svg viewBox="0 0 24 24" focusable="false">
+              <path d="m9 7-5 5 5 5M15 7l5 5-5 5M13 4l-2 16" /></svg></span></a
+        ><a href="#home"
+          >Back to top
+          <span class="ui-icon control-icon control-icon-top" aria-hidden="true"
+            ><svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 19V5m-5 5 5-5 5 5" /></svg></span
+        ></a>
       </div>
     </footer>
     <dialog id="caseStudy" aria-labelledby="caseTitle">
@@ -352,7 +444,7 @@
     </dialog>
     <dialog id="overview" aria-labelledby="overviewTitle">
       <div class="dialog-bar">
-        <span class="eyebrow">IN 30 SECONDS</span
+        <span class="eyebrow">THE SHORT VERSION</span
         ><button
           class="icon-button"
           id="closeOverview"
@@ -380,7 +472,7 @@
           </dd>
         </div>
         <div>
-          <dt>Open first</dt>
+          <dt>Start with</dt>
           <dd>
             Canvas Rooms for shared state, Quorum Lab for distributed systems,
             and Spectra for GPU graphics.
@@ -389,10 +481,21 @@
       </dl>
       <div class="overview-links">
         <a class="button primary" href="Saood-Williams-CV.pdf" download
-          >Download CV</a
+          >Download CV
+          <span
+            class="ui-icon control-icon control-icon-download"
+            aria-hidden="true"
+            ><svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 19h14" /></svg></span></a
         ><a class="button" href="mailto:saoodwilliams321@gmail.com"
-          >Email Sa'ood</a
-        >
+          >Email Sa'ood
+          <span
+            class="ui-icon control-icon control-icon-mail"
+            aria-hidden="true"
+            ><svg viewBox="0 0 24 24" focusable="false">
+              <rect x="4" y="6" width="16" height="12" rx="2" />
+              <path d="m5 8 7 5 7-5" /></svg></span
+        ></a>
       </div>
     </dialog>
     <div id="toast" role="status" aria-live="polite"></div>

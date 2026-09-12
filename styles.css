@@ -1993,3 +1993,546 @@ dialog li {
     transition: none !important;
   }
 }
+
+/* The site's controls share one small visual language: a quiet surface, a
+   warm edge, and a clear icon that moves just enough to acknowledge input. */
+.ui-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 1.15em;
+  height: 1.15em;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ui-icon.control-icon,
+.control-icon.ui-icon {
+  width: 1.42rem;
+  height: 1.42rem;
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--line));
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+.ui-icon.control-icon svg,
+.control-icon.ui-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.control-icon-play path:first-child {
+  fill: currentColor;
+  stroke: none;
+}
+.button,
+.text-button,
+.preview-open,
+.nav-contact,
+.icon-button,
+.command-trigger {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+.button::before,
+.text-button::before,
+.preview-open::before,
+.nav-contact::before,
+.icon-button::before,
+.command-trigger::before {
+  position: absolute;
+  z-index: 0;
+  content: "";
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    color-mix(in srgb, var(--accent) 20%, transparent) 48%,
+    transparent 72%
+  );
+  transform: translateX(-125%) skewX(-18deg);
+  transition: transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+.button::after,
+.text-button::after,
+.preview-open::after,
+.nav-contact::after,
+.icon-button::after,
+.command-trigger::after {
+  position: absolute;
+  z-index: 2;
+  content: "";
+  inset: 1px;
+  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.button > *,
+.text-button > *,
+.preview-open > *,
+.nav-contact > *,
+.icon-button > *,
+.command-trigger > * {
+  position: relative;
+  z-index: 1;
+}
+.button:hover,
+.text-button:hover,
+.preview-open:hover,
+.nav-contact:hover,
+.icon-button:hover,
+.command-trigger:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 65%, var(--line));
+  box-shadow: 0 12px 24px -18px
+    color-mix(in srgb, var(--accent) 90%, transparent);
+}
+.button:hover::before,
+.text-button:hover::before,
+.preview-open:hover::before,
+.nav-contact:hover::before,
+.icon-button:hover::before,
+.command-trigger:hover::before {
+  transform: translateX(125%) skewX(-18deg);
+}
+.button:active,
+.text-button:active,
+.preview-open:active,
+.nav-contact:active,
+.icon-button:active,
+.command-trigger:active {
+  transform: translateY(1px) scale(0.985);
+  box-shadow: none;
+}
+.button:hover .control-icon,
+.text-button:hover .control-icon,
+.preview-open:hover .control-icon,
+.nav-contact:hover .control-icon {
+  transform: rotate(-7deg);
+  border-color: currentColor;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.button.primary:hover {
+  filter: none;
+  background: color-mix(in srgb, var(--accent) 91%, white);
+}
+.button.primary .control-icon {
+  border-color: color-mix(in srgb, var(--on) 38%, transparent);
+  background: color-mix(in srgb, var(--on) 10%, transparent);
+}
+.button.primary:hover .control-icon {
+  border-color: currentColor;
+  background: color-mix(in srgb, var(--on) 17%, transparent);
+}
+.text-button {
+  min-height: 42px;
+  padding: 7px 12px 7px 14px;
+  gap: 11px;
+  border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 34%, transparent);
+  text-decoration: none !important;
+}
+.text-button:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  text-decoration: none;
+}
+.text-button .control-icon {
+  width: 1.28rem;
+  height: 1.28rem;
+  border-radius: 50%;
+}
+.icon-button {
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--panel) 60%, transparent);
+}
+.icon-button:hover {
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+}
+.icon-button:hover svg {
+  transform: rotate(8deg);
+}
+.icon-button svg {
+  transition: transform 180ms ease;
+}
+.command-trigger {
+  gap: 8px;
+  min-height: 42px;
+  padding: 5px 9px 5px 6px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 30%, transparent);
+}
+.command-trigger .control-icon {
+  width: 1.48rem;
+  height: 1.48rem;
+  border-radius: 50%;
+}
+.command-trigger kbd {
+  border-radius: 5px;
+}
+.nav-contact {
+  min-height: 42px;
+  padding: 5px 6px 5px 14px;
+  gap: 9px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+.nav-contact .control-icon {
+  width: 1.38rem;
+  height: 1.38rem;
+}
+.work-filters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px 9px 0 0;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+.work-filters button:hover {
+  background: color-mix(in srgb, var(--panel) 72%, transparent);
+}
+.work-filters button.active {
+  background: color-mix(in srgb, var(--panel) 74%, transparent);
+  border-color: color-mix(in srgb, var(--line) 85%, transparent);
+  border-bottom-color: var(--accent);
+}
+.filter-glyph {
+  position: relative;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  color: currentColor;
+  opacity: 0.82;
+}
+.filter-glyph-all {
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  background:
+    radial-gradient(circle at 4px 4px, currentColor 0 1px, transparent 1.5px),
+    radial-gradient(circle at 10px 4px, currentColor 0 1px, transparent 1.5px),
+    radial-gradient(circle at 4px 10px, currentColor 0 1px, transparent 1.5px),
+    radial-gradient(circle at 10px 10px, currentColor 0 1px, transparent 1.5px);
+}
+.filter-glyph-applications::before,
+.filter-glyph-applications::after {
+  position: absolute;
+  top: 2px;
+  width: 7px;
+  height: 11px;
+  content: "";
+  border-block: 1px solid currentColor;
+}
+.filter-glyph-applications::before {
+  left: 0;
+  border-left: 1px solid currentColor;
+  transform: skewY(-24deg);
+}
+.filter-glyph-applications::after {
+  right: 0;
+  border-right: 1px solid currentColor;
+  transform: skewY(24deg);
+}
+.filter-glyph-graphics {
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.filter-glyph-graphics::before {
+  position: absolute;
+  content: "";
+  inset: 4px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.filter-glyph-algorithms::before,
+.filter-glyph-algorithms::after {
+  position: absolute;
+  left: 0;
+  width: 15px;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  box-shadow:
+    0 5px 0 currentColor,
+    0 10px 0 currentColor;
+}
+.filter-glyph-algorithms::before {
+  top: 2px;
+}
+.filter-glyph-algorithms::after {
+  top: 4px;
+  left: 4px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow:
+    5px 5px 0 var(--bg),
+    -1px 10px 0 var(--bg);
+}
+.preview-open {
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+.preview-open:hover {
+  text-decoration: none;
+}
+.preview-open .control-icon {
+  width: 1.28rem;
+  height: 1.28rem;
+  border-radius: 50%;
+}
+.project-actions a,
+.project-actions button {
+  padding: 5px 10px 5px 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  text-decoration: none !important;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+.project-actions a:hover,
+.project-actions button:hover {
+  background: color-mix(in srgb, var(--panel) 78%, transparent);
+  border-color: color-mix(in srgb, var(--line) 90%, transparent);
+  transform: translateY(-1px);
+}
+.project-actions > a:first-child {
+  background: color-mix(in srgb, var(--accent) 11%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.project-actions > a:first-child:hover {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 64%, transparent);
+}
+.project-actions .control-icon {
+  width: 1.18rem;
+  height: 1.18rem;
+  padding: 2px;
+  border-radius: 5px;
+}
+.source-row button {
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--panel) 42%, transparent);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+.source-row button:hover {
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -18px var(--accent);
+}
+.source-row button:active {
+  transform: translateY(1px) scale(0.97);
+}
+.source-row button .control-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+.search-wrap {
+  gap: 10px;
+}
+.search-wrap .control-icon {
+  width: 1.3rem;
+  height: 1.3rem;
+  padding: 3px;
+  border-radius: 50%;
+}
+.search-label {
+  white-space: nowrap;
+}
+.github-repo h3 .control-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  padding: 3px;
+  border-radius: 50%;
+  color: var(--muted);
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    background 180ms ease;
+}
+.github-repo:hover h3 .control-icon {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  transform: translate(2px, -2px);
+}
+.case-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px 8px 0 0;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+.case-tabs button:hover {
+  background: color-mix(in srgb, var(--panel) 76%, transparent);
+}
+.case-tabs button .control-icon {
+  width: 1.22rem;
+  height: 1.22rem;
+  padding: 2px;
+  border-radius: 50%;
+}
+.case-tabs button.active .control-icon {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
+}
+.command-option {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+.command-option:hover,
+.command-option:focus {
+  border-color: color-mix(in srgb, var(--line) 90%, transparent);
+  transform: translateX(3px);
+}
+.command-option .control-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  padding: 3px;
+  border-radius: 6px;
+}
+.command-option-name {
+  flex: 1;
+}
+.overview-links .button .control-icon,
+.case-links .button .control-icon {
+  width: 1.32rem;
+  height: 1.32rem;
+}
+footer a:not(.wordmark),
+footer button {
+  gap: 7px;
+  padding-inline: 7px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+footer a:not(.wordmark):hover,
+footer button:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--panel) 68%, transparent);
+  border-color: color-mix(in srgb, var(--line) 90%, transparent);
+  transform: translateY(-1px);
+}
+footer .control-icon {
+  width: 1.14rem;
+  height: 1.14rem;
+  padding: 2px;
+  border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .work-filters button {
+    gap: 5px;
+    padding-inline: 7px;
+  }
+  .filter-glyph {
+    width: 13px;
+    height: 13px;
+  }
+  .filter-glyph-algorithms::before {
+    width: 13px;
+    box-shadow:
+      0 4px 0 currentColor,
+      0 8px 0 currentColor;
+  }
+  .filter-glyph-algorithms::after {
+    box-shadow:
+      4px 4px 0 var(--bg),
+      -1px 8px 0 var(--bg);
+  }
+  .search-label {
+    display: none;
+  }
+  .search-wrap {
+    gap: 9px;
+  }
+  .project-actions a,
+  .project-actions button {
+    padding-inline: 7px;
+  }
+  footer a:not(.wordmark),
+  footer button {
+    padding-inline: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .text-button,
+  .preview-open,
+  .nav-contact,
+  .icon-button,
+  .command-trigger,
+  .button::before,
+  .text-button::before,
+  .preview-open::before,
+  .nav-contact::before,
+  .icon-button::before,
+  .command-trigger::before,
+  .ui-icon,
+  .project-actions a,
+  .project-actions button,
+  .source-row button,
+  .github-repo h3 .control-icon,
+  .command-option,
+  footer a:not(.wordmark),
+  footer button {
+    transition: none;
+  }
+}
+.motion-off .button,
+.motion-off .text-button,
+.motion-off .preview-open,
+.motion-off .nav-contact,
+.motion-off .icon-button,
+.motion-off .command-trigger,
+.motion-off .ui-icon,
+.motion-off .project-actions a,
+.motion-off .project-actions button,
+.motion-off .source-row button,
+.motion-off .command-option,
+.motion-off footer a:not(.wordmark),
+.motion-off footer button {
+  transition: none;
+}
