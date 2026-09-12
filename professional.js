@@ -29,6 +29,30 @@ const uiIcon = (name, className = "") => {
   return `<svg class="ui-icon ${className}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${icons[name] || icons.arrow}</svg>`;
 };
 
+const technologyIcon = (id) => {
+  const marks = {
+    javascript: "JS",
+    react: '<path d="M12 7.2c3.9 0 7.1 2.1 7.1 4.8s-3.2 4.8-7.1 4.8S4.9 14.7 4.9 12 8.1 7.2 12 7.2Z"/><path d="M8 9.1c1.9-3.4 5.2-5.1 7.5-3.8s2.6 5 .7 8.4-5.2 5.1-7.5 3.8-2.6-5-.7-8.4Z"/><path d="M16 9.1c-1.9-3.4-5.2-5.1-7.5-3.8s-2.6 5-.7 8.4 5.2 5.1 7.5 3.8 2.6-5 .7-8.4Z"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>',
+    typescript: "TS",
+    next: "N",
+    svg: "&lt;/&gt;",
+    node: "N",
+    sqlite: '<ellipse cx="12" cy="6" rx="6" ry="2.6"/><path d="M6 6v11c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6V6"/><path d="M6 11c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6"/>',
+    postgres: "PG",
+    supabase: "S",
+    webgl: '<path d="M4 13c2.2-5.4 5.4-5.4 8 0s5.8 5.4 8 0"/><path d="M4 8c2.2 5.4 5.4 5.4 8 0s5.8-5.4 8 0"/>',
+    workers: "W",
+    algorithms: "A*",
+    collaboration: "C",
+    testing: "✓",
+    actions: "CI",
+    docker: "D",
+  };
+  const mark = marks[id] || "•";
+  const isSvg = mark.startsWith("<");
+  return `<span class="tech-icon tech-icon-${id}" aria-hidden="true">${isSvg ? `<svg viewBox="0 0 24 24" focusable="false">${mark}</svg>` : mark}</span>`;
+};
+
 const technologies = [
   {
     id: "interface",
@@ -285,7 +309,7 @@ export function initTechnologyStack(target) {
   let activeCategory = 0;
   let activeTechnology = 0;
   mount.innerHTML = `
-    <div class="section-title professional-heading"><div><p class="eyebrow">STACK / IN USE</p><h2>Every tool has a job.</h2></div><p>Select a tool to see the project, implementation choice, and source behind it.</p></div>
+    <div class="section-title professional-heading"><div><p class="eyebrow">STACK / IN USE</p><h2>Technologies</h2></div><div class="stack-heading-aside"><p>A practical set of tools behind the work. Select one to see how it is used.</p><a class="stack-view-all" href="#github"><span class="stack-grid-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>View source</span>${uiIcon("arrow", "control-icon")}</a></div></div>
     <div class="stack-explorer">
       <div class="stack-layers" role="tablist" aria-label="Technology categories" aria-orientation="vertical">${technologies.map((category, index) => `<button type="button" role="tab" class="stack-layer" id="${prefix}-tab-${index}" aria-selected="${index === 0}" aria-controls="${prefix}-panel" tabindex="${index === 0 ? 0 : -1}" data-stack-category="${index}"><span class="stack-layer-number" aria-hidden="true">0${index + 1}</span>${uiIcon(category.id, `stack-category-icon stack-category-icon-${category.id}`)}<span><strong>${escapeHTML(category.name)}</strong><small>${escapeHTML(category.description)}</small></span><span class="stack-layer-arrow" aria-hidden="true">${uiIcon("arrow")}</span></button>`).join("")}</div>
       <div class="stack-panel" id="${prefix}-panel" role="tabpanel" aria-labelledby="${prefix}-tab-0" tabindex="0"><div class="stack-technologies" role="group" aria-label="Technologies in the selected category"></div><div class="stack-detail"></div></div>
@@ -320,7 +344,7 @@ export function initTechnologyStack(target) {
     choices.innerHTML = category.items
       .map(
         (technology, index) =>
-          `<button type="button" data-stack-technology="${index}" aria-pressed="${index === activeTechnology}">${escapeHTML(technology.name)}</button>`,
+          `<button type="button" data-stack-technology="${index}" aria-pressed="${index === activeTechnology}">${technologyIcon(technology.id)}<span>${escapeHTML(technology.name)}</span></button>`,
       )
       .join("");
     renderDetail(announce);

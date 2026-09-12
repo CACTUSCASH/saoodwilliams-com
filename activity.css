@@ -1,9 +1,9 @@
 .github-activity {
-  --activity-0: #2b2925;
-  --activity-1: #58483f;
-  --activity-2: #795f51;
-  --activity-3: #9b6a56;
-  --activity-4: #bd8068;
+  --activity-0: #20242b;
+  --activity-1: #384557;
+  --activity-2: #566c87;
+  --activity-3: #718aa8;
+  --activity-4: #9aabc1;
   margin-top: 54px;
   padding-block: 30px 0;
   border-top: 1px solid var(--line);
@@ -11,11 +11,11 @@
   contain: layout style;
 }
 [data-theme="light"] .github-activity {
-  --activity-0: #e4dfd7;
-  --activity-1: #d1b7a8;
-  --activity-2: #b88a76;
-  --activity-3: #9d624b;
-  --activity-4: #7e3926;
+  --activity-0: #e3e7ed;
+  --activity-1: #c4cfdd;
+  --activity-2: #9eafc4;
+  --activity-3: #7185a2;
+  --activity-4: #4e617a;
 }
 .activity-top {
   display: flex;

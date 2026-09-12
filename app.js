@@ -69,7 +69,7 @@ function applyTheme(theme) {
     `Switch to ${theme === "dark" ? "light" : "dark"} theme`,
   );
   $('meta[name="theme-color"]').content =
-    theme === "dark" ? "#171614" : "#f2efe9";
+    theme === "dark" ? "#121212" : "#f7f8fa";
 }
 applyTheme(read("sw-theme") === "light" ? "light" : "dark");
 $("#theme").onclick = () => {

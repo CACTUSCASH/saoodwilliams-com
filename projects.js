@@ -73,7 +73,7 @@ export const projects = [
     demo: "labs/relay/",
     demoAction: "Run the graph",
     tags: ["Node.js", "SQLite", "Execution engine"],
-    wash: "#b38350",
+    wash: "#71839b",
     screen: "#161718",
     summary:
       "Connect a few typed nodes, run the graph, and inspect every branch and retry.",
