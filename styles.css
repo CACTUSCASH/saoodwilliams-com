@@ -548,11 +548,10 @@ h1 em {
 }
 .mini-portrait img {
   width: 41px;
-  height: 49px;
+  height: 41px;
   border-radius: 5px;
   object-fit: cover;
-  object-position: 50% 25%;
-  filter: saturate(0.75);
+  object-position: center;
 }
 .mini-portrait p {
   font-size: 10px;
@@ -987,16 +986,13 @@ h3 {
 .about-photo img {
   display: block;
   width: 100%;
-  height: 480px;
+  height: auto;
+  aspect-ratio: 1;
   object-fit: cover;
-  object-position: center 34%;
-  filter: saturate(0.65);
-  transition:
-    filter 0.6s,
-    transform 0.7s;
+  object-position: center;
+  transition: transform 0.7s;
 }
 .about-photo:hover img {
-  filter: saturate(1);
   transform: scale(1.035);
 }
 .about-photo figcaption {
@@ -1709,9 +1705,6 @@ dd {
     gap: 35px;
     grid-template-columns: 0.8fr 1fr;
   }
-  .about-photo img {
-    height: 420px;
-  }
   .about-copy h2 {
     font-size: 41px;
   }
@@ -1868,7 +1861,7 @@ dd {
     font-size: 8px;
   }
   .mini-portrait img {
-    height: 42px;
+    height: 34px;
     width: 34px;
   }
   .scroll-note {
@@ -1999,9 +1992,6 @@ dd {
   .about-photo {
     max-width: 390px;
     padding: 0 7px;
-  }
-  .about-photo img {
-    height: 420px;
   }
   .photo-note {
     font-size: 8px;
