@@ -50,18 +50,18 @@ The published site is served from the repository root. Relative paths support th
 
 ## Interactions and accessibility
 
-- A canvas point sculpture responds to the pointer and changes between orbital, spherical, and wave forms.
+- The opening section introduces Sa'ood by name and portrait. The portrait reveals its original colour on hover, keyboard focus, or tap. Its image file is unchanged; the effect is rendered with CSS.
 - Project filters separate application, graphics, and algorithm work. Embedded previews lead to a full interactive demo or a case study.
 - Case studies include overview and engineering tabs, with an interactive demo tab where available. Tabs support arrow keys, Home, and End; native dialogs support keyboard focus and Escape.
 - Quick navigation opens with Ctrl/Cmd K and searches sections and demos. Theme and motion preferences persist in browser storage when available.
-- The page includes a skip link, labeled controls, visible focus indicators, a recruiter overview, a CV download, and email links.
+- The page includes a skip link, labeled controls, visible focus indicators, a quick introduction, a CV download, and email links.
 - Reduced-motion preferences disable automatic page animation. The motion control also informs compatible embedded previews when to pause. Preview frames are excluded from keyboard navigation; the interactive version is available through a separate control.
 
 ## Rendering and data
 
-The portfolio uses HTML, CSS, and native JavaScript modules. Its sculpture is a projected point field rendered with Canvas 2D. Spectra is the separate WebGL2 project.
+The portfolio uses HTML, CSS, and native JavaScript modules. A neutral palette, consistent typography, and a featured project followed by a two-column gallery establish the page hierarchy. Spectra is the separate WebGL2 project.
 
-Sculpture animation stops outside the viewport and when the document is hidden. Its drawing resolution is capped, and scroll updates are scheduled through `requestAnimationFrame`. Preview frames load near the viewport and receive visibility and motion state from the parent page. These choices limit unnecessary rendering; they are not a guarantee of a particular frame rate or performance score.
+Preview frames load near the viewport and receive visibility and motion state from the parent page. Compatible previews animate when their card is hovered or contains keyboard focus. Visitors can disable preview motion; reduced-motion preferences are respected. The portrait uses pointer-driven CSS clipping with scheduled updates, without a continuous animation loop. The page uses the normal cursor, native scrolling, and immediately visible content.
 
 The GitHub archive requests public repository metadata from GitHub's API, filters out forks and private entries, and supports search and incremental display. A curated project list remains available if the API request fails or is rate-limited. No GitHub token is included in the client. Fonts are loaded from Google Fonts with system fallbacks.
 
@@ -71,7 +71,6 @@ The GitHub archive requests public repository metadata from GitHub's API, filter
 index.html          Published page structure and metadata
 styles.css          Responsive layout, themes, and motion styles
 app.js              Project rendering, dialogs, filters, and GitHub archive
-sculpture.js        Canvas point-field renderer
 projects.js         Project descriptions and engineering notes
 assets/             Portrait and site icon
 labs/               Five static browser demos

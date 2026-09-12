@@ -8,7 +8,7 @@
       name="description"
       content="Sa'ood Williams, full-stack developer in Cape Town. Explore working software, interactive graphics, and the engineering behind the projects."
     />
-    <meta name="theme-color" content="#121613" />
+    <meta name="theme-color" content="#151515" />
     <meta
       property="og:title"
       content="Sa'ood Williams | Full-stack developer"
@@ -41,15 +41,14 @@
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <div class="reading-progress" aria-hidden="true"></div>
     <header class="site-header">
       <div class="nav shell">
         <a class="wordmark" href="#home" aria-label="Sa'ood Williams home"
           >sw<span class="brand-point" aria-hidden="true"></span
         ></a>
         <nav aria-label="Main navigation">
-          <a href="#work">Work <sup>05</sup></a
-          ><a href="#about">About</a><a href="#github">GitHub</a>
+          <a href="#work">Work</a><a href="#about">About</a
+          ><a href="#github">GitHub</a>
         </nav>
         <div class="nav-tools">
           <button
@@ -76,120 +75,70 @@
     <main id="main">
       <section class="hero shell" id="home">
         <div class="hero-top">
-          <p class="eyebrow">
-            <span class="status-light"></span> OPEN TO REMOTE ROLES & CONTRACTS
-          </p>
-          <span class="location-label"
-            >CAPE TOWN, ZA <span id="time">SAST</span></span
-          >
+          <p class="eyebrow">Open to remote roles and contracts</p>
+          <span class="location-label">Cape Town, South Africa</span>
         </div>
         <div class="hero-grid">
           <div class="hero-copy">
-            <p class="intro">
-              Sa'ood Williams <span>/ Full-stack developer</span>
-            </p>
-            <h1>I build the web<br />from <em>both sides.</em></h1>
+            <p class="intro">Full-stack developer</p>
+            <h1>Sa'ood<br />Williams.</h1>
             <p class="hero-description">
-              The interface you notice.<br />The systems you count on.<br /><span
-                >I care about getting both right.</span
-              >
+              I build web applications, from the interface to the API and
+              database.
             </p>
             <div class="hero-actions">
               <a href="#work" class="button primary"
-                >Explore the work
+                >View my work
                 <span class="arrow diagonal-down" aria-hidden="true"></span></a
               ><button class="text-button" id="quickOverview">
-                The 30-second version
+                Quick introduction
                 <span class="plus" aria-hidden="true"></span>
               </button>
             </div>
-            <div class="hero-proof">
-              <span>05 <small>RUNNABLE DEMOS</small></span
-              ><span>03 <small>AREAS TO EXPLORE</small></span
-              ><a
-                href="https://github.com/CACTUSCASH"
-                target="_blank"
-                rel="noopener"
-                >SOURCE INCLUDED <span class="arrow" aria-hidden="true"></span
-              ></a>
-            </div>
           </div>
-          <div class="hero-art" aria-label="Interactive generative sculpture">
-            <canvas
-              id="sculpture"
-              aria-label="A rotating point sculpture that responds to your pointer"
-            ></canvas>
-            <div class="art-label">
-              <span>STUDY 001</span><span id="shapeLabel">ORBITAL FIELD</span>
-            </div>
-            <div class="art-coordinate" aria-hidden="true">
-              x <span id="pointerX">0.00</span><br />y
-              <span id="pointerY">0.00</span>
-            </div>
-            <div class="art-controls">
-              <div
-                class="shape-buttons"
-                role="group"
-                aria-label="Sculpture shape"
-              >
-                <button class="active" data-shape="orbit" aria-pressed="true">
-                  Orbit</button
-                ><button data-shape="sphere" aria-pressed="false">Sphere</button
-                ><button data-shape="wave" aria-pressed="false">Wave</button>
-              </div>
-              <button
-                id="motionToggle"
-                class="motion-toggle"
-                aria-pressed="false"
-              >
-                Pause motion
-              </button>
-            </div>
-            <p class="art-hint">Move your pointer. Change the shape.</p>
-          </div>
+          <figure class="hero-portrait">
+            <button
+              class="portrait-frame"
+              id="portraitReveal"
+              aria-label="Show portrait in colour"
+              aria-pressed="false"
+              aria-describedby="portraitHint"
+            >
+              <img
+                class="portrait-base"
+                src="assets/portrait.png"
+                width="1254"
+                height="1254"
+                alt="Sa'ood Williams wearing glasses and a black blazer"
+                fetchpriority="high"
+                decoding="async"
+              />
+              <img
+                class="portrait-colour"
+                src="assets/portrait.png"
+                width="1254"
+                height="1254"
+                alt=""
+                aria-hidden="true"
+                decoding="async"
+              />
+            </button>
+            <figcaption class="portrait-caption">
+              <span>Sa'ood / Cape Town</span
+              ><span id="portraitHint">Hover or tap for colour</span>
+            </figcaption>
+          </figure>
         </div>
-        <div class="hero-bottom">
-          <div class="mini-portrait">
-            <img
-              src="assets/portrait.png"
-              width="1254"
-              height="1254"
-              alt="Portrait of Sa'ood Williams"
-            />
-            <p>
-              Based in Cape Town.<br /><span
-                >Building for wherever you are.</span
-              >
-            </p>
-          </div>
-          <a class="scroll-note" href="#work"
-            >SCROLL TO EXPLORE
-            <span class="scroll-line" aria-hidden="true"></span></a
-          ><span class="hero-edition">SELECTED WORK / 2026</span>
+        <div class="stack-line" aria-label="Technologies">
+          <span>React</span><span>TypeScript</span><span>Node.js</span
+          ><span>PostgreSQL</span><span>WebGL</span>
         </div>
       </section>
-      <div
-        class="tech-marquee"
-        aria-label="React, TypeScript, Node.js, PostgreSQL, WebGL and Python"
-      >
-        <div class="marquee-track" aria-hidden="true">
-          <div>
-            <span>React</span><i></i><span>TypeScript</span><i></i
-            ><span>Node.js</span><i></i><span>PostgreSQL</span><i></i
-            ><span>WebGL</span><i></i><span>Python</span><i></i>
-          </div>
-          <div>
-            <span>React</span><i></i><span>TypeScript</span><i></i
-            ><span>Node.js</span><i></i><span>PostgreSQL</span><i></i
-            ><span>WebGL</span><i></i><span>Python</span><i></i>
-          </div>
-        </div>
-      </div>
       <section id="work" class="work shell section">
         <div class="section-title reveal">
           <div>
-            <p class="eyebrow">01 / SELECTED WORK</p>
-            <h2>Go on.<br /><em>Try something.</em></h2>
+            <p class="eyebrow">Projects</p>
+            <h2>Selected work.</h2>
           </div>
           <p>
             Every project below opens into a working demo.<br />The code and
@@ -199,7 +148,7 @@
         <div class="work-toolbar">
           <div class="work-filters" role="group" aria-label="Filter projects">
             <button data-filter="all" class="active" aria-pressed="true">
-              All work <span>05</span></button
+              All work</button
             ><button data-filter="fullstack" aria-pressed="false">
               Full stack</button
             ><button data-filter="graphics" aria-pressed="false">
@@ -229,22 +178,9 @@
       </section>
       <section class="about shell section" id="about">
         <div class="about-layout">
-          <div class="about-photo reveal">
-            <figure>
-              <img
-                src="assets/portrait.png"
-                alt="Sa'ood Williams wearing glasses and a black blazer"
-                width="1254"
-                height="1254"
-                loading="lazy"
-              />
-              <figcaption>SA'OOD WILLIAMS <span>CAPE TOWN</span></figcaption>
-            </figure>
-            <span class="photo-note">A face to go with the commits.</span>
-          </div>
           <div class="about-copy reveal">
-            <p class="eyebrow">02 / THE PERSON BEHIND IT</p>
-            <h2>Curiosity is<br />the <em>starting point.</em></h2>
+            <p class="eyebrow">Background</p>
+            <h2>About me.</h2>
             <p>
               I'm Sa'ood, a full-stack developer in Cape Town. I like getting a
               whole system to work: the screen, the API, the data, and the
@@ -268,6 +204,28 @@
               ></a>
             </div>
           </div>
+          <aside class="about-details" aria-label="Profile details">
+            <dl>
+              <div>
+                <dt>Based in</dt>
+                <dd>Cape Town, South Africa</dd>
+              </div>
+              <div>
+                <dt>Education</dt>
+                <dd>
+                  Higher Certificate in Information Systems<br />(Cyber
+                  Security), Eduvos
+                </dd>
+              </div>
+              <div>
+                <dt>Looking for</dt>
+                <dd>
+                  Full-stack development roles and contracts. Open to remote
+                  work.
+                </dd>
+              </div>
+            </dl>
+          </aside>
         </div>
         <div class="capabilities">
           <article class="reveal">
@@ -293,8 +251,8 @@
       <section id="github" class="github shell section">
         <div class="section-title reveal">
           <div>
-            <p class="eyebrow">03 / OPEN SOURCE</p>
-            <h2>There is more<br /><em>in the repository.</em></h2>
+            <p class="eyebrow">GitHub</p>
+            <h2>More from my GitHub.</h2>
           </div>
           <a
             class="text-button"
@@ -306,8 +264,7 @@
         </div>
         <div class="github-toolbar">
           <p>
-            <span class="status-light"></span
-            ><span id="githubStatus">Selected public repositories</span>
+            <span id="githubStatus">Selected public repositories</span>
           </p>
           <label class="search-wrap"
             ><span>Search</span
@@ -326,13 +283,13 @@
       <section id="contact" class="contact shell section reveal">
         <div class="contact-top">
           <p class="eyebrow">HAVE A ROLE OR A PROJECT IN MIND?</p>
-          <span class="eyebrow"
-            ><span class="status-light"></span> LET'S TALK</span
-          >
+          <span class="eyebrow">Cape Town / Remote</span>
         </div>
         <a class="contact-title" href="mailto:saoodwilliams321@gmail.com"
-          >Let's build<br /><em>what comes next.</em
-          ><span class="contact-arrow arrow" aria-hidden="true"></span
+          >Get in touch.<span
+            class="contact-arrow arrow"
+            aria-hidden="true"
+          ></span
         ></a>
         <div class="contact-bottom">
           <a href="mailto:saoodwilliams321@gmail.com"
@@ -349,7 +306,7 @@
         >sw<span class="brand-point" aria-hidden="true"></span></a
       ><span>© 2026 Sa'ood Williams</span>
       <div>
-        <button id="footerMotion">Pause motion</button
+        <button id="footerMotion">Disable preview motion</button
         ><a
           href="https://github.com/CACTUSCASH/saoodwilliams-com"
           target="_blank"

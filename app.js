@@ -1,5 +1,4 @@
 import { projects, githubBase } from "./projects.js";
-import { createSculpture } from "./sculpture.js";
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -45,7 +44,7 @@ function applyTheme(theme) {
     `Switch to ${theme === "dark" ? "light" : "dark"} theme`,
   );
   $('meta[name="theme-color"]').content =
-    theme === "dark" ? "#121613" : "#f1f0e8";
+    theme === "dark" ? "#151515" : "#f3f1eb";
 }
 applyTheme(read("sw-theme") === "light" ? "light" : "dark");
 $("#theme").onclick = () => {
@@ -53,26 +52,14 @@ $("#theme").onclick = () => {
     document.documentElement.dataset.theme === "dark" ? "light" : "dark";
   applyTheme(next);
   write("sw-theme", next);
-  sculpture.redraw();
 };
-function updateTime() {
-  $("#time").textContent =
-    new Intl.DateTimeFormat("en-ZA", {
-      timeZone: "Africa/Johannesburg",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    }).format(new Date()) + " SAST";
-}
-updateTime();
-setInterval(updateTime, 60000);
 
 const featured = projects.filter((p) => p.demo);
 function sendFrameMotion(frame) {
   frame.contentWindow?.postMessage(
     {
       type: "portfolio-motion",
-      paused,
+      paused: paused || frame.dataset.engaged !== "true",
       visible: frame.dataset.visible === "true",
     },
     location.origin,
@@ -103,13 +90,13 @@ const previewSizes = new ResizeObserver((entries) => {
     const frame = target.querySelector("iframe");
     const scale = contentRect.width / 1100;
     frame.style.transform = `scale(${scale})`;
-    frame.style.height = `${Math.max(530, (contentRect.height - 24) / scale)}px`;
+    frame.style.height = `${Math.max(530, contentRect.height / scale)}px`;
   }
 });
 $("#projectList").innerHTML = featured
   .map(
-    (p, i) =>
-      `<article class="project reveal" data-category="${p.category}" id="project-${p.id}" style="--wash:${p.wash};--screen:${p.screen}"><div class="project-visual"><span class="visual-number" aria-hidden="true">0${i + 1} / ${p.type}</span><div class="project-screen"><div class="screen-chrome"><span class="screen-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>${p.id} / ${p.type.toLowerCase()}</span><span class="arrow" aria-hidden="true"></span></div><iframe title="${p.name} preview" data-src="${p.demo}?preview=1" tabindex="-1" aria-hidden="true" inert loading="lazy"></iframe></div><button class="preview-open" data-case="${p.id}" data-initial="demo">Interact with preview <span class="arrow" aria-hidden="true"></span></button></div><div class="project-info"><p class="project-kicker">0${i + 1} / ${p.type}<span class="status-light" aria-hidden="true"></span></p><h3>${p.name}</h3><p class="project-summary">${p.summary}</p><p class="project-detail">${p.detail}</p><div class="tags">${p.tags.map((tag) => `<span>${tag}</span>`).join("")}</div><div class="project-actions"><a href="${p.demo}">Open demo <span class="arrow" aria-hidden="true"></span></a><button data-case="${p.id}">Behind the build <span class="plus" aria-hidden="true"></span></button></div></div></article>`,
+    (p) =>
+      `<article class="project" data-category="${p.category}" id="project-${p.id}" style="--screen:${p.screen}"><div class="project-visual"><div class="project-screen"><iframe title="${p.name} preview" data-src="${p.demo}?preview=1" tabindex="-1" aria-hidden="true" inert loading="lazy"></iframe></div><button class="preview-open" data-case="${p.id}" data-initial="demo" aria-label="Try ${p.name}">Try project <span class="arrow" aria-hidden="true"></span></button></div><div class="project-info"><p class="project-kicker">${p.type}</p><h3>${p.name}</h3><p class="project-summary">${p.summary}</p><p class="project-detail">${p.detail}</p><div class="tags">${p.tags.map((tag) => `<span>${tag}</span>`).join("")}</div><div class="project-actions"><a href="${p.demo}">Open project <span class="arrow" aria-hidden="true"></span></a><button data-case="${p.id}">Project notes <span class="plus" aria-hidden="true"></span></button><a class="project-source" href="${githubBase + p.repo}" target="_blank" rel="noopener" aria-label="${p.name} source on GitHub">GitHub</a></div></div></article>`,
   )
   .join("");
 $$(".project-screen").forEach((el) => {
@@ -118,6 +105,24 @@ $$(".project-screen").forEach((el) => {
   frameVisibility.observe(el);
   const frame = el.querySelector("iframe");
   frame.addEventListener("load", () => sendFrameMotion(frame));
+  const card = el.closest(".project");
+  let pointerInside = false;
+  const syncPreview = () => {
+    frame.dataset.engaged = String(
+      pointerInside || card.matches(":focus-within"),
+    );
+    sendFrameMotion(frame);
+  };
+  card.addEventListener("pointerenter", (event) => {
+    pointerInside = event.pointerType !== "touch";
+    syncPreview();
+  });
+  card.addEventListener("pointerleave", () => {
+    pointerInside = false;
+    syncPreview();
+  });
+  card.addEventListener("focusin", syncPreview);
+  card.addEventListener("focusout", () => queueMicrotask(syncPreview));
 });
 $("#sourceProjects").innerHTML = projects
   .filter((p) => !p.demo)
@@ -143,6 +148,8 @@ $$("[data-filter]").forEach(
         }
       });
       $("#workCount").textContent = `${count} PROJECT${count === 1 ? "" : "S"}`;
+      $("#projectList").dataset.count = String(count);
+      $("#projectList").dataset.filter = filter;
     }),
 );
 
@@ -280,7 +287,7 @@ let limit = 6;
 function renderRepos() {
   const query = $("#repoSearch").value.toLowerCase();
   const matches = repos.filter((r) =>
-    `${r.name} ${r.description || ""} ${r.language || ""}`
+    `${r.name} ${r.description || ""} ${r.language || ""} ${Array.isArray(r.topics) ? r.topics.join(" ") : ""}`
       .toLowerCase()
       .includes(query),
   );
@@ -289,7 +296,7 @@ function renderRepos() {
       .slice(0, limit)
       .map(
         (r) =>
-          `<a class="github-repo" href="${esc(r.html_url)}" target="_blank" rel="noopener"><h3>${esc(r.name)}<span class="arrow" aria-hidden="true"></span></h3><p>${esc(cleanCopy(r.description || "Source code, setup, and documentation on GitHub."))}</p><span class="repo-language">${esc(r.language || "Source code")}<span>${typeof r.stargazers_count === "number" ? `${r.stargazers_count} stars` : "Public source"}</span></span></a>`,
+          `<a class="github-repo" href="${esc(r.html_url)}" target="_blank" rel="noopener"><h3>${esc(r.name)}<span class="arrow" aria-hidden="true"></span></h3><p>${esc(cleanCopy(r.description || "Source code, setup, and documentation on GitHub."))}</p><span class="repo-language">${esc(r.language || "Source code")}<span>${typeof r.stargazers_count === "number" ? `${r.stargazers_count} ${r.stargazers_count === 1 ? "star" : "stars"}` : "Public source"}</span></span></a>`,
       )
       .join("") ||
     '<p class="repo-empty">No repositories match that search.</p>';
@@ -330,18 +337,6 @@ async function refreshRepos() {
 }
 refreshRepos();
 
-const reveals = new IntersectionObserver(
-  (entries) => {
-    for (const entry of entries)
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        reveals.unobserve(entry.target);
-      }
-  },
-  { threshold: 0.08 },
-);
-$$(".reveal").forEach((el) => reveals.observe(el));
-document.documentElement.classList.add("motion-ready");
 const sectionObserver = new IntersectionObserver(
   (entries) => {
     for (const entry of entries)
@@ -361,9 +356,6 @@ const sectionObserver = new IntersectionObserver(
 let scrollQueued = false;
 function updateScroll() {
   scrollQueued = false;
-  const max = document.documentElement.scrollHeight - innerHeight;
-  $(".reading-progress").style.transform =
-    `scaleX(${max > 0 ? scrollY / max : 0})`;
   $(".site-header").classList.toggle("scrolled", scrollY > 12);
 }
 addEventListener(
@@ -378,21 +370,19 @@ addEventListener(
 );
 updateScroll();
 
-const sculpture = createSculpture($("#sculpture"), { paused });
 function applyMotion() {
   document.documentElement.classList.toggle("motion-off", paused);
-  for (const id of ["motionToggle", "footerMotion"])
-    $("#" + id).textContent = paused ? "Resume motion" : "Pause motion";
-  $("#motionToggle").setAttribute("aria-pressed", String(paused));
-  sculpture.setPaused(paused);
+  $("#footerMotion").textContent = paused
+    ? "Enable preview motion"
+    : "Disable preview motion";
+  $("#footerMotion").setAttribute("aria-pressed", String(paused));
   for (const frame of $$(".project-screen iframe")) sendFrameMotion(frame);
 }
-for (const id of ["motionToggle", "footerMotion"])
-  $("#" + id).onclick = () => {
-    paused = !paused;
-    write("sw-motion", paused ? "paused" : "running");
-    applyMotion();
-  };
+$("#footerMotion").onclick = () => {
+  paused = !paused;
+  write("sw-motion", paused ? "paused" : "running");
+  applyMotion();
+};
 reduced.addEventListener("change", (event) => {
   if (event.matches) {
     paused = true;
@@ -400,57 +390,67 @@ reduced.addEventListener("change", (event) => {
   }
 });
 applyMotion();
-$$("[data-shape]").forEach(
-  (button) =>
-    (button.onclick = () => {
-      const shape = button.dataset.shape;
-      sculpture.setShape(shape);
-      $("#shapeLabel").textContent = {
-        orbit: "ORBITAL FIELD",
-        sphere: "SPHERICAL FIELD",
-        wave: "WAVE FIELD",
-      }[shape];
-      $$("[data-shape]").forEach((b) => {
-        b.classList.toggle("active", b === button);
-        b.setAttribute("aria-pressed", String(b === button));
-      });
-    }),
-);
-const halo = document.createElement("div");
-halo.className = "cursor-halo";
-halo.setAttribute("aria-hidden", "true");
-if (matchMedia("(pointer:fine)").matches && !reduced.matches) {
-  document.body.append(halo);
-  let queued = false;
-  let pointerEvent;
-  addEventListener(
-    "pointermove",
-    (event) => {
-      pointerEvent = event;
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => {
-        queued = false;
-        halo.classList.toggle("active", !paused);
-        halo.classList.toggle(
-          "hover",
-          !!pointerEvent.target.closest("a,button"),
-        );
-        halo.style.transform = `translate(${pointerEvent.clientX}px,${pointerEvent.clientY}px)`;
-        const visual = pointerEvent.target.closest(".project-visual");
-        if (visual) {
-          const r = visual.getBoundingClientRect();
-          visual.style.setProperty(
-            "--mx",
-            `${pointerEvent.clientX - r.left}px`,
-          );
-          visual.style.setProperty("--my", `${pointerEvent.clientY - r.top}px`);
-        }
-      });
-    },
-    { passive: true },
+
+const portrait = $("#portraitReveal");
+let portraitPinned = false;
+let portraitHovered = false;
+let portraitFocused = false;
+let portraitFrame = null;
+let portraitPoint = { x: 50, y: 50 };
+function drawPortrait() {
+  portraitFrame = null;
+  const fullColour = portraitPinned || portraitFocused;
+  portrait.classList.toggle("is-revealed", fullColour);
+  portrait.style.setProperty("--portrait-x", `${portraitPoint.x}%`);
+  portrait.style.setProperty("--portrait-y", `${portraitPoint.y}%`);
+  portrait.style.setProperty(
+    "--reveal-radius",
+    fullColour ? "150%" : portraitHovered ? "62%" : "0%",
   );
-  document.addEventListener("pointerleave", () =>
-    halo.classList.remove("active"),
+  portrait.setAttribute("aria-pressed", String(portraitPinned));
+  portrait.setAttribute(
+    "aria-label",
+    portraitPinned ? "Show portrait in monochrome" : "Show portrait in colour",
   );
+  $("#portraitHint").textContent = portraitPinned
+    ? "Tap to return to monochrome"
+    : "Hover or tap for colour";
 }
+function schedulePortrait() {
+  if (portraitFrame === null)
+    portraitFrame = requestAnimationFrame(drawPortrait);
+}
+portrait.addEventListener("pointermove", (event) => {
+  if (event.pointerType === "touch") return;
+  const bounds = portrait.getBoundingClientRect();
+  portraitPoint = {
+    x: Math.max(
+      0,
+      Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100),
+    ),
+    y: Math.max(
+      0,
+      Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100),
+    ),
+  };
+  portraitHovered = true;
+  schedulePortrait();
+});
+portrait.addEventListener("pointerleave", () => {
+  portraitHovered = false;
+  schedulePortrait();
+});
+portrait.addEventListener("focus", () => {
+  portraitFocused = portrait.matches(":focus-visible");
+  schedulePortrait();
+});
+portrait.addEventListener("blur", () => {
+  portraitFocused = false;
+  schedulePortrait();
+});
+portrait.addEventListener("click", () => {
+  portraitPinned = !portraitPinned;
+  portraitHovered = false;
+  portraitFocused = false;
+  drawPortrait();
+});

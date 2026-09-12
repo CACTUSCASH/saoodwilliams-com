@@ -6,7 +6,6 @@ const files = [
   "index.html",
   "app.js",
   "projects.js",
-  "sculpture.js",
   "styles.css",
 ];
 async function walk(dir) {
