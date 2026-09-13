@@ -102,7 +102,9 @@ const uiIcon = (name, className = "") => {
     cloud:
       '<path d="M7 17h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 10.5 3.5 3.5 0 0 0 7 17Z"/>',
     ai: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
+    check: '<path d="m5 12.5 4 4 10-9"/>',
     arrow: '<path d="M5 12h13M13 6l6 6-6 6"/>',
+    external: '<path d="M13 5h6v6M19 5l-8 8M18 14v5H5V6h5"/>',
     close: '<path d="m6 6 12 12M6 18 18 6"/>',
   };
   return `<svg class="ui-icon ${className}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${icons[name] || icons.arrow}</svg>`;
@@ -149,11 +151,13 @@ export function initCredentials(container) {
       .map(
         (
           item,
-        ) => `<button type="button" class="credential-card" data-credential="${item.id}" aria-label="Open credential record: ${escape(item.title)}">
-      <span class="credential-card-top"><span>${item.category}</span><span class="credential-number">${String(credentials.indexOf(item) + 1).padStart(2, "0")}</span></span>
-      <span class="credential-card-title">${escape(item.title)}</span>
-      <span class="credential-card-bottom"><span>Claude Academy<small>September 2026</small></span><span class="credential-open" aria-hidden="true">${uiIcon("arrow", "control-icon")}</span></span>
-    </button>`,
+        ) => `<article class="credential-card">
+      <div class="credential-card-top"><span>${item.category}</span><span class="credential-top-actions"><a class="credential-verify-badge" href="${escape(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="Verify ${escape(item.title)} on Claude Academy"><span class="credential-badge-icon">${uiIcon("check", "credential-badge-mark")}</span><span>Official</span><span class="credential-badge-external">${uiIcon("external")}</span></a><span class="credential-number">${String(credentials.indexOf(item) + 1).padStart(2, "0")}</span></span></div>
+      <button type="button" class="credential-card-main" data-credential="${item.id}" aria-label="Open credential record: ${escape(item.title)}">
+        <span class="credential-card-title">${escape(item.title)}</span>
+        <span class="credential-card-bottom"><span>Claude Academy<small>September 2026</small></span><span class="credential-open" aria-hidden="true">${uiIcon("arrow", "control-icon")}</span></span>
+      </button>
+    </article>`,
       )
       .join("");
     more.hidden = expanded || matches.length <= 6;
@@ -174,7 +178,7 @@ export function initCredentials(container) {
   more.addEventListener("click", () => {
     expanded = true;
     render();
-    grid.children[6]?.focus();
+    grid.children[6]?.querySelector("[data-credential]")?.focus();
   });
   grid.addEventListener("click", (event) => {
     const button = event.target.closest("[data-credential]");
