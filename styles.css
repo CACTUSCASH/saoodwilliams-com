@@ -3030,24 +3030,15 @@ h1 {
   font-weight: 650;
 }
 
-h1 .hero-name {
+h1.hero-name {
   position: relative;
-  display: inline-flex;
+  display: block;
   max-width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
   padding: 0 0 13px;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  text-align: left;
   white-space: nowrap;
 }
 
-h1 .hero-name::before {
+h1.hero-name::before {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -3056,10 +3047,10 @@ h1 .hero-name::before {
   background: var(--accent);
   content: "";
   transform-origin: left center;
-  transition: width 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: hero-name-line 7.5s 900ms ease-in-out infinite;
 }
 
-h1 .hero-name::after {
+h1.hero-name::after {
   position: absolute;
   top: 0.34em;
   right: -1.1rem;
@@ -3070,49 +3061,71 @@ h1 .hero-name::after {
   content: "";
   opacity: 0;
   transform: translate(-5px, 5px);
-  transition:
-    opacity 180ms ease,
-    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: hero-name-mark 7.5s 900ms ease-in-out infinite;
 }
 
 .hero-name-word {
   position: relative;
   display: block;
-  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: hero-name-first 7.5s 900ms ease-in-out infinite;
 }
 
 .hero-name-word + .hero-name-word {
-  transform: translateX(0.08em);
+  animation-name: hero-name-second;
 }
 
-h1 .hero-name:hover::before,
-h1 .hero-name:focus-visible::before,
-h1 .hero-name[aria-pressed="true"]::before {
-  width: 100%;
+@keyframes hero-name-line {
+  0%,
+  16%,
+  62%,
+  100% {
+    width: 2.35rem;
+  }
+  24%,
+  50% {
+    width: 100%;
+  }
 }
 
-h1 .hero-name:hover::after,
-h1 .hero-name:focus-visible::after,
-h1 .hero-name[aria-pressed="true"]::after {
-  opacity: 1;
-  transform: translate(0, 0);
+@keyframes hero-name-mark {
+  0%,
+  16%,
+  62%,
+  100% {
+    opacity: 0;
+    transform: translate(-5px, 5px);
+  }
+  24%,
+  50% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
 }
 
-h1 .hero-name:hover .hero-name-word:first-child,
-h1 .hero-name:focus-visible .hero-name-word:first-child,
-h1 .hero-name[aria-pressed="true"] .hero-name-word:first-child {
-  transform: translateX(0.05em);
+@keyframes hero-name-first {
+  0%,
+  16%,
+  62%,
+  100% {
+    transform: translateX(0);
+  }
+  24%,
+  50% {
+    transform: translateX(0.05em);
+  }
 }
 
-h1 .hero-name:hover .hero-name-word:last-child,
-h1 .hero-name:focus-visible .hero-name-word:last-child,
-h1 .hero-name[aria-pressed="true"] .hero-name-word:last-child {
-  transform: translateX(0.18em);
-}
-
-h1 .hero-name:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 9px;
+@keyframes hero-name-second {
+  0%,
+  16%,
+  62%,
+  100% {
+    transform: translateX(0.08em);
+  }
+  24%,
+  50% {
+    transform: translateX(0.18em);
+  }
 }
 
 .button.primary {
@@ -4013,27 +4026,15 @@ h1 .hero-name:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  h1 .hero-name::before,
-  h1 .hero-name::after,
+  h1.hero-name::before,
+  h1.hero-name::after,
   .hero-name-word {
-    transition: none;
-  }
-
-  h1 .hero-name:hover .hero-name-word,
-  h1 .hero-name:focus-visible .hero-name-word,
-  h1 .hero-name[aria-pressed="true"] .hero-name-word {
-    transform: none;
+    animation: none;
   }
 }
 
-.motion-off h1 .hero-name::before,
-.motion-off h1 .hero-name::after,
+.motion-off h1.hero-name::before,
+.motion-off h1.hero-name::after,
 .motion-off .hero-name-word {
-  transition: none;
-}
-
-.motion-off h1 .hero-name:hover .hero-name-word,
-.motion-off h1 .hero-name:focus-visible .hero-name-word,
-.motion-off h1 .hero-name[aria-pressed="true"] .hero-name-word {
-  transform: none;
+  animation: none;
 }
