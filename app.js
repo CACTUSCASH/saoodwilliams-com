@@ -546,6 +546,11 @@ const portraitEffect = createPortraitEffect($("#portraitReveal"), {
             : "Move through the portrait";
   },
 });
+const heroName = $("#heroName");
+heroName.addEventListener("click", () => {
+  const active = heroName.getAttribute("aria-pressed") !== "true";
+  heroName.setAttribute("aria-pressed", String(active));
+});
 function applyMotion() {
   document.documentElement.classList.toggle("motion-off", paused);
   $("#footerMotion .motion-label").textContent = paused

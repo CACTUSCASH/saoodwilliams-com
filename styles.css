@@ -8,10 +8,12 @@
   --line: #30343d;
   --accent: #9aabc1;
   --on: #15171b;
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --font-body:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-display:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   color-scheme: dark;
   font-family: var(--font-body);
   font-optical-sizing: auto;
@@ -1166,6 +1168,76 @@ footer > span {
   font-size: 12px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+}
+.profile-view-stack {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 8px;
+}
+.profile-view-avatar {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  margin-left: -8px;
+  overflow: hidden;
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--muted);
+}
+.profile-view-avatar:first-child {
+  margin-left: 0;
+}
+.profile-view-avatar-owner {
+  z-index: 3;
+}
+.profile-view-avatar-source {
+  z-index: 2;
+  background: var(--text);
+}
+.profile-view-avatar-signal {
+  z-index: 1;
+  background: color-mix(in srgb, var(--accent) 20%, var(--panel));
+}
+.profile-view-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-view-avatar-owner img {
+  filter: saturate(0.7) contrast(1.05);
+}
+.profile-view-avatar-source img {
+  padding: 5px;
+  object-fit: contain;
+}
+.profile-view-signal {
+  position: relative;
+  display: block;
+  width: 11px;
+  height: 10px;
+  border-bottom: 1px solid currentColor;
+}
+.profile-view-signal::before {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  width: 2px;
+  height: 3px;
+  background: currentColor;
+  box-shadow:
+    3px -2px 0 currentColor,
+    6px -5px 0 currentColor;
+  content: "";
+}
+.profile-views-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 }
 footer > div {
   display: flex;
@@ -2958,6 +3030,91 @@ h1 {
   font-weight: 650;
 }
 
+h1 .hero-name {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 0 13px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-align: left;
+  white-space: nowrap;
+}
+
+h1 .hero-name::before {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 2.35rem;
+  height: 2px;
+  background: var(--accent);
+  content: "";
+  transform-origin: left center;
+  transition: width 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+h1 .hero-name::after {
+  position: absolute;
+  top: 0.34em;
+  right: -1.1rem;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-top: 1px solid var(--accent);
+  border-right: 1px solid var(--accent);
+  content: "";
+  opacity: 0;
+  transform: translate(-5px, 5px);
+  transition:
+    opacity 180ms ease,
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-name-word {
+  position: relative;
+  display: block;
+  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-name-word + .hero-name-word {
+  transform: translateX(0.08em);
+}
+
+h1 .hero-name:hover::before,
+h1 .hero-name:focus-visible::before,
+h1 .hero-name[aria-pressed="true"]::before {
+  width: 100%;
+}
+
+h1 .hero-name:hover::after,
+h1 .hero-name:focus-visible::after,
+h1 .hero-name[aria-pressed="true"]::after {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+h1 .hero-name:hover .hero-name-word:first-child,
+h1 .hero-name:focus-visible .hero-name-word:first-child,
+h1 .hero-name[aria-pressed="true"] .hero-name-word:first-child {
+  transform: translateX(0.05em);
+}
+
+h1 .hero-name:hover .hero-name-word:last-child,
+h1 .hero-name:focus-visible .hero-name-word:last-child,
+h1 .hero-name[aria-pressed="true"] .hero-name-word:last-child {
+  transform: translateX(0.18em);
+}
+
+h1 .hero-name:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 9px;
+}
+
 .button.primary {
   background: var(--text);
   border-color: var(--text);
@@ -3349,30 +3506,114 @@ h1 {
   z-index: 4;
 }
 
-/* Verification markers use the same small, attached check treatment across
-   the identity rail, contact card, and conversation surface. */
+/* Verification markers use the same blue rosette treatment across the
+   identity rail, contact card, conversation surface, and records. */
 .identity-badge {
-  right: -6px;
-  bottom: -5px;
-  width: 22px;
-  height: 22px;
-  border: 2px solid var(--bg);
-  background: color-mix(in srgb, var(--accent) 66%, var(--text));
-  color: var(--on);
+  position: relative;
+  inset: auto;
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #1d9bf0;
+  vertical-align: middle;
+  transform: translateY(3px);
 }
 .identity-badge svg {
-  width: 13px;
-  height: 13px;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2.5;
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  stroke: none;
+}
+.identity-copy strong {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 2px;
+  gap: 6px;
 }
 .chat-trigger-badge,
 .chat-avatar-badge {
-  border-color: var(--bg);
-  background: color-mix(in srgb, var(--accent) 66%, var(--text));
-  color: var(--on);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #1d9bf0;
+}
+.chat-trigger-badge svg,
+.chat-avatar-badge svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  stroke: none;
+}
+.contact-card-badge {
+  right: -7px;
+  bottom: -6px;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #1d9bf0;
+}
+.contact-card-badge svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  stroke: none;
+}
+
+/* The opening stack is a quick scan of the systems behind the work. Small
+   line marks give each technology a visual anchor without turning the row
+   into a loud logo wall. */
+.stack-line {
+  align-items: stretch;
+  gap: 10px;
+}
+.stack-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 32px;
+  padding: 5px 0;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.stack-item svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: var(--accent);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.35;
+}
+.stack-item svg circle[fill="currentColor"] {
+  fill: currentColor;
+}
+.stack-item > span {
+  color: inherit;
+}
+.stack-item:first-child > span {
+  color: var(--text);
+}
+@media (max-width: 600px) {
+  .stack-line {
+    gap: 7px 16px;
+  }
+  .stack-item {
+    gap: 7px;
+    min-height: 30px;
+  }
+  .stack-item svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 /* Contact is the handoff point, so it has its own compact composition rather
@@ -3769,4 +4010,30 @@ h1 {
 .motion-off .contact-cta,
 .motion-off .contact-arrow {
   transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1 .hero-name::before,
+  h1 .hero-name::after,
+  .hero-name-word {
+    transition: none;
+  }
+
+  h1 .hero-name:hover .hero-name-word,
+  h1 .hero-name:focus-visible .hero-name-word,
+  h1 .hero-name[aria-pressed="true"] .hero-name-word {
+    transform: none;
+  }
+}
+
+.motion-off h1 .hero-name::before,
+.motion-off h1 .hero-name::after,
+.motion-off .hero-name-word {
+  transition: none;
+}
+
+.motion-off h1 .hero-name:hover .hero-name-word,
+.motion-off h1 .hero-name:focus-visible .hero-name-word,
+.motion-off h1 .hero-name[aria-pressed="true"] .hero-name-word {
+  transform: none;
 }

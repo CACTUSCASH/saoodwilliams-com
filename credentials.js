@@ -102,6 +102,7 @@ const uiIcon = (name, className = "") => {
     cloud:
       '<path d="M7 17h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 10.5 3.5 3.5 0 0 0 7 17Z"/>',
     ai: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
+    verified: '<path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.053-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.607-.274 1.264-.144 1.898.13.634.435 1.219.88 1.688.47.443 1.054.749 1.688.879.633.13 1.29.083 1.897-.14.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.607.224 1.264.272 1.897.14.634-.13 1.217-.436 1.687-.878.445-.47.75-1.055.88-1.688.13-.634.083-1.291-.14-1.897.586-.274 1.084-.705 1.438-1.246.354-.541.551-1.17.57-1.817Zm-11.343 3.9-3.5-3.5 1.238-1.238 2.262 2.262 5.315-5.315L15.5 8.35l-6.5 6.55Z"/>',
     check: '<path d="m5 12.5 4 4 10-9"/>',
     arrow: '<path d="M5 12h13M13 6l6 6-6 6"/>',
     external: '<path d="M13 5h6v6M19 5l-8 8M18 14v5H5V6h5"/>',
@@ -121,8 +122,7 @@ const categoryIcon = (category) =>
 export function initCredentials(container) {
   if (!container) return;
   let category = "All",
-    expanded = false,
-    opener;
+    expanded = false;
   container.innerHTML = `
     <div class="credential-toolbar">
       <div class="credential-filters" role="group" aria-label="Filter certificates">
@@ -131,15 +131,9 @@ export function initCredentials(container) {
       <p class="credential-count" role="status"></p>
     </div>
     <div class="credential-grid"></div>
-    <button class="text-button credential-more" type="button">View all 21 records ${uiIcon("arrow", "control-icon")}</button>
-    <dialog class="credential-dialog" aria-labelledby="credentialTitle">
-      <div class="dialog-bar"><span class="eyebrow">Verified course</span><button type="button" class="icon-button" data-close-credential aria-label="Close certificate">${uiIcon("close")}</button></div>
-      <div class="credential-sheet"></div>
-      <div class="credential-dialog-footer"><span>Open the issuer's record to verify the title, recipient, date, and credential ID.</span><a class="button primary credential-verify" target="_blank" rel="noopener">Verify this record ${uiIcon("external", "control-icon")}</a></div>
-    </dialog>`;
+    <button class="text-button credential-more" type="button">View all 21 records ${uiIcon("arrow", "control-icon")}</button>`;
   const grid = container.querySelector(".credential-grid"),
-    more = container.querySelector(".credential-more"),
-    dialog = container.querySelector("dialog");
+    more = container.querySelector(".credential-more");
   function render() {
     const matches = credentials.filter(
       (item) => category === "All" || item.category === category,
@@ -151,12 +145,12 @@ export function initCredentials(container) {
       .map(
         (
           item,
-        ) => `<article class="credential-card">
-      <div class="credential-card-top"><span>${item.category}</span><span class="credential-top-actions"><a class="credential-verify-badge" href="${escape(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="Verify ${escape(item.title)} on Claude Academy"><span class="credential-badge-icon">${uiIcon("check", "credential-badge-mark")}</span><span>Official</span><span class="credential-badge-external">${uiIcon("external")}</span></a><span class="credential-number">${String(credentials.indexOf(item) + 1).padStart(2, "0")}</span></span></div>
-      <button type="button" class="credential-card-main" data-credential="${item.id}" aria-label="Open credential record: ${escape(item.title)}">
+    ) => `<article class="credential-card">
+      <div class="credential-card-top"><span>${item.category}</span><span class="credential-top-actions"><a class="credential-verify-badge" href="${escape(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="Verify ${escape(item.title)} on Claude Academy"><span class="credential-badge-icon">${uiIcon("verified", "credential-badge-mark")}</span><span>Official</span><span class="credential-badge-external">${uiIcon("external")}</span></a><span class="credential-number">${String(credentials.indexOf(item) + 1).padStart(2, "0")}</span></span></div>
+      <a class="credential-card-main" href="${escape(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="Verify ${escape(item.title)} on Claude Academy">
         <span class="credential-card-title">${escape(item.title)}</span>
         <span class="credential-card-bottom"><span>Claude Academy<small>September 2026</small></span><span class="credential-open" aria-hidden="true">${uiIcon("arrow", "control-icon")}</span></span>
-      </button>
+      </a>
     </article>`,
       )
       .join("");
@@ -178,35 +172,7 @@ export function initCredentials(container) {
   more.addEventListener("click", () => {
     expanded = true;
     render();
-    grid.children[6]?.querySelector("[data-credential]")?.focus();
+    grid.children[6]?.querySelector(".credential-card-main")?.focus();
   });
-  grid.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-credential]");
-    if (!button) return;
-    const item = credentials.find(
-      (record) => record.id === button.dataset.credential,
-    );
-    opener = button;
-    container.querySelector(".credential-sheet").innerHTML =
-      `<p class="eyebrow">${item.category}</p><h3 id="credentialTitle">${escape(item.title)}</h3><p class="credential-recipient">Sa'ood Williams</p><dl><div><dt>Issued by</dt><dd>${item.issuer}</dd></div><div><dt>Issued</dt><dd>${item.issued}</dd></div><div class="credential-id"><dt>Credential ID</dt><dd>${item.id}</dd></div></dl>`;
-    container.querySelector(".credential-verify").href = item.url;
-    dialog.showModal();
-  });
-  container
-    .querySelector("[data-close-credential]")
-    .addEventListener("click", () => dialog.close());
-  dialog.addEventListener("click", (event) => {
-    if (event.target === dialog) {
-      const r = dialog.getBoundingClientRect();
-      if (
-        event.clientX < r.left ||
-        event.clientX > r.right ||
-        event.clientY < r.top ||
-        event.clientY > r.bottom
-      )
-        dialog.close();
-    }
-  });
-  dialog.addEventListener("close", () => opener?.focus());
   render();
 }
