@@ -4184,3 +4184,73 @@ h1.hero-name::after {
 .motion-off .portrait-frame::after {
   animation: none;
 }
+
+/* Keep the conversation anchored by one portrait. The repeated surfaces use a
+   small system mark so the contact UI stays useful without feeling like a
+   stack of duplicated headshots. */
+.chat-message {
+  align-items: flex-start;
+}
+
+.chat-message-avatar.chat-message-mark {
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 48%, var(--line));
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  color: var(--accent);
+}
+
+.chat-message-mark svg,
+.chat-trigger-mark svg {
+  display: block;
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.chat-message-mark circle,
+.chat-trigger-mark circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.chat-trigger-avatar.chat-trigger-mark {
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, currentColor 42%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, currentColor 9%, transparent);
+  color: currentColor;
+}
+
+.chat-trigger-mark {
+  position: relative;
+}
+
+.chat-trigger-mark::after {
+  position: absolute;
+  right: -2px;
+  bottom: 0;
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--text);
+  border-radius: 50%;
+  background: var(--accent);
+  content: "";
+}
+
+.chat-trigger-mark svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-trigger-mark::after {
+    transition: none;
+  }
+}
