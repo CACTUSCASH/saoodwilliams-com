@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="robots" content="noai, noimageai, noarchive"><meta name="googlebot" content="noarchive"><meta name="tdm-reservation" content="1"><meta name="tdm-policy" content="https://cactuscash.github.io/saoodwilliams-com/LICENSE.txt"><meta name="copyright" content="(c) 2026 Sa'ood Williams. All rights reserved."><style>html{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],[contenteditable] *{-webkit-user-select:text;user-select:text}img,canvas,video,svg,picture{-webkit-user-drag:none}html.sw-shield body{filter:blur(26px) brightness(.5)!important}@media print{body{display:none!important}}</style><script>/*SW-610ff8451491*/(()=>{const h=(self.location&&self.location.hostname)||"";if(!(/^(cactuscash\.github\.io|localhost|127\.0\.0\.1|\[::1\])$/.test(h)||h.endsWith(".localhost"))){try{document.documentElement.innerHTML='<body style="margin:0;height:100vh;display:grid;place-items:center;background:#0b0c0e;color:#e9e9e6;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:24px"><p>This work belongs to Sa\u2019ood Williams and is not licensed for use here.<br><a style="color:#9fd3ff" href="https://cactuscash.github.io/saoodwilliams-com/">View the original</a></p></body>'}catch(e){}throw new Error("Unlicensed copy")}})();(()=>{const a=e=>e&&e.closest&&e.closest("input,textarea,select,[contenteditable]"),n=document.documentElement;let s=0;const i=e=>{n.classList.add("sw-shield"),clearTimeout(s),e&&(s=setTimeout(()=>n.classList.remove("sw-shield"),e))},r=()=>{clearTimeout(s),n.classList.remove("sw-shield")};addEventListener("contextmenu",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("dragstart",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("copy",e=>{a(e.target)||(e.preventDefault(),e.clipboardData&&e.clipboardData.setData("text/plain","© Sa’ood Williams — https://cactuscash.github.io/saoodwilliams-com/"))},!0),addEventListener("keydown",e=>{const t=(e.key||"").toLowerCase(),d=e.ctrlKey||e.metaKey;(e.metaKey&&e.shiftKey||t==="printscreen"||e.shiftKey&&t==="meta")&&i(1800),(t==="f12"||d&&["s","u","p"].includes(t)||d&&e.shiftKey&&["i","j","c"].includes(t)||e.metaKey&&e.altKey&&["i","j","c","u"].includes(t))&&(e.preventDefault(),e.stopPropagation())},!0),addEventListener("keyup",e=>{if((e.key||"").toLowerCase()==="printscreen"){i(1200);try{navigator.clipboard.writeText("© Sa’ood Williams")}catch{}}},!0),window.top===window&&(addEventListener("blur",()=>{document.activeElement&&document.activeElement.tagName==="IFRAME"||i(0)}),addEventListener("focus",r),document.addEventListener("visibilitychange",()=>{document.hidden?i(0):r()})),addEventListener("beforeprint",()=>i(0)),addEventListener("afterprint",r)})();
+</script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Packet Lens parses pcap and pcapng captures in your browser, reassembles TCP streams and fingerprints TLS clients with JA3. Files never leave the tab."
+    />
+    <meta name="theme-color" content="#0a0d11" />
+    <title>Packet Lens | Network forensics in the browser</title>
+    <script>
+      if (new URLSearchParams(location.search).get("preview") === "1")
+        document.documentElement.classList.add("preview");
+    </script>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css?v=515dba1803" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./"
+        ><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="14" cy="14" r="9.5" />
+          <path d="M8.5 14h3l1.6-4 2.4 8 1.6-4h2.4" />
+          <path d="m21 21 6.5 6.5" /></svg
+        ><span>packet lens</span><small>PCAP / LAB</small></a
+      >
+      <div class="top-meta">
+        <span class="led" id="led" aria-hidden="true"></span
+        ><span id="status" role="status" aria-live="polite">READY</span
+        ><span class="divider">/</span
+        >
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">NETWORK FORENSICS / IN THE BROWSER</p>
+          <h1>Read the wire,<br /><em>byte by byte.</em></h1>
+        </div>
+        <p class="lede">
+          Drop a pcap or pcapng capture. A Web Worker in this tab decodes every
+          frame, rebuilds TCP streams from late and repeated segments, and
+          fingerprints TLS clients with JA3. Hover any field to see its exact
+          bytes.
+        </p>
+      </section>
+
+      <section class="loader" aria-label="Load a capture">
+        <div class="drop" id="drop" tabindex="0" role="button" aria-describedby="privacy">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M20 26V8m0 0-7 7m7-7 7 7" />
+            <path d="M7 24v7a2 2 0 0 0 2 2h22a2 2 0 0 0 2-2v-7" />
+          </svg>
+          <div>
+            <strong>Drop a .pcap or .pcapng file</strong>
+            <span>or press to choose one from your device</span>
+          </div>
+        </div>
+        <div class="loader-side">
+          <div class="loader-actions">
+            <button id="sample" class="primary" type="button">Load sample capture</button
+            ><button id="download" type="button" disabled>Download sample .pcap</button>
+            <input id="file" type="file" accept=".pcap,.pcapng,.cap,.dmp" hidden />
+          </div>
+          <p class="privacy" id="privacy">
+            <span class="lock" aria-hidden="true"></span>Files never leave
+            your browser. Parsing happens locally in a Web Worker, with no upload
+            and no server.
+          </p>
+        </div>
+      </section>
+
+      <section class="overview" id="overview" aria-label="Capture overview">
+        <div class="meta" id="meta"></div>
+        <div class="breakdown">
+          <div class="mini-head"><span>PROTOCOLS</span><small>by packets</small></div>
+          <div class="stack" id="stack" aria-hidden="true"></div>
+          <div class="legend" id="legend"></div>
+        </div>
+        <div class="timeline">
+          <div class="mini-head"><span>TIMELINE</span><small id="timelineScale"></small></div>
+          <svg id="spark" viewBox="0 0 480 64" preserveAspectRatio="none" role="img" aria-label="Packets over time"></svg>
+        </div>
+      </section>
+
+      <section class="workspace" id="workspace" aria-label="Capture workspace">
+        <div class="tabs" role="tablist" aria-label="Views">
+          <button role="tab" id="tab-packets" aria-controls="panel-packets" aria-selected="true" data-tab="packets">Packets <b id="count-packets">0</b></button
+          ><button role="tab" id="tab-flows" aria-controls="panel-flows" aria-selected="false" data-tab="flows" tabindex="-1">Flows <b id="count-flows">0</b></button
+          ><button role="tab" id="tab-tls" aria-controls="panel-tls" aria-selected="false" data-tab="tls" tabindex="-1">TLS <b id="count-tls">0</b></button
+          ><button role="tab" id="tab-dns" aria-controls="panel-dns" aria-selected="false" data-tab="dns" tabindex="-1">DNS <b id="count-dns">0</b></button>
+        </div>
+
+        <div class="tabpanel" id="panel-packets" role="tabpanel" aria-labelledby="tab-packets">
+          <div class="list-panel">
+            <div class="list-tools">
+              <label class="filter"
+                ><span class="sr">Filter packets</span
+                ><input id="filter" type="search" placeholder="Filter: tls, 443, example.com, retransmission" autocomplete="off" spellcheck="false"
+              /></label>
+              <span class="shown" id="shown"></span>
+            </div>
+            <div class="plist" id="plist" role="grid" aria-label="Packet list" tabindex="0">
+              <div class="prow phead" role="row">
+                <span role="columnheader">No.</span><span role="columnheader">Time</span><span role="columnheader">Source</span><span role="columnheader">Destination</span><span role="columnheader">Proto</span><span role="columnheader">Length</span><span role="columnheader">Info</span>
+              </div>
+              <div class="pbody" id="pbody">
+                <div class="pspacer" id="pspacer"></div>
+                <div class="prows" id="prows"></div>
+              </div>
+            </div>
+          </div>
+          <div class="inspect">
+            <div class="tree-panel">
+              <div class="panel-head"><span>PACKET DETAIL</span><small id="treeHint">Hover a field to light its bytes</small></div>
+              <div class="tree" id="tree" role="tree" aria-label="Decoded fields"></div>
+            </div>
+            <div class="hex-panel">
+              <div class="panel-head">
+                <span id="hexTitle">BYTES</span>
+                <div class="hex-tabs" id="hexTabs" role="group" aria-label="Byte source">
+                  <button type="button" data-source="0" aria-pressed="true">Frame</button
+                  ><button type="button" data-source="1" aria-pressed="false" hidden>Reassembled</button>
+                </div>
+              </div>
+              <div class="field-chip" id="chip" aria-live="polite"></div>
+              <div class="hex" id="hex" aria-label="Hex view"></div>
+              <div class="fingerprint" id="fingerprint" hidden>
+                <div class="fp-head"><span>JA3 FINGERPRINT</span><small id="fpSni"></small></div>
+                <code class="fp-string" id="fpString"></code>
+                <div class="fp-hash"><span>MD5</span><strong id="fpHash"></strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabpanel" id="panel-flows" role="tabpanel" aria-labelledby="tab-flows" hidden>
+          <div class="table-wrap"><table class="table" id="flowTable"></table></div>
+          <div class="stream" id="stream" hidden>
+            <div class="panel-head"><span id="streamTitle">STREAM</span><small id="streamMeta"></small></div>
+            <div class="turns" id="turns"></div>
+          </div>
+        </div>
+        <div class="tabpanel" id="panel-tls" role="tabpanel" aria-labelledby="tab-tls" hidden>
+          <div class="cards" id="tlsCards"></div>
+        </div>
+        <div class="tabpanel" id="panel-dns" role="tabpanel" aria-labelledby="tab-dns" hidden>
+          <div class="table-wrap"><table class="table" id="dnsTable"></table></div>
+        </div>
+        <div class="preview-caption" aria-hidden="true"><span>PACKET LENS</span><strong>Live pcap decode</strong></div>
+      </section>
+
+      <section class="notes" aria-label="How it works and limits">
+        <div>
+          <p class="eyebrow">UNDER THE HOOD</p>
+          <h2>Every byte<br /><em>accounted for.</em></h2>
+        </div>
+        <div class="note-grid">
+          <article>
+            <span>01</span>
+            <h3>Decoders</h3>
+            <p>
+              Ethernet with 802.1Q, Linux SLL and raw IP; IPv4 with options and
+              fragments, IPv6 extension headers, ARP, TCP options, UDP, ICMP and
+              ICMPv6. IP, TCP, UDP and ICMP checksums are verified, including the
+              pseudo-header.
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Streams</h3>
+            <p>
+              Flows are keyed by 5-tuple. Sequence arithmetic survives the 2^32
+              wrap, late segments wait in a bounded buffer, retransmissions are
+              compared byte for byte, and holes become explicit gaps.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Limits</h3>
+            <p>
+              IP fragments are flagged but not reassembled. TLS records are
+              decoded up to the encrypted boundary; nothing is decrypted. HTTP/2
+              and QUIC are not parsed. Captures up to 256 MB, decoded in memory.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a href="https://cactuscash.github.io/saoodwilliams-com/">Sa'ood Williams portfolio</a
+      ><span>Packet Lens / pcap and pcapng in pure JavaScript</span
+      >
+    </footer>
+    <script type="module" src="app.js?v=515dba1803"></script>
+  </body>
+</html>

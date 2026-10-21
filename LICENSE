@@ -1,0 +1,33 @@
+Copyright (c) 2026 Sa'ood Williams. All rights reserved.
+
+This repository and the website it builds (including all source code, shaders,
+designs, text, images, video, audio and other assets, together "the Work")
+are proprietary and confidential.
+
+No licence is granted. Without prior written permission from the copyright
+holder you may not, in whole or in part:
+
+  1. copy, reproduce, modify, translate, adapt or create derivative works of
+     the Work, including by re-implementing its distinctive designs, effects
+     or code from observation;
+  2. distribute, publish, sublicense, sell, host or otherwise make the Work
+     available to anyone;
+  3. use the Work, or any output, screenshot, recording or description of it,
+     to train, fine-tune, evaluate, prompt or otherwise feed any machine
+     learning or artificial intelligence system, or to have such a system
+     generate a copy, imitation or derivative of the Work;
+  4. scrape, crawl, mirror or archive the Work by automated means;
+  5. remove or alter any copyright, licence or attribution notice.
+
+Viewing the published website in a web browser for personal, non-commercial
+purposes is permitted.
+
+Text and data mining reservation: the copyright holder expressly reserves the
+rights in the Work against text and data mining under Article 4(3) of
+Directive (EU) 2019/790 and any equivalent law.
+
+Third-party components included in the Work (for example Google MediaPipe,
+Apache License 2.0) remain under their own licences, which are reproduced next
+to those components.
+
+Permission requests: saoodwilliams321@gmail.com

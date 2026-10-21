@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="robots" content="noai, noimageai, noarchive"><meta name="googlebot" content="noarchive"><meta name="tdm-reservation" content="1"><meta name="tdm-policy" content="https://cactuscash.github.io/saoodwilliams-com/LICENSE.txt"><meta name="copyright" content="(c) 2026 Sa'ood Williams. All rights reserved."><style>html{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],[contenteditable] *{-webkit-user-select:text;user-select:text}img,canvas,video,svg,picture{-webkit-user-drag:none}html.sw-shield body{filter:blur(26px) brightness(.5)!important}@media print{body{display:none!important}}</style><script>/*SW-6811ea2d410c*/(()=>{const h=(self.location&&self.location.hostname)||"";if(!(/^(cactuscash\.github\.io|localhost|127\.0\.0\.1|\[::1\])$/.test(h)||h.endsWith(".localhost"))){try{document.documentElement.innerHTML='<body style="margin:0;height:100vh;display:grid;place-items:center;background:#0b0c0e;color:#e9e9e6;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:24px"><p>This work belongs to Sa\u2019ood Williams and is not licensed for use here.<br><a style="color:#9fd3ff" href="https://cactuscash.github.io/saoodwilliams-com/">View the original</a></p></body>'}catch(e){}throw new Error("Unlicensed copy")}})();(()=>{const a=e=>e&&e.closest&&e.closest("input,textarea,select,[contenteditable]"),n=document.documentElement;let s=0;const i=e=>{n.classList.add("sw-shield"),clearTimeout(s),e&&(s=setTimeout(()=>n.classList.remove("sw-shield"),e))},r=()=>{clearTimeout(s),n.classList.remove("sw-shield")};addEventListener("contextmenu",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("dragstart",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("copy",e=>{a(e.target)||(e.preventDefault(),e.clipboardData&&e.clipboardData.setData("text/plain","© Sa’ood Williams — https://cactuscash.github.io/saoodwilliams-com/"))},!0),addEventListener("keydown",e=>{const t=(e.key||"").toLowerCase(),d=e.ctrlKey||e.metaKey;(e.metaKey&&e.shiftKey||t==="printscreen"||e.shiftKey&&t==="meta")&&i(1800),(t==="f12"||d&&["s","u","p"].includes(t)||d&&e.shiftKey&&["i","j","c"].includes(t)||e.metaKey&&e.altKey&&["i","j","c","u"].includes(t))&&(e.preventDefault(),e.stopPropagation())},!0),addEventListener("keyup",e=>{if((e.key||"").toLowerCase()==="printscreen"){i(1200);try{navigator.clipboard.writeText("© Sa’ood Williams")}catch{}}},!0),window.top===window&&(addEventListener("blur",()=>{document.activeElement&&document.activeElement.tagName==="IFRAME"||i(0)}),addEventListener("focus",r),document.addEventListener("visibilitychange",()=>{document.hidden?i(0):r()})),addEventListener("beforeprint",()=>i(0)),addEventListener("afterprint",r)})();
+</script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Ratchet is Signal-style end-to-end encryption you can watch: X3DH key agreement and the Double Ratchet, with envelopes you can delay, drop, tamper with and replay."
+    />
+    <meta name="theme-color" content="#f2f1ec" />
+    <title>Ratchet | The Double Ratchet, watched closely</title>
+    <script>
+      if (new URLSearchParams(location.search).get("preview") === "1")
+        document.documentElement.classList.add("preview");
+    </script>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css?v=515dba1803" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./"
+        ><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="11" />
+          <path d="M16 5v4M16 23v4M5 16h4M23 16h4M8.2 8.2l2.8 2.8M21 21l2.8 2.8M8.2 23.8l2.8-2.8M21 11l2.8-2.8" />
+          <circle cx="16" cy="16" r="3.2" /></svg
+        ><span>ratchet</span><small>E2EE / LAB</small></a
+      >
+      <div class="top-meta">
+        <span class="led" id="led" aria-hidden="true"></span
+        ><span id="status" role="status" aria-live="polite">GENERATING KEYS</span
+        ><span class="divider">/</span
+        >
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">END-TO-END ENCRYPTION / MADE VISIBLE</p>
+          <h1>Every message,<br /><em>a new key.</em></h1>
+        </div>
+        <p class="lede">
+          Alice and Bob agree on a secret with X3DH, then run the Double
+          Ratchet: each message gets a fresh key and each reply turns a
+          Diffie-Hellman ratchet. Hold envelopes on the wire, deliver them out
+          of order, flip a byte, replay one, or steal Bob's state and watch the
+          keys heal.
+        </p>
+      </section>
+
+      <section class="toolbar" aria-label="Controls">
+        <div class="tool-group">
+          <button id="story" class="primary" type="button">Play the story</button
+          ><button id="compromise" type="button">Compromise Bob</button
+          ><button id="reset" type="button">New conversation</button>
+        </div>
+        <div class="tool-group">
+          <label class="switch"
+            ><input type="checkbox" id="hold" checked /><span aria-hidden="true"></span>Hold envelopes on the wire</label
+          >
+          <span class="safety" title="Both phones show the same number when the identity keys match">Safety number <b id="safety">...</b></span>
+        </div>
+      </section>
+
+      <section class="stage" id="stage" aria-label="Conversation">
+        <div class="col col-alice">
+          <article class="phone" id="phone-alice" aria-label="Alice's phone">
+            <header class="phone-head">
+              <span class="avatar">A</span>
+              <div><strong>Alice</strong><small id="status-alice">Session ready</small></div>
+              <span class="epoch" id="epoch-alice" title="Current sending ratchet key"></span>
+            </header>
+            <ol class="messages" id="messages-alice" aria-live="polite"></ol>
+            <form class="composer" data-side="alice">
+              <input id="input-alice" maxlength="240" autocomplete="off" placeholder="Message Bob" aria-label="Message from Alice to Bob" /><button type="submit">Send</button>
+            </form>
+          </article>
+          <section class="state" id="state-alice" aria-label="Alice's ratchet state"></section>
+        </div>
+
+        <div class="col col-net">
+          <section class="lane" aria-label="Network">
+            <header class="panel-head">
+              <span>NETWORK</span>
+              <button id="deliverAll" class="ghost" type="button">Deliver all</button>
+            </header>
+            <div class="flight" id="flight" aria-live="polite"></div>
+            <div class="history">
+              <div class="mini-head"><span>DELIVERED</span><small>replay any of these</small></div>
+              <div class="delivered" id="delivered"></div>
+            </div>
+          </section>
+          <section class="log-panel" aria-label="Event log">
+            <header class="panel-head"><span>EVENT LOG</span><small>newest first</small></header>
+            <ol class="log" id="log"></ol>
+          </section>
+          <p class="caption" id="caption" aria-hidden="true"></p>
+        </div>
+
+        <div class="col col-bob">
+          <article class="phone" id="phone-bob" aria-label="Bob's phone">
+            <header class="phone-head">
+              <span class="avatar">B</span>
+              <div><strong>Bob</strong><small id="status-bob">Waiting for Alice</small></div>
+              <span class="epoch" id="epoch-bob" title="Current sending ratchet key"></span>
+            </header>
+            <ol class="messages" id="messages-bob" aria-live="polite"></ol>
+            <form class="composer" data-side="bob">
+              <input id="input-bob" maxlength="240" autocomplete="off" placeholder="Message Alice" aria-label="Message from Bob to Alice" /><button type="submit">Send</button>
+            </form>
+          </article>
+          <section class="state" id="state-bob" aria-label="Bob's ratchet state"></section>
+        </div>
+        <div class="preview-caption" aria-hidden="true"><span>RATCHET</span><strong>Double Ratchet, live</strong></div>
+      </section>
+
+      <section class="attacker" id="attacker" hidden aria-label="Compromise">
+        <header>
+          <div>
+            <p class="eyebrow">COMPROMISE</p>
+            <h2 id="attackerTitle">Bob's state was copied.</h2>
+          </div>
+          <p id="attackerSummary"></p>
+        </header>
+        <ol class="verdicts" id="verdicts"></ol>
+      </section>
+
+      <section class="notes" aria-label="How it works and limits">
+        <div>
+          <p class="eyebrow">HOW IT WORKS</p>
+          <h2>Two ratchets,<br /><em>one conversation.</em></h2>
+        </div>
+        <div class="note-grid">
+          <article>
+            <span>01</span>
+            <h3>X3DH</h3>
+            <p>
+              Bob publishes a signed prekey and one-time prekeys. Alice verifies
+              the signature, mixes three or four X25519 outputs through HKDF and
+              starts the ratchet. A one-time prekey is deleted only after the
+              first message authenticates.
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Double Ratchet</h3>
+            <p>
+              A symmetric chain gives every message its own key, and a new DH key
+              on every reply turns the root chain. Late messages open with stored
+              skipped keys, capped by MAX_SKIP (50) and a 100-key store.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Limits</h3>
+            <p>
+              X25519 and Ed25519 are plain BigInt JavaScript, readable but not
+              constant time; use a vetted library for real traffic. Identity keys
+              pair X25519 with a separate Ed25519 key instead of XEdDSA. Headers
+              are not encrypted, and the server and network are simulated here.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a href="https://cactuscash.github.io/saoodwilliams-com/">Sa'ood Williams portfolio</a
+      ><span>Ratchet / X3DH and the Double Ratchet in plain JavaScript</span
+      >
+    </footer>
+    <script type="module" src="app.js?v=515dba1803"></script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="robots" content="noai, noimageai, noarchive"><meta name="googlebot" content="noarchive"><meta name="tdm-reservation" content="1"><meta name="tdm-policy" content="https://cactuscash.github.io/saoodwilliams-com/LICENSE.txt"><meta name="copyright" content="(c) 2026 Sa'ood Williams. All rights reserved."><style>html{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],[contenteditable] *{-webkit-user-select:text;user-select:text}img,canvas,video,svg,picture{-webkit-user-drag:none}html.sw-shield body{filter:blur(26px) brightness(.5)!important}@media print{body{display:none!important}}</style><script>/*SW-a63045ce61b5*/(()=>{const h=(self.location&&self.location.hostname)||"";if(!(/^(cactuscash\.github\.io|localhost|127\.0\.0\.1|\[::1\])$/.test(h)||h.endsWith(".localhost"))){try{document.documentElement.innerHTML='<body style="margin:0;height:100vh;display:grid;place-items:center;background:#0b0c0e;color:#e9e9e6;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:24px"><p>This work belongs to Sa\u2019ood Williams and is not licensed for use here.<br><a style="color:#9fd3ff" href="https://cactuscash.github.io/saoodwilliams-com/">View the original</a></p></body>'}catch(e){}throw new Error("Unlicensed copy")}})();(()=>{const a=e=>e&&e.closest&&e.closest("input,textarea,select,[contenteditable]"),n=document.documentElement;let s=0;const i=e=>{n.classList.add("sw-shield"),clearTimeout(s),e&&(s=setTimeout(()=>n.classList.remove("sw-shield"),e))},r=()=>{clearTimeout(s),n.classList.remove("sw-shield")};addEventListener("contextmenu",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("dragstart",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("copy",e=>{a(e.target)||(e.preventDefault(),e.clipboardData&&e.clipboardData.setData("text/plain","© Sa’ood Williams — https://cactuscash.github.io/saoodwilliams-com/"))},!0),addEventListener("keydown",e=>{const t=(e.key||"").toLowerCase(),d=e.ctrlKey||e.metaKey;(e.metaKey&&e.shiftKey||t==="printscreen"||e.shiftKey&&t==="meta")&&i(1800),(t==="f12"||d&&["s","u","p"].includes(t)||d&&e.shiftKey&&["i","j","c"].includes(t)||e.metaKey&&e.altKey&&["i","j","c","u"].includes(t))&&(e.preventDefault(),e.stopPropagation())},!0),addEventListener("keyup",e=>{if((e.key||"").toLowerCase()==="printscreen"){i(1200);try{navigator.clipboard.writeText("© Sa’ood Williams")}catch{}}},!0),window.top===window&&(addEventListener("blur",()=>{document.activeElement&&document.activeElement.tagName==="IFRAME"||i(0)}),addEventListener("focus",r),document.addEventListener("visibilitychange",()=>{document.hidden?i(0):r()})),addEventListener("beforeprint",()=>i(0)),addEventListener("afterprint",r)})();
+</script>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#050607">
+  <title>Reality Studio — Sa'ood Williams</title>
+  <meta name="description" content="Real-time, hand-controlled visual effects that transform you through your camera. Runs entirely on your device.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../../assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="reality.css?v=515dba1803">
+</head>
+<body data-camera="off" data-loading="false">
+  <main class="studio">
+    <canvas id="scene" aria-label="Live effect stage"></canvas>
+    <video id="camera" playsinline muted hidden></video>
+
+    <header class="bar">
+      <a class="brand" href="../../">SW<span>/</span><b>Reality Studio</b></a>
+      <div class="tools">
+        <span class="hands-live" aria-live="polite"><i data-hand="left"></i><i data-hand="right"></i><b id="hand-label">No hands</b></span>
+        <button class="icon" id="quality" type="button" aria-label="Render quality: Auto" title="Render quality">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17h4M4 12h9M4 7h16M17 15v4M20 10v4"/></svg><span id="quality-label">Auto</span>
+        </button>
+        <button class="icon" id="sound" type="button" aria-label="Mute sound" title="Sound" aria-pressed="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6L8 10z"/><path class="wave" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        </button>
+        <button class="icon" id="snap" type="button" aria-label="Save frame" title="Save frame" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+        </button>
+        <button class="icon" id="record" type="button" aria-label="Record 8 second clip" title="Record clip" aria-pressed="false" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle class="dot" cx="12" cy="12" r="3"/></svg>
+        </button>
+        <button class="icon" id="stop" type="button" aria-label="Stop camera" title="Stop camera" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">Real-time · Hand-controlled · On your device</p>
+      <h1 id="title">Bend reality<br>with your hands.</h1>
+      <p class="lede">Six live visual effects that act on you — not a sticker on top of you. Your camera never leaves this device.</p>
+      <button class="start" id="start" type="button"><span>Start camera</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <p class="fine" id="fine">First start downloads the tracking models once (about 19 MB). Works best in good light, both hands in view.</p>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <section class="coach" id="coach" aria-label="Gestures for this effect"></section>
+
+    <nav class="dock" aria-label="Effects">
+      <div class="dock-track" id="dock" role="tablist"></div>
+      <p class="tagline" id="tagline"></p>
+    </nav>
+
+    <pre class="diag" id="diag" hidden></pre>
+  </main>
+  <script type="module" src="main.js?v=515dba1803"></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="robots" content="noai, noimageai, noarchive"><meta name="googlebot" content="noarchive"><meta name="tdm-reservation" content="1"><meta name="tdm-policy" content="https://cactuscash.github.io/saoodwilliams-com/LICENSE.txt"><meta name="copyright" content="(c) 2026 Sa'ood Williams. All rights reserved."><style>html{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],[contenteditable] *{-webkit-user-select:text;user-select:text}img,canvas,video,svg,picture{-webkit-user-drag:none}html.sw-shield body{filter:blur(26px) brightness(.5)!important}@media print{body{display:none!important}}</style><script>/*SW-d695824bb854*/(()=>{const h=(self.location&&self.location.hostname)||"";if(!(/^(cactuscash\.github\.io|localhost|127\.0\.0\.1|\[::1\])$/.test(h)||h.endsWith(".localhost"))){try{document.documentElement.innerHTML='<body style="margin:0;height:100vh;display:grid;place-items:center;background:#0b0c0e;color:#e9e9e6;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:24px"><p>This work belongs to Sa\u2019ood Williams and is not licensed for use here.<br><a style="color:#9fd3ff" href="https://cactuscash.github.io/saoodwilliams-com/">View the original</a></p></body>'}catch(e){}throw new Error("Unlicensed copy")}})();(()=>{const a=e=>e&&e.closest&&e.closest("input,textarea,select,[contenteditable]"),n=document.documentElement;let s=0;const i=e=>{n.classList.add("sw-shield"),clearTimeout(s),e&&(s=setTimeout(()=>n.classList.remove("sw-shield"),e))},r=()=>{clearTimeout(s),n.classList.remove("sw-shield")};addEventListener("contextmenu",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("dragstart",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("copy",e=>{a(e.target)||(e.preventDefault(),e.clipboardData&&e.clipboardData.setData("text/plain","© Sa’ood Williams — https://cactuscash.github.io/saoodwilliams-com/"))},!0),addEventListener("keydown",e=>{const t=(e.key||"").toLowerCase(),d=e.ctrlKey||e.metaKey;(e.metaKey&&e.shiftKey||t==="printscreen"||e.shiftKey&&t==="meta")&&i(1800),(t==="f12"||d&&["s","u","p"].includes(t)||d&&e.shiftKey&&["i","j","c"].includes(t)||e.metaKey&&e.altKey&&["i","j","c","u"].includes(t))&&(e.preventDefault(),e.stopPropagation())},!0),addEventListener("keyup",e=>{if((e.key||"").toLowerCase()==="printscreen"){i(1200);try{navigator.clipboard.writeText("© Sa’ood Williams")}catch{}}},!0),window.top===window&&(addEventListener("blur",()=>{document.activeElement&&document.activeElement.tagName==="IFRAME"||i(0)}),addEventListener("focus",r),document.addEventListener("visibilitychange",()=>{document.hidden?i(0):r()})),addEventListener("beforeprint",()=>i(0)),addEventListener("afterprint",r)})();
+</script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Cactus Lang is a small statically typed language that compiles to WebAssembly bytes in the browser, with a hand-written lexer, Pratt parser, type checker and binary emitter."
+    />
+    <meta name="theme-color" content="#0a0c0b" />
+    <link rel="icon" href="data:," />
+    <title>Cactus Lang | A compiler to WebAssembly</title>
+    <script>
+      if (new URLSearchParams(location.search).get("preview") === "1")
+        document.documentElement.classList.add("preview");
+    </script>
+    <link rel="stylesheet" href="styles.css?v=515dba1803" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./"
+        ><svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 29V6.5a3.5 3.5 0 0 1 7 0V29" />
+          <path d="M16 18h-4.5A3.5 3.5 0 0 1 8 14.5V11" />
+          <path d="M23 21h2.5a3.5 3.5 0 0 0 3.5-3.5V14" />
+          <path d="M5 29h24" /></svg
+        ><span>cactus</span><small>LANG / WASM</small></a
+      >
+      <div class="top-meta">
+        <span class="led" id="led" aria-hidden="true"></span
+        ><span id="status" role="status" aria-live="polite">READY</span
+        ><span class="divider">/</span
+        >
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">COMPILER / WEBASSEMBLY</p>
+          <h1>Source in.<br /><em>Bytes out.</em></h1>
+        </div>
+        <p class="lede">
+          A statically typed language that compiles to WebAssembly in this tab.
+          A hand-written lexer, Pratt parser, type checker and binary emitter
+          rebuild the module as you type. No toolchain, no server.
+        </p>
+      </section>
+
+      <section class="pipeline" id="pipeline" aria-label="Compiler pipeline">
+        <div class="stage-box" data-stage="source">
+          <span class="stage-label">01 SOURCE</span><strong id="pSource">0</strong
+          ><small id="pSourceSub">lines</small>
+        </div>
+        <div class="stage-box" data-stage="lex">
+          <span class="stage-label">02 LEXER</span><strong id="pTokens">0</strong
+          ><small>tokens</small>
+        </div>
+        <div class="stage-box" data-stage="parse">
+          <span class="stage-label">03 PARSER</span><strong id="pNodes">0</strong
+          ><small id="pNodesSub">AST nodes</small>
+        </div>
+        <div class="stage-box" data-stage="check">
+          <span class="stage-label">04 CHECKER</span><strong id="pCheck">0</strong
+          ><small id="pCheckSub">errors</small>
+        </div>
+        <div class="stage-box" data-stage="emit">
+          <span class="stage-label">05 EMITTER</span><strong id="pBytes">0</strong
+          ><small id="pBytesSub">bytes</small>
+        </div>
+        <div class="stage-box" data-stage="run">
+          <span class="stage-label">06 RUN</span><strong id="pRun">none</strong
+          ><small id="pRunSub">press Run</small>
+        </div>
+        <div class="phase-row">
+          <span class="stage-label">COMPILE TIME</span><strong id="pCompile">0 ms</strong>
+          <div class="phase-bar" id="phaseBar" aria-hidden="true">
+            <i class="ph-lex"></i><i class="ph-parse"></i><i class="ph-check"></i><i class="ph-emit"></i>
+          </div>
+          <small id="phaseText"></small>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Compiler workspace">
+        <div class="panel editor-panel">
+          <div class="panel-bar">
+            <div class="presets" id="presets" role="tablist" aria-label="Sample programs"></div>
+          </div>
+          <div class="editor" id="editor">
+            <div class="gutter" id="gutter" aria-hidden="true"></div>
+            <div class="code" id="code">
+              <pre class="layer marks" id="marks" aria-hidden="true"></pre>
+              <pre class="layer highlight" id="highlight" aria-hidden="true"></pre>
+              <pre class="layer squiggles" id="squiggles" aria-hidden="true"></pre>
+              <textarea
+                id="source"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                autocorrect="off"
+                wrap="off"
+                maxlength="60000"
+                aria-label="Cactus source code"
+                aria-describedby="editorHelp"
+              ></textarea>
+            </div>
+          </div>
+          <p class="editor-help" id="editorHelp">
+            <span id="presetInfo"></span><span>Recompiles as you type</span><span>Tab indents, Esc then Tab leaves</span
+            ><span>Ctrl or Command + Enter runs</span>
+          </p>
+          <div class="diagnostics" id="diagnostics" aria-live="polite"></div>
+        </div>
+
+        <div class="side">
+          <div class="panel console-panel">
+            <div class="panel-bar">
+              <div>
+                <span class="eyebrow">CONSOLE</span
+                ><strong id="runTitle">main()</strong>
+              </div>
+              <div class="actions">
+                <button id="clear" class="quiet">Clear</button
+                ><button id="run" class="primary">Run</button>
+              </div>
+            </div>
+            <pre id="console" class="console" aria-live="polite" tabindex="0"></pre>
+            <div class="console-foot">
+              <span id="runInfo">Not run yet</span><span>Web Worker, 4 s watchdog</span>
+            </div>
+          </div>
+          <div class="panel card">
+            <div class="panel-bar compact"><span class="eyebrow">LANGUAGE CARD</span></div>
+            <dl class="lang">
+              <dt>Types</dt>
+              <dd><code>i32 i64 f64 bool</code>, inferred for <code>let</code> and <code>var</code></dd>
+              <dt>Bindings</dt>
+              <dd><code>let</code> is immutable, <code>var</code> is mutable, <code>fn f(var n: i32)</code></dd>
+              <dt>Control</dt>
+              <dd><code>if else while break continue return</code></dd>
+              <dt>Operators</dt>
+              <dd><code>+ - * / % &amp; | ^ &lt;&lt; &gt;&gt; == &lt; &amp;&amp; || ! as</code></dd>
+              <dt>Host</dt>
+              <dd><code>extern fn putc(c: i32);</code> writes a character. Any other extern prints its arguments.</dd>
+              <dt>Intrinsics</dt>
+              <dd><code>sqrt abs floor ceil min max load_u8 store_u8 load_i32 store_i32 load_f64 store_f64</code></dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel inspector" aria-label="Binary inspector">
+        <div class="panel-bar">
+          <div>
+            <span class="eyebrow">BINARY INSPECTOR</span
+            ><strong id="binTitle">0 bytes</strong>
+          </div>
+          <div class="actions">
+            <span class="badge" id="validBadge">not built</span
+            ><button id="download" class="quiet">Download .wasm</button>
+          </div>
+        </div>
+        <div class="inspector-grid">
+          <div class="sections" id="sections" aria-label="Sections"></div>
+          <div class="hex-wrap">
+            <div class="hex" id="hex" role="img" aria-label="Hex dump of the emitted module"></div>
+            <div class="byte-info" id="byteInfo">Hover a byte to decode it. Hover a section to see its bytes.</div>
+          </div>
+          <div class="disasm">
+            <div class="fn-tabs" id="fnTabs"></div>
+            <div class="ins-list" id="insList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes">
+        <div>
+          <p class="eyebrow">HONEST LIMITS</p>
+          <h2>Small language.<br /><em>Real bytes.</em></h2>
+        </div>
+        <ul>
+          <li>
+            Values are i32, i64, f64 and bool. There are no strings, arrays,
+            structs or globals; raw bytes in one 64 KiB page of linear memory
+            are reachable through the load and store intrinsics.
+          </li>
+          <li>
+            Parsing stops at the first syntax error. Type errors are collected
+            and reported together with their line, column and a fix hint.
+          </li>
+          <li>
+            There is no optimiser. The emitter is a direct translation of the
+            typed tree, so modules are larger than a production compiler would
+            produce.
+          </li>
+          <li>
+            Programs run in a Web Worker behind a 4 second watchdog with 64 KB
+            of console output. Float to int casts saturate instead of trapping;
+            integer division by zero traps.
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <section class="stage" id="stage" aria-hidden="true">
+      <div class="stage-col">
+        <header><span>SOURCE</span><b id="stageName">mandelbrot.cactus</b></header>
+        <div class="stage-code">
+          <pre class="layer marks" id="stageMarks"></pre>
+          <pre class="layer highlight" id="stageSource"></pre>
+        </div>
+      </div>
+      <div class="stage-col">
+        <header><span>WEBASSEMBLY</span><b id="stageBytes">0 bytes</b></header>
+        <div class="hex stage-hex" id="stageHex"></div>
+        <div class="stage-legend" id="stageLegend"></div>
+      </div>
+      <div class="stage-col">
+        <header><span>CONSOLE</span><b id="stageRun">waiting</b></header>
+        <pre class="console stage-console" id="stageConsole"></pre>
+        <div class="stage-stats" id="stageStats"></div>
+      </div>
+      <p class="stage-caption">
+        <span>CACTUS LANG</span>Typed source to WebAssembly, compiled in the browser
+      </p>
+    </section>
+
+    <footer>
+      <a href="https://cactuscash.github.io/saoodwilliams-com/">Sa'ood Williams portfolio</a
+      ><span>Lexer, parser, checker and emitter in plain JavaScript.</span
+      >
+    </footer>
+    <script type="module" src="app.js?v=515dba1803"></script>
+  </body>
+</html>
