@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="robots" content="noai, noimageai, noarchive"><meta name="googlebot" content="noarchive"><meta name="tdm-reservation" content="1"><meta name="tdm-policy" content="https://cactuscash.github.io/saoodwilliams-com/LICENSE.txt"><meta name="copyright" content="(c) 2026 Sa'ood Williams. All rights reserved."><style>html{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],[contenteditable] *{-webkit-user-select:text;user-select:text}img,canvas,video,svg,picture{-webkit-user-drag:none}html.sw-shield body{filter:blur(26px) brightness(.5)!important}@media print{body{display:none!important}}</style><script>/*SW-28627ff4c91a*/(()=>{const h=(self.location&&self.location.hostname)||"";if(!(/^(cactuscash\.github\.io|localhost|127\.0\.0\.1|\[::1\])$/.test(h)||h.endsWith(".localhost"))){try{document.documentElement.innerHTML='<body style="margin:0;height:100vh;display:grid;place-items:center;background:#0b0c0e;color:#e9e9e6;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:24px"><p>This work belongs to Sa\u2019ood Williams and is not licensed for use here.<br><a style="color:#9fd3ff" href="https://cactuscash.github.io/saoodwilliams-com/">View the original</a></p></body>'}catch(e){}throw new Error("Unlicensed copy")}})();(()=>{const a=e=>e&&e.closest&&e.closest("input,textarea,select,[contenteditable]"),n=document.documentElement;let s=0;const i=e=>{n.classList.add("sw-shield"),clearTimeout(s),e&&(s=setTimeout(()=>n.classList.remove("sw-shield"),e))},r=()=>{clearTimeout(s),n.classList.remove("sw-shield")};addEventListener("contextmenu",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("dragstart",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("copy",e=>{a(e.target)||(e.preventDefault(),e.clipboardData&&e.clipboardData.setData("text/plain","© Sa’ood Williams — https://cactuscash.github.io/saoodwilliams-com/"))},!0),addEventListener("keydown",e=>{const t=(e.key||"").toLowerCase(),d=e.ctrlKey||e.metaKey;(e.metaKey&&e.shiftKey||t==="printscreen"||e.shiftKey&&t==="meta")&&i(1800),(t==="f12"||d&&["s","u","p"].includes(t)||d&&e.shiftKey&&["i","j","c"].includes(t)||e.metaKey&&e.altKey&&["i","j","c","u"].includes(t))&&(e.preventDefault(),e.stopPropagation())},!0),addEventListener("keyup",e=>{if((e.key||"").toLowerCase()==="printscreen"){i(1200);try{navigator.clipboard.writeText("© Sa’ood Williams")}catch{}}},!0),window.top===window&&(addEventListener("blur",()=>{document.activeElement&&document.activeElement.tagName==="IFRAME"||i(0)}),addEventListener("focus",r),document.addEventListener("visibilitychange",()=>{document.hidden?i(0):r()})),addEventListener("beforeprint",()=>i(0)),addEventListener("afterprint",r)})();
+</script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Orbit Workspace: a thoughtful kanban workspace with local persistence."
+    />
+    <title>Orbit | Project workspace</title>
+    <link rel="stylesheet" href="base.css?v=0aafddc6f3" />
+    <link rel="stylesheet" href="styles.css?v=0aafddc6f3" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="./" style="color: inherit; text-decoration: none"
+        ><b>◎</b>orbit<span class="workspace"> / Personal workspace</span></a
+      ><span class="mode" id="mode">Connecting…</span>
+    </header>
+    <main>
+      <div class="top">
+        <div>
+          <p class="eyebrow">WORKSPACE / PRODUCT</p>
+          <h1>Good work starts here.</h1>
+          <p>A little clarity for your next big idea.</p>
+        </div>
+        <div class="actions">
+          <button id="export">↓ Export board</button
+          ><button class="primary" id="new">＋ New task</button>
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="board-head">
+        <h2>Product roadmap <span class="muted">/ Board</span></h2>
+        <p>Sample workspace · make it your own</p>
+      </div>
+      <div class="toolbar">
+        <input
+          id="search"
+          type="search"
+          aria-label="Search tasks"
+          placeholder="⌕  Search tasks, labels, or IDs…"
+        /><select id="priority" aria-label="Filter by priority">
+          <option>All priorities</option>
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option></select
+        ><button id="reset">Reset sample</button>
+      </div>
+      <div class="board" id="board" aria-label="Task board"></div>
+    </main>
+    <footer>
+      <span>Built by Sa'ood Williams · Node.js / SQLite / JavaScript</span
+      ><a href="https://github.com/CACTUSCASH">GitHub ↗</a
+      ><a href="https://cactuscash.github.io/saoodwilliams-com/">← Portfolio</a>
+    </footer>
+    <dialog id="editor">
+      <form id="taskForm">
+        <div class="panel-head">
+          <h2 id="editorTitle">New task</h2>
+          <button type="button" id="close" aria-label="Close task editor">
+            ×
+          </button>
+        </div>
+        <label
+          >Title<input
+            name="title"
+            required
+            maxlength="120"
+            placeholder="What needs to happen?" /></label
+        ><label
+          >Description<textarea
+            name="description"
+            maxlength="2000"
+            placeholder="A little context goes a long way."
+          ></textarea></label
+        ><label
+          >Status<select name="status">
+            <option>Backlog</option>
+            <option>In progress</option>
+            <option>Review</option>
+            <option>Done</option>
+          </select></label
+        ><label
+          >Priority<select name="priority">
+            <option>Medium</option>
+            <option>High</option>
+            <option>Low</option>
+          </select></label
+        ><label
+          >Label<input name="tag" maxlength="40" value="Feature" required
+        /></label>
+        <div class="actions">
+          <button type="button" id="delete">Delete task</button
+          ><button class="primary" type="submit">Save task</button>
+        </div>
+      </form>
+    </dialog>
+    <script type="module" src="app.js?v=0aafddc6f3"></script>
+  </body>
+</html>

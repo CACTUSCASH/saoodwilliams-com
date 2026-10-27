@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="robots" content="noai, noimageai, noarchive"><meta name="googlebot" content="noarchive"><meta name="tdm-reservation" content="1"><meta name="tdm-policy" content="https://cactuscash.github.io/saoodwilliams-com/LICENSE.txt"><meta name="copyright" content="(c) 2026 Sa'ood Williams. All rights reserved."><style>html{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],[contenteditable] *{-webkit-user-select:text;user-select:text}img,canvas,video,svg,picture{-webkit-user-drag:none}html.sw-shield body{filter:blur(26px) brightness(.5)!important}@media print{body{display:none!important}}</style><script>/*SW-ef09977dacad*/(()=>{const h=(self.location&&self.location.hostname)||"";if(!(/^(cactuscash\.github\.io|localhost|127\.0\.0\.1|\[::1\])$/.test(h)||h.endsWith(".localhost"))){try{document.documentElement.innerHTML='<body style="margin:0;height:100vh;display:grid;place-items:center;background:#0b0c0e;color:#e9e9e6;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:24px"><p>This work belongs to Sa\u2019ood Williams and is not licensed for use here.<br><a style="color:#9fd3ff" href="https://cactuscash.github.io/saoodwilliams-com/">View the original</a></p></body>'}catch(e){}throw new Error("Unlicensed copy")}})();(()=>{const a=e=>e&&e.closest&&e.closest("input,textarea,select,[contenteditable]"),n=document.documentElement;let s=0;const i=e=>{n.classList.add("sw-shield"),clearTimeout(s),e&&(s=setTimeout(()=>n.classList.remove("sw-shield"),e))},r=()=>{clearTimeout(s),n.classList.remove("sw-shield")};addEventListener("contextmenu",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("dragstart",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("copy",e=>{a(e.target)||(e.preventDefault(),e.clipboardData&&e.clipboardData.setData("text/plain","© Sa’ood Williams — https://cactuscash.github.io/saoodwilliams-com/"))},!0),addEventListener("keydown",e=>{const t=(e.key||"").toLowerCase(),d=e.ctrlKey||e.metaKey;(e.metaKey&&e.shiftKey||t==="printscreen"||e.shiftKey&&t==="meta")&&i(1800),(t==="f12"||d&&["s","u","p"].includes(t)||d&&e.shiftKey&&["i","j","c"].includes(t)||e.metaKey&&e.altKey&&["i","j","c","u"].includes(t))&&(e.preventDefault(),e.stopPropagation())},!0),addEventListener("keyup",e=>{if((e.key||"").toLowerCase()==="printscreen"){i(1200);try{navigator.clipboard.writeText("© Sa’ood Williams")}catch{}}},!0),window.top===window&&(addEventListener("blur",()=>{document.activeElement&&document.activeElement.tagName==="IFRAME"||i(0)}),addEventListener("focus",r),document.addEventListener("visibilitychange",()=>{document.hidden?i(0):r()})),addEventListener("beforeprint",()=>i(0)),addEventListener("afterprint",r)})();
+</script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="TinyDB is a relational database written from scratch that runs in your browser: 4 KiB pages, a B+tree, a write-ahead log with crash recovery, and a SQL planner you can watch."
+    />
+    <meta name="theme-color" content="#0b0e14" />
+    <title>TinyDB | A database engine in the browser</title>
+    <script>if (new URLSearchParams(location.search).get("preview") === "1") document.documentElement.classList.add("preview");</script>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css?v=0aafddc6f3" />
+    <script type="module" src="app.js?v=0aafddc6f3"></script>
+  </head>
+  <body>
+    <a class="skip" href="#workspace">Skip to the database</a>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="./">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="11" y="3.5" width="10" height="6.5" rx="1.5" />
+            <rect x="2.5" y="21" width="10.5" height="7.5" rx="1.5" />
+            <rect x="19" y="21" width="10.5" height="7.5" rx="1.5" />
+            <path d="M14 10 7.8 21M18 10l6.2 11" />
+          </svg>
+          tinydb<span>LAB / DATABASE ENGINE</span>
+        </a>
+        <div class="top-links">
+          <span class="tx-pill" id="txPill" data-state="boot">Starting worker</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="intro">
+          <div>
+            <p class="eyebrow">Relational engine / built from the page up</p>
+            <h1>A database you can<br /><em>see through.</em></h1>
+          </div>
+          <div class="intro-copy">
+            <p>
+              Slotted 4 KiB pages, a B+tree, a write-ahead log with crash recovery and a SQL planner, written from
+              scratch with no libraries and running in a Web Worker in this tab.
+            </p>
+            <p class="seed-line" id="seedLine" role="status">Seeding 2,000 users and 10,000 orders…</p>
+          </div>
+        </section>
+
+        <div id="workspace" class="workspace">
+          <section class="panel editor-panel" aria-label="SQL editor">
+            <div class="panel-head">
+              <h2><span class="index">01</span>Query</h2>
+              <span class="head-note">SQL runs inside the worker</span>
+            </div>
+            <div class="presets" id="presets" role="group" aria-label="Example queries"></div>
+            <div class="editor" id="editor">
+              <pre class="hl" aria-hidden="true"><code id="hl"></code></pre>
+              <textarea id="sql" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="SQL"></textarea>
+            </div>
+            <div class="editor-foot">
+              <label class="params" id="paramsWrap" hidden>
+                <span>? values</span>
+                <input id="params" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="42, 'delivered'" />
+              </label>
+              <span class="hint" id="hint">Ctrl + Enter runs every statement</span>
+              <button class="run" id="run" disabled>Run</button>
+            </div>
+          </section>
+
+          <section class="panel tree-panel" aria-label="B+tree visualiser">
+            <div class="panel-head">
+              <h2><span class="index">02</span>B+tree</h2>
+              <div class="tree-controls">
+                <label class="select"><span class="sr-only">Tree</span><select id="treeSelect" aria-label="Tree to draw"></select></label>
+                <button id="burst" class="quiet" disabled>Insert 24 rows</button>
+                <button id="splitDemo" class="quiet" disabled>Split demo</button>
+              </div>
+            </div>
+            <div class="tree-stage">
+              <canvas id="tree" aria-label="Pages of the selected B+tree; pages touched by the last query are lit"></canvas>
+            </div>
+            <div class="tree-meta">
+              <span id="treeFacts">Waiting for the database</span>
+              <span class="touch-chips" id="touchChips"></span>
+            </div>
+            <p class="inspector" id="inspector">Hover or tap a page to inspect it. Lit pages were touched by the last statement.</p>
+          </section>
+
+          <section class="panel results-panel" aria-label="Results">
+            <div class="stats-bar" id="stats">
+              <div><span>PAGES READ</span><strong>0</strong></div>
+              <div><span>CACHE HITS</span><strong>0</strong></div>
+              <div><span>ROWS SCANNED</span><strong>0</strong></div>
+              <div><span>ELAPSED</span><strong>0 ms</strong></div>
+              <div><span>RESULT</span><strong>none</strong></div>
+            </div>
+            <div class="stmt-tabs" id="stmtTabs" role="tablist" aria-label="Statements"></div>
+            <div class="message" id="message" role="status"></div>
+            <div class="grid-wrap" id="gridWrap"><table class="grid" id="grid"></table></div>
+          </section>
+
+          <section class="panel plan-panel" aria-label="Query plan">
+            <div class="panel-head">
+              <h2><span class="index">03</span>Plan</h2>
+              <span class="plan-legend"><b>actual</b> rows / <i>estimated</i></span>
+            </div>
+            <div class="plan" id="plan"><p class="empty">Run a statement to see its operator tree.</p></div>
+          </section>
+
+          <section class="panel wal-panel" aria-label="Write-ahead log">
+            <div class="panel-head">
+              <h2><span class="index">04</span>Write-ahead log</h2>
+              <div class="wal-actions">
+                <button id="commitDemo" class="quiet" disabled>Commit 4 transactions</button>
+                <button id="checkpoint" class="quiet" disabled>Checkpoint</button>
+                <button id="crash" class="danger" disabled>Crash and recover</button>
+              </div>
+            </div>
+            <p class="wal-facts" id="walFacts">No log yet.</p>
+            <div class="wal-timeline" id="walTimeline" aria-hidden="true"></div>
+            <div class="recovery" id="recovery" hidden></div>
+            <ol class="wal-frames" id="walFrames"></ol>
+          </section>
+        </div>
+
+        <section class="notes" aria-label="How it works and limits">
+          <div>
+            <p class="eyebrow">How it is built</p>
+            <h2>Every layer,<br /><em>hand written.</em></h2>
+          </div>
+          <div class="note-grid">
+            <article>
+              <span class="note-number">01</span>
+              <h3>Storage</h3>
+              <p>A growable ArrayBuffer of 4 KiB pages behind an LRU buffer pool with pin counts. Page 0 holds the header, catalog root and free list.</p>
+            </article>
+            <article>
+              <span class="note-number">02</span>
+              <h3>B+tree</h3>
+              <p>Slotted pages with variable-length cells, byte-balanced splits, merge or borrow on underflow, a stable root page and memcomparable keys.</p>
+            </article>
+            <article>
+              <span class="note-number">03</span>
+              <h3>Durability</h3>
+              <p>Commits append full page images and a commit record, each with a CRC32. Recovery replays whole transactions and drops a torn tail.</p>
+            </article>
+            <article>
+              <span class="note-number">04</span>
+              <h3>Limits</h3>
+              <p>One writer, no MVCC or subqueries, joins in FROM order, rows under 1,000 bytes (no overflow pages), 53-bit integers. The disk is memory: reload and it is gone.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <a href="https://cactuscash.github.io/saoodwilliams-com/">Sa'ood Williams portfolio</a>
+        <span>TinyDB / storage, B+tree, WAL, SQL</span>
+      </footer>
+    </div>
+
+    <section class="preview-stage" aria-hidden="true">
+      <div class="pv-tree">
+        <canvas id="pvTree"></canvas>
+        <p class="pv-caption"><b>tinydb</b><span id="pvStatus">B+tree of 4 KiB pages</span></p>
+      </div>
+      <div class="pv-side">
+        <p class="pv-kicker" id="pvKicker">INSERT burst</p>
+        <pre class="pv-sql" id="pvSql"></pre>
+        <div class="plan pv-plan" id="pvPlan"></div>
+        <div class="pv-stats" id="pvStats"></div>
+      </div>
+    </section>
+  </body>
+</html>

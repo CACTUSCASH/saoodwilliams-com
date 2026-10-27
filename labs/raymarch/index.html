@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta name="robots" content="noai, noimageai, noarchive"><meta name="googlebot" content="noarchive"><meta name="tdm-reservation" content="1"><meta name="tdm-policy" content="https://cactuscash.github.io/saoodwilliams-com/LICENSE.txt"><meta name="copyright" content="(c) 2026 Sa'ood Williams. All rights reserved."><style>html{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],[contenteditable] *{-webkit-user-select:text;user-select:text}img,canvas,video,svg,picture{-webkit-user-drag:none}html.sw-shield body{filter:blur(26px) brightness(.5)!important}@media print{body{display:none!important}}</style><script>/*SW-071e5b066b73*/(()=>{const h=(self.location&&self.location.hostname)||"";if(!(/^(cactuscash\.github\.io|localhost|127\.0\.0\.1|\[::1\])$/.test(h)||h.endsWith(".localhost"))){try{document.documentElement.innerHTML='<body style="margin:0;height:100vh;display:grid;place-items:center;background:#0b0c0e;color:#e9e9e6;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:24px"><p>This work belongs to Sa\u2019ood Williams and is not licensed for use here.<br><a style="color:#9fd3ff" href="https://cactuscash.github.io/saoodwilliams-com/">View the original</a></p></body>'}catch(e){}throw new Error("Unlicensed copy")}})();(()=>{const a=e=>e&&e.closest&&e.closest("input,textarea,select,[contenteditable]"),n=document.documentElement;let s=0;const i=e=>{n.classList.add("sw-shield"),clearTimeout(s),e&&(s=setTimeout(()=>n.classList.remove("sw-shield"),e))},r=()=>{clearTimeout(s),n.classList.remove("sw-shield")};addEventListener("contextmenu",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("dragstart",e=>{a(e.target)||e.preventDefault()},!0),addEventListener("copy",e=>{a(e.target)||(e.preventDefault(),e.clipboardData&&e.clipboardData.setData("text/plain","© Sa’ood Williams — https://cactuscash.github.io/saoodwilliams-com/"))},!0),addEventListener("keydown",e=>{const t=(e.key||"").toLowerCase(),d=e.ctrlKey||e.metaKey;(e.metaKey&&e.shiftKey||t==="printscreen"||e.shiftKey&&t==="meta")&&i(1800),(t==="f12"||d&&["s","u","p"].includes(t)||d&&e.shiftKey&&["i","j","c"].includes(t)||e.metaKey&&e.altKey&&["i","j","c","u"].includes(t))&&(e.preventDefault(),e.stopPropagation())},!0),addEventListener("keyup",e=>{if((e.key||"").toLowerCase()==="printscreen"){i(1200);try{navigator.clipboard.writeText("© Sa’ood Williams")}catch{}}},!0),window.top===window&&(addEventListener("blur",()=>{document.activeElement&&document.activeElement.tagName==="IFRAME"||i(0)}),addEventListener("focus",r),document.addEventListener("visibilitychange",()=>{document.hidden?i(0):r()})),addEventListener("beforeprint",()=>i(0)),addEventListener("afterprint",r)})();
+</script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="SDF Path Tracer is a WebGL2 progressive path tracer for signed distance field scenes written in JavaScript and compiled to GLSL at runtime."
+    />
+    <meta name="theme-color" content="#0b0c0f" />
+    <link rel="icon" href="data:," />
+    <title>SDF Path Tracer | Progressive WebGL2 rendering</title>
+    <script>
+      if (new URLSearchParams(location.search).get("preview") === "1")
+        document.documentElement.classList.add("preview");
+    </script>
+    <link rel="stylesheet" href="styles.css?v=0aafddc6f3" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./"
+        ><svg viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="11" cy="16" r="6" />
+          <path d="M17 16h12M22 9.5l6 6.5-6 6.5" />
+          <path d="M3 8l4 3M3 24l4-3" /></svg
+        ><span>raymarch</span><small>SDF / PATH TRACER</small></a
+      >
+      <div class="top-meta">
+        <span class="led" id="led" aria-hidden="true"></span
+        ><span id="status" role="status" aria-live="polite">STARTING</span
+        ><span class="divider">/</span
+        >
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">GRAPHICS / WEBGL2 PATH TRACING</p>
+          <h1>Every pixel,<br /><em>a random walk.</em></h1>
+        </div>
+        <p class="lede">
+          A progressive path tracer for signed distance fields. Scenes are
+          written in JavaScript, compiled to GLSL while you watch, and rendered
+          on your GPU one sample at a time until the noise settles.
+        </p>
+      </section>
+
+      <section class="workspace" aria-label="Path tracer workspace">
+        <div class="panel view-panel">
+          <div class="panel-bar">
+            <div class="presets" id="presets" role="tablist" aria-label="Scenes"></div>
+            <div class="actions">
+              <button id="resetView" class="quiet" type="button">Reset view</button
+              ><button id="exportPng" class="primary" type="button">Export PNG</button>
+            </div>
+          </div>
+          <div class="stage" id="stage">
+            <canvas
+              id="canvas"
+              tabindex="0"
+              aria-label="Path traced render. Drag to orbit, scroll or pinch to zoom, arrow keys rotate."
+            ></canvas>
+            <div class="hud hud-left" aria-hidden="true">
+              <strong id="sppBig">0</strong><span>samples per pixel</span>
+            </div>
+            <div class="hud hud-right" id="hudRight" aria-hidden="true"></div>
+            <div class="overlay" id="overlay" role="status">
+              <strong>WebGL2 required</strong>
+              <p>This browser could not create a WebGL2 context.</p>
+            </div>
+            <div class="preview-caption" aria-hidden="true">
+              <span>SDF PATH TRACER</span><strong id="previewSpp">0 spp</strong>
+            </div>
+          </div>
+          <div class="view-foot">
+            <span>Drag to orbit · Scroll or pinch to zoom · Double-click resets</span
+            ><span id="progressText">Converging</span>
+          </div>
+          <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+        </div>
+
+        <aside class="panel inspector" aria-label="Scene controls">
+          <section class="group">
+            <div class="group-head"><span class="eyebrow">MATERIALS</span><small>live uniforms, no recompile</small></div>
+            <div class="materials" id="materials"></div>
+            <div class="mat-edit">
+              <label class="color-row"
+                ><span>Albedo <output id="albedoValue">#ffffff</output></span
+                ><input id="albedo" type="color" value="#ffffff"
+              /></label>
+              <label class="range"
+                ><span>Roughness <output id="roughnessValue">0.50</output></span
+                ><input id="roughness" type="range" min="0" max="1" step="0.01" value="0.5"
+              /></label>
+              <label class="range"
+                ><span>Metallic <output id="metallicValue">0.00</output></span
+                ><input id="metallic" type="range" min="0" max="1" step="0.01" value="0"
+              /></label>
+            </div>
+          </section>
+          <section class="group">
+            <div class="group-head"><span class="eyebrow">LIGHT</span></div>
+            <label class="range"
+              ><span>Light intensity <output id="lightValue">1.00x</output></span
+              ><input id="light" type="range" min="0" max="3" step="0.01" value="1"
+            /></label>
+            <label class="range"
+              ><span>Exposure <output id="exposureValue">1.00</output></span
+              ><input id="exposure" type="range" min="0.1" max="4" step="0.01" value="1"
+            /></label>
+          </section>
+          <section class="group">
+            <div class="group-head"><span class="eyebrow">INTEGRATOR</span></div>
+            <label class="range"
+              ><span>Bounces <output id="bouncesValue">4</output></span
+              ><input id="bounces" type="range" min="1" max="8" step="1" value="4"
+            /></label>
+            <div class="selects">
+              <label
+                >Samples per frame<select id="samples">
+                  <option value="1">1</option>
+                  <option value="2" selected>2</option>
+                  <option value="4">4</option>
+                </select></label
+              ><label
+                >Resolution<select id="scale">
+                  <option value="auto" selected>Auto</option>
+                  <option value="0.25">25%</option>
+                  <option value="0.5">50%</option>
+                  <option value="0.75">75%</option>
+                  <option value="1">100%</option>
+                </select></label
+              >
+            </div>
+          </section>
+          <section class="group stats" id="stats"></section>
+        </aside>
+      </section>
+
+      <section class="code-grid" aria-label="Scene source and generated GLSL">
+        <div class="panel code-panel">
+          <div class="panel-bar">
+            <div><span class="eyebrow">SCENE / JAVASCRIPT</span><strong id="sceneTitle">Showcase</strong></div>
+            <button id="compileScene" class="primary" type="button">Compile scene</button>
+          </div>
+          <textarea
+            id="sceneSource"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            autocorrect="off"
+            wrap="off"
+            maxlength="20000"
+            aria-label="Scene source in JavaScript"
+            aria-describedby="sceneHelp"
+          ></textarea>
+          <p class="code-help" id="sceneHelp">
+            The scene API is in scope: sphere, box, roundBox, torus, cylinder,
+            capsule, plane, union, smoothUnion, subtract, intersect, translate,
+            rotate, scale, repeat, material, scene. Ctrl or Command + Enter compiles.
+          </p>
+          <div class="scene-error" id="sceneError" role="status" aria-live="polite"></div>
+        </div>
+        <div class="panel code-panel">
+          <div class="panel-bar">
+            <div><span class="eyebrow">GENERATED GLSL</span><strong id="glslTitle">map()</strong></div>
+            <span class="badge" id="compileBadge">compiling</span>
+          </div>
+          <pre class="glsl" id="glsl" tabindex="0" aria-label="Generated GLSL"></pre>
+        </div>
+      </section>
+
+      <section class="notes">
+        <div>
+          <p class="eyebrow">HONEST LIMITS</p>
+          <h2>Unbiased-ish.<br /><em>Honestly noisy.</em></h2>
+        </div>
+        <ul>
+          <li>
+            Indirect light is clamped in luminance to cut caustic fireflies,
+            which trades a little bias in the brightest bounced highlights for
+            a cleaner image sooner. Directly visible lights stay exact.
+          </li>
+          <li>
+            Next event estimation only knows about emissive spheres under plain
+            unions and rigid transforms. Other glowing surfaces are still found,
+            but only when a bounce happens to hit them.
+          </li>
+          <li>
+            Distance bounds from smooth unions and repetition are not exact, so
+            sphere tracing can occasionally overstep a thin feature. Materials
+            are opaque: no glass, subsurface or volumes.
+          </li>
+          <li>
+            Without float render targets the accumulator falls back to an
+            encoded 8-bit buffer, which converges with visible banding.
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <a href="https://cactuscash.github.io/saoodwilliams-com/">Sa'ood Williams portfolio</a
+      ><span>Scene graph to GLSL to pixels, in plain JavaScript and WebGL2.</span
+      >
+    </footer>
+    <script type="module" src="app.js?v=0aafddc6f3"></script>
+  </body>
+</html>
